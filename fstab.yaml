@@ -1,6 +1,6 @@
 mountpoints:
   /:
-    url: "https://author-p<programId>-e<envId>.adobeaemcloud.com/bin/franklin.delivery/<githubOrg>/<repo>/main"
+    url: "https://author-p130360-e1272151.adobeaemcloud.com/bin/franklin.delivery/adobe-rnd/aem-boilerplate-xwalk-commerce/main"
     type: "markup"
     suffix: ".html"
 folders:

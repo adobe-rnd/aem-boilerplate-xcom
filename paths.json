@@ -1,10 +1,11 @@
 {
   "mappings": [
-    "/content/<sitename>/:/",
-    "/content/<sitename>/configuration:/.helix/config.json",
-    "/content/<sitename>/metadata:/metadata.json"
+    "/content/xwalk-commerce/:/",
+    "/content/xwalk-commerce/configuration:/.helix/config.json",
+    "/content/xwalk-commerce/headers:/.helix/headers.json",
+    "/content/xwalk-commerce/metadata:/metadata.json"
   ],
   "includes": [
-    "/content/<sitename>/"
+    "/content/xwalk-commerce/"
   ]
 }

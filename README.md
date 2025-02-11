@@ -52,17 +52,14 @@ This is a custom script which copies files out of `node_modules` and into a loca
 npm run lint
 ```
 
-## Local development
+## Setup
 
-1. Create a new repository based on the `aem-boilerplate-commerce` template and add a mountpoint in the `fstab.yaml`
-1. Add the [AEM Code Sync GitHub App](https://github.com/apps/aem-code-sync) to the repository
-1. Add your Adobe Commerce SaaS configuration in the `configs.xlsx` sheet in your content repository.
-1. Install all dependencies using `npm i`.
-1. Start AEM Proxy: `npm run up` (opens your browser at `http://localhost:3000`)
-1. Open the `{repo}` directory in your favourite IDE and start coding :)
+See also [Developer Tutorial](https://experienceleague.adobe.com/en/docs/experience-manager-cloud-service/content/edge-delivery/wysiwyg-authoring/edge-dev-getting-started)
 
-## Changelog
-
-Major changes are described and documented as part of pull requests and tracked via the `changelog` tag. To keep your project up to date, please follow this list:
-
-https://github.com/hlxsites/aem-boilerplate-commerce/issues?q=label%3Achangelog+is%3Aclosed
+1. Create a new repository based on the `aem-boilerplate-xwalk-commerce` template 
+2. Install all dependencies using `npm i`.
+3. Add the [AEM Code Sync GitHub App](https://github.com/apps/aem-code-sync) to the repository, so your code changes get synced with EDS.
+5. [todo] create a new site in AEM using the 
+4. Update the mountpoint in `fstab.yaml`
+5. Update the path mappings in `paths.json`
+6. Update your Adobe Commerce SaaS configuration in the `configuration` sheet in your AEM site.
