@@ -1,5 +1,5 @@
-# Edge Delivery Services + Adobe Commerce Boilerplate
-This project boilerplate is for Edge Delivery Services projects that integrate with Adobe Commerce.
+# Crosswalk + Adobe Commerce Boilerplate
+This project boilerplate is for AEM Authoring with Edge Delivery Services (aka Crosswalk) projects that integrate with Adobe Commerce.
 
 ## Documentation
 https://experienceleague.adobe.com/developer/commerce/storefront/
@@ -10,7 +10,7 @@ https://experienceleague.adobe.com/developer/commerce/storefront/
 
 ## Pre-requisites
 
-Out of the box, this project template uses a pre-configured Adobe Commerce environment. If you want to use your own Adobe Commerce environment, you'll need to update the `configs.xlsx` file in your content repository to have values that match your environment.
+Out of the box, this project template uses a pre-configured Adobe Commerce environment. If you want to use your own Adobe Commerce environment, you'll need to update the `configuration` spreadsheet in your AEM site to have values that match your environment.
 
 Additionally, you need to have the following modules and customizations installed on your environment:
 
@@ -22,12 +22,13 @@ Additionally, you need to have the following modules and customizations installe
 
 ## Documentation
 
-Before using the boilerplate, we recommend you to go through the documentation on https://www.aem.live/docs/ and more specifically:
-1. [Developer Tutorial](https://www.aem.live/developer/tutorial)
-2. [The Anatomy of a Project](https://www.aem.live/developer/anatomy-of-a-project)
-3. [Web Performance](https://www.aem.live/developer/keeping-it-100)
-4. [Markup, Sections, Blocks, and Auto Blocking](https://www.aem.live/developer/markup-sections-blocks)
-
+Before using the boilerplate, we recommend you to go through the documentation on [WYSIWYG Content Authoring for Edge Delivery Services](https://experienceleague.adobe.com/en/docs/experience-manager-cloud-service/content/edge-delivery/) and more specifically:
+1. [Developer Tutorial](https://experienceleague.adobe.com/en/docs/experience-manager-cloud-service/content/edge-delivery/wysiwyg-authoring/edge-dev-getting-started)
+2. [Content Modeling](https://experienceleague.adobe.com/en/docs/experience-manager-cloud-service/content/edge-delivery/wysiwyg-authoring/content-modeling)
+3. [Creating Blocks](https://experienceleague.adobe.com/en/docs/experience-manager-cloud-service/content/edge-delivery/wysiwyg-authoring/create-block)
+4. [Spreadsheets](https://experienceleague.adobe.com/en/docs/experience-manager-cloud-service/content/edge-delivery/wysiwyg-authoring/tabular-data)
+5. [Path Mapping](https://experienceleague.adobe.com/en/docs/experience-manager-cloud-service/content/edge-delivery/wysiwyg-authoring/path-mapping)
+6. [Folder Mapping](https://www.aem.live/developer/folder-mapping)
 ## Installation
 
 ```sh
