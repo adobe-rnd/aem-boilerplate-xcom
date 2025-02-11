@@ -35,6 +35,15 @@
           "...": "../blocks/*/_*.json#/definitions"
         }
       ]
+    },
+    {
+      "title": "Commerce",
+      "id": "commerce",
+      "components": [
+        {
+          "...": "../blocks/commerce-*/_*.json#/definitions"
+        }
+      ]
     }
   ]
 }
