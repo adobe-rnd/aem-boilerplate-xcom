@@ -59,7 +59,7 @@ See also [Developer Tutorial](https://experienceleague.adobe.com/en/docs/experie
 1. Create a new repository based on the `aem-boilerplate-xwalk-commerce` template 
 2. Install all dependencies using `npm i`.
 3. Add the [AEM Code Sync GitHub App](https://github.com/apps/aem-code-sync) to the repository, so your code changes get synced with EDS.
-5. [todo] create a new site in AEM using the 
+5. [todo] create a new site in AEM using the site template XXX
 4. Update the mountpoint in `fstab.yaml`
 5. Update the path mappings in `paths.json`
 6. Update your Adobe Commerce SaaS configuration in the `configuration` sheet in your AEM site.
