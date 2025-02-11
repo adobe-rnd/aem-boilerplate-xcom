@@ -3,7 +3,11 @@
     "/content/xwalk-commerce/:/",
     "/content/xwalk-commerce/configuration:/.helix/config.json",
     "/content/xwalk-commerce/headers:/.helix/headers.json",
-    "/content/xwalk-commerce/metadata:/metadata.json"
+    "/content/xwalk-commerce/metadata:/metadata.json",
+    "/content/xwalk-commerce/placeholders:/placeholders.json",
+    "/content/xwalk-commerce/configs:/configs.json",
+    "/content/xwalk-commerce/configs-dev:/configs-dev.json",
+    "/content/xwalk-commerce/configs-stage:/configs-stage.json"
   ],
   "includes": [
     "/content/xwalk-commerce/"
