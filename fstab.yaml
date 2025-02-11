@@ -3,3 +3,5 @@ mountpoints:
     url: "https://author-p<programId>-e<envId>.adobeaemcloud.com/bin/franklin.delivery/<githubOrg>/<repo>/main"
     type: "markup"
     suffix: ".html"
+folders:
+  /products/: /products/default
