@@ -190,5 +190,9 @@
         "valueType": "string"
       }
     ]
+  },
+  {
+    "id": "program-recommendations",
+    "fields": []
   }
 ]
