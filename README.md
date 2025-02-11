@@ -32,7 +32,7 @@ Before using the boilerplate, we recommend you to go through the documentation o
 ## Installation
 
 ```sh
-npm i
+npm i 
 ```
 
 ## Updating Drop-in dependencies
