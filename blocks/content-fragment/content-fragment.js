@@ -17,7 +17,7 @@ export default async function decorate(block) {
       ?.toLowerCase()
       ?.replace(' ', '_') || 'master';
   block.innerHTML = '';
-  const isAuthor = isAuthorEnvironment();
+  const isAuthor = document.querySelector('*[data-aue-resource]') !== null;
   const url = window?.location?.origin?.includes('author')
     ? `${aemauthorurl}${persistedquery};path=${contentPath};variation=${variationname};ts=${
       Math.random() * 1000
