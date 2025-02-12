@@ -38,7 +38,7 @@
           "...": "../blocks/columns/_*.json#/definitions"
         },
         {
-          "...": "../blocks/fragments/_*.json#/definitions"
+          "...": "../blocks/fragment/_*.json#/definitions"
         },
         {
           "...": "../blocks/hero/_*.json#/definitions"
