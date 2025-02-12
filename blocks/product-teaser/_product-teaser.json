@@ -23,7 +23,7 @@
   ],
   "models": [
     {
-      "id": "product-list-page",
+      "id": "product-teaser",
       "fields":
       [
         {
