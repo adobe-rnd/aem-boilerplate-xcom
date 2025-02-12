@@ -272,7 +272,7 @@
     ]
   },
   {
-    "id": "product-list-page",
+    "id": "product-teaser",
     "fields": [
       {
         "component": "text",
