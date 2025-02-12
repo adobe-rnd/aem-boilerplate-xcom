@@ -42,6 +42,9 @@
         },
         {
           "...": "../blocks/hero/_*.json#/definitions"
+        },
+        {
+          "...": "../blocks/content-fragment/_*.json#/definitions"
         }
       ]
     },

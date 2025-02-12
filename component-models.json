@@ -156,6 +156,35 @@
     ]
   },
   {
+    "id": "content-fragment-offer",
+    "fields": [
+      {
+        "component": "aem-content-fragment",
+        "name": "path",
+        "value": "",
+        "label": "Content Fragment path",
+        "valueType": "string"
+      },
+      {
+        "component": "select",
+        "name": "variation",
+        "value": "",
+        "label": "Variation",
+        "valueType": "string",
+        "options": [
+          {
+            "name": "Default",
+            "value": "master"
+          },
+          {
+            "name": "Variation 1",
+            "value": "Variation 1"
+          }
+        ]
+      }
+    ]
+  },
+  {
     "id": "fragment",
     "fields": [
       {
