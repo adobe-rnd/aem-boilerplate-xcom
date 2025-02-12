@@ -228,6 +228,25 @@
               }
             }
           }
+        },
+        {
+          "title": "Product Teaser",
+          "id": "product-teaser",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "name": "Product Teaser",
+                  "model": "product-teaser",
+                  "key-value": true,
+                  "details-button": true,
+                  "cart-button": true,
+                  "sku": "nora-practice-tank/WT03"
+                }
+              }
+            }
+          }
         }
       ]
     }
