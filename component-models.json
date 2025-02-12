@@ -192,7 +192,50 @@
     ]
   },
   {
+    "id": "product-list-page",
+    "fields": [
+      {
+        "component": "number",
+        "name": "category",
+        "label": "Category",
+        "valueType": "number",
+        "value": 4,
+        "description": "Current Category ID"
+      },
+      {
+        "component": "text",
+        "name": "urlPath",
+        "label": "URL Path",
+        "valueType": "string",
+        "value": "gear",
+        "description": "Current Category URL Path"
+      },
+      {
+        "component": "multiselect",
+        "name": "type",
+        "label": "Type",
+        "options": [
+          {
+            "name": "None",
+            "value": ""
+          },
+          {
+            "name": "Search",
+            "value": "search"
+          }
+        ]
+      }
+    ]
+  },
+  {
     "id": "product-recommendations",
-    "fields": []
+    "fields": [
+      {
+        "component": "text",
+        "name": "typeId",
+        "label": "Type ID",
+        "description": "Type ID"
+      }
+    ]
   }
 ]
