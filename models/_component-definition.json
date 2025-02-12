@@ -32,7 +32,16 @@
       "id": "blocks",
       "components": [
         {
-          "...": "../blocks/*/_*.json#/definitions"
+          "...": "../blocks/cards/_*.json#/definitions"
+        },
+        {
+          "...": "../blocks/columns/_*.json#/definitions"
+        },
+        {
+          "...": "../blocks/fragments/_*.json#/definitions"
+        },
+        {
+          "...": "../blocks/hero/_*.json#/definitions"
         }
       ]
     },
