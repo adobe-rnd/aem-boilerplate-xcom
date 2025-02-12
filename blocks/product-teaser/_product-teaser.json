@@ -35,28 +35,16 @@
           "description": "SKU to display"
         },
         {
-          "component": "radio-group",
-          "name": "cart-button",
-          "label": "Show Cart Button",
-          "valueType": "string",
-          "options": [
-            {
-              "name": "On",
-              "value": "true"
-            }
-          ]
-        },
-        {
-          "component": "radio-group",
+          "component": "boolean",
           "name": "details-button",
           "label": "Show Details Button",
-          "valueType": "string",
-          "options": [
-            {
-              "name": "On",
-              "value": "true"
-            }
-          ]
+          "valueType": "boolean"
+        },
+        {
+          "component": "boolean",
+          "name": "cart-button",
+          "label": "Show Cart Button",
+          "valueType": "boolean"
         }
       ]
     }
