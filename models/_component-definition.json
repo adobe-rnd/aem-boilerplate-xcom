@@ -46,8 +46,8 @@
       ]
     },
     {
-      "title": "Commerce",
-      "id": "commerce",
+      "title": "Product",
+      "id": "product",
       "components": [
         {
           "...": "../blocks/commerce-*/_*.json#/definitions"

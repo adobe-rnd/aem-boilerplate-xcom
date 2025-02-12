@@ -192,6 +192,10 @@
     ]
   },
   {
+    "id": "product-details",
+    "fields": []
+  },
+  {
     "id": "product-list-page",
     "fields": [
       {
