@@ -10,7 +10,10 @@
             "template": {
               "name": "Product List Page",
               "model": "product-list-page",
-              "key-value": true
+              "key-value": true,
+              "urlPath": "gear",
+              "category": 4,
+              "type": ""
             }
           }
         }
