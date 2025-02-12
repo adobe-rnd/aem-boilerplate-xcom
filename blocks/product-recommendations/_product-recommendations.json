@@ -21,6 +21,12 @@
     {
       "id": "product-recommendations",
       "fields": [
+        {
+          "component": "text",
+          "name": "typeId",
+          "label": "Type ID",
+          "description": "Type ID"
+        }       
       ]
     }
   ],
