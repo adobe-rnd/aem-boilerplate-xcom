@@ -30,7 +30,7 @@ import '../../scripts/initializers/cart.js';
 
 export default async function decorate(block) {
   // eslint-disable-next-line no-underscore-dangle
-  const product = events._lastEvent?.['pdp/data']?.payload ?? pdpApi.fetchProductData('24-WG080');
+  const product = events._lastEvent?.['pdp/data']?.payload ?? null;
 
   const labels = await fetchPlaceholders();
 
