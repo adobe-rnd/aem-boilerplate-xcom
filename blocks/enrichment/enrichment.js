@@ -59,7 +59,7 @@ export default async function decorate(block) {
           // if in AEM authoring environment, move enrichment wrapper to top
           // of enrichment content
           if (window.xwalk.isAuthorEnv && firstEnrichmentWrapper) {
-            wrapper.parentNode.insertBefore(firstEnrichmentWrapper, wrapper);
+            wrapper.parentNode.insertBefore(wrapper, firstEnrichmentWrapper);
           }
         } else if (sections.length > 1) {
           // If multiple sections, insert them after section of block
