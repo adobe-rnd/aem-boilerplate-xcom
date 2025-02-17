@@ -34,7 +34,7 @@ await initializeDropin(async () => {
     'Content-Type': 'application/json',
   });
 
-  const sku = getSkuFromUrl();
+  const sku = getSkuFromUrl() ?? '24-WG080';
   const optionsUIDs = getOptionsUIDsFromUrl();
 
   const [product, labels] = await Promise.all([
