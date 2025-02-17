@@ -55,6 +55,10 @@ export default async function decorate(block) {
           const wrapper = block.closest('.enrichment-wrapper');
           Array.from(sections[0].children)
             .forEach((child) => wrapper.parentNode.insertBefore(child, wrapper));
+          // on AEM authoring environment, move wrapper block to top of enrichment wrappers
+          if (window.xwalk.isAuthorEnv) {
+            wrapper.parentNode.insertAdjecentElement('afterbegin', wrapper);
+          }
         } else if (sections.length > 1) {
           // If multiple sections, insert them after section of block
           const blockSection = block.closest('.section');
@@ -67,6 +71,9 @@ export default async function decorate(block) {
   } catch (error) {
     console.error(error);
   } finally {
-    // block.closest('.enrichment-wrapper')?.remove();
+    // if not rendered from AEM authoring environment, remove enrichment wrapper
+    if (!window.xwalk.isAuthorEnv) {
+      block.closest('.enrichment-wrapper')?.remove();
+    }
   }
 }
