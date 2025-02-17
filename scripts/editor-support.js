@@ -10,6 +10,7 @@ import {
 import { decorateRichtext } from './editor-support-rte.js';
 import { decorateMain } from './scripts.js';
 
+window.xwalk = window.xwalk || {};
 window.xwalk.isAuthorEnv = true;
 
 async function applyChanges(event) {
