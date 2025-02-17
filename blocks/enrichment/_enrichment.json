@@ -2,7 +2,7 @@
   "definitions": [
     {
       "title": "Enrichment",
-      "id": "enrichments",
+      "id": "enrichment",
       "plugins": {
         "xwalk": {
           "page": {
