@@ -54,11 +54,13 @@ export default async function decorate(block) {
           block.closest('.section').classList.add(...sections[0].classList);
           const wrapper = block.closest('.enrichment-wrapper');
           Array.from(sections[0].children)
-            .forEach((child) => wrapper.parentNode.insertBefore(child, wrapper));
-          // on AEM authoring environment, move UE instr to first block/default content element
-          if (window.xwalk.isAuthorEnv) {
-            moveInstrumentation(block, wrapper.parentNode.firstElementChild.firstElementChild);
-          }
+            .forEach((child, i) => {
+              wrapper.parentNode.insertBefore(child, wrapper);
+              // on AEM authoring environment, move UE instr to first block/default content element
+              if (i === 0 && window.xwalk.isAuthorEnv) {
+                moveInstrumentation(block, child.firstElementChild);
+              }
+            });
         } else if (sections.length > 1) {
           // If multiple sections, insert them after section of block
           const blockSection = block.closest('.section');
