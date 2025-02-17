@@ -258,7 +258,9 @@
                 "template": {
                   "name": "Enrichment",
                   "model": "enrichment",
-                  "key-value": true
+                  "key-value": true,
+                  "position": "below-product",
+                  "type": "product"
                 }
               }
             }

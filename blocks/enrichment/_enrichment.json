@@ -10,7 +10,9 @@
             "template": {
               "name": "Enrichment",
               "model": "enrichment",
-              "key-value": true
+              "key-value": true,
+              "position": "below-product",
+              "type": "product"
             }
           }
         }
@@ -23,7 +25,7 @@
       "fields": [
         {
           "component": "multiselect",
-          "name": "typeId",
+          "name": "type",
           "label": "Type ID",
           "description": "Type ID",
           "maxSize": 1,

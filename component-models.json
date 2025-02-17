@@ -189,7 +189,7 @@
     "fields": [
       {
         "component": "multiselect",
-        "name": "typeId",
+        "name": "type",
         "label": "Type ID",
         "description": "Type ID",
         "maxSize": 1,
