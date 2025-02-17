@@ -185,6 +185,45 @@
     ]
   },
   {
+    "id": "enrichment",
+    "fields": [
+      {
+        "component": "multiselect",
+        "name": "typeId",
+        "label": "Type ID",
+        "description": "Type ID",
+        "maxSize": 1,
+        "options": [
+          {
+            "label": "Product",
+            "value": "product"
+          },
+          {
+            "label": "Category",
+            "value": "category"
+          }
+        ]
+      },
+      {
+        "component": "multiselect",
+        "name": "position",
+        "label": "Position",
+        "description": "Position of the enrichment on the page",
+        "maxSize": 1,
+        "options": [
+          {
+            "label": "Below Product",
+            "value": "below-product"
+          },
+          {
+            "label": "Above Product",
+            "value": "above-product"
+          }
+        ]
+      }
+    ]
+  },
+  {
     "id": "fragment",
     "fields": [
       {

@@ -53,10 +53,10 @@
       "id": "product",
       "components": [
         {
-          "...": "../blocks/commerce-*/_*.json#/definitions"
+          "...": "../blocks/product-*/_*.json#/definitions"
         },
         {
-          "...": "../blocks/product-*/_*.json#/definitions"
+          "...": "../blocks/enrichment/_*.json#/definitions"
         }
       ]
     }
