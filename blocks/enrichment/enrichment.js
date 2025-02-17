@@ -1,5 +1,5 @@
 import { readBlockConfig } from '../../scripts/aem.js';
-import { fetchIndex, moveInstrumentation } from '../../scripts/scripts.js';
+import { fetchIndex } from '../../scripts/scripts.js';
 import { getSkuFromUrl } from '../../scripts/commerce.js';
 import { loadFragment } from '../fragment/fragment.js';
 
@@ -53,14 +53,14 @@ export default async function decorate(block) {
         if (sections.length === 1) {
           block.closest('.section').classList.add(...sections[0].classList);
           const wrapper = block.closest('.enrichment-wrapper');
+          const firstEnrichmentWrapper = sections[0].firstElementChild;
           Array.from(sections[0].children)
-            .forEach((child, i) => {
-              wrapper.parentNode.insertBefore(child, wrapper);
-              // on AEM authoring environment, move UE instr to first block/default content element
-              if (i === 0 && window.xwalk.isAuthorEnv) {
-                moveInstrumentation(block, child.firstElementChild);
-              }
-            });
+            .forEach((child) => wrapper.parentNode.insertBefore(child, wrapper));
+          // if in AEM authoring environment, move enrichment wrapper to top
+          // of enrichment content
+          if (window.xwalk.isAuthorEnv && firstEnrichmentWrapper) {
+            wrapper.parentNode.insertBefore(firstEnrichmentWrapper, wrapper);
+          }
         } else if (sections.length > 1) {
           // If multiple sections, insert them after section of block
           const blockSection = block.closest('.section');
@@ -73,6 +73,9 @@ export default async function decorate(block) {
   } catch (error) {
     console.error(error);
   } finally {
-    block.closest('.enrichment-wrapper')?.remove();
+    // if not rendered from AEM authoring environment, remove block
+    if (!window.xwalk.isAuthorEnv) {
+      block.closest('.enrichment-wrapper')?.remove();
+    }
   }
 }
