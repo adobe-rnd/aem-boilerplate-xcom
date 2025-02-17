@@ -26,16 +26,16 @@
         {
           "component": "multiselect",
           "name": "type",
-          "label": "Type ID",
-          "description": "Type ID",
+          "label": "Type",
+          "description": "Type of page",
           "maxSize": 1,
           "options": [
             {
-              "label": "Product",
+              "name": "Product",
               "value": "product"
             },
             {
-              "label": "Category",
+              "name": "Category",
               "value": "category"
             }
           ]
@@ -48,11 +48,11 @@
           "maxSize": 1,
           "options": [
             {
-              "label": "Below Product",
+              "name": "Below Product",
               "value": "below-product"
             },
             {
-              "label": "Above Product",
+              "name": "Above Product",
               "value": "above-product"
             }
           ]
