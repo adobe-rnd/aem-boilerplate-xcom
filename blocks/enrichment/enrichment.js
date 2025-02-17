@@ -1,5 +1,5 @@
 import { readBlockConfig } from '../../scripts/aem.js';
-import { fetchIndex, moveInstrumentation } from '../../scripts/scripts.js';
+import { fetchIndex } from '../../scripts/scripts.js';
 import { getSkuFromUrl } from '../../scripts/commerce.js';
 import { loadFragment } from '../fragment/fragment.js';
 
@@ -53,11 +53,8 @@ export default async function decorate(block) {
         if (sections.length === 1) {
           block.closest('.section').classList.add(...sections[0].classList);
           const wrapper = block.closest('.enrichment-wrapper');
-          // move the UE instrumentation to the enrichment wrapper
-          moveInstrumentation(block, wrapper);
           Array.from(sections[0].children)
-            // add child blocks from enrichment section to the wrapper
-            .forEach((child) => wrapper.appendChild(child));
+            .forEach((child) => wrapper.parentNode.insertBefore(child, wrapper));
         } else if (sections.length > 1) {
           // If multiple sections, insert them after section of block
           const blockSection = block.closest('.section');
@@ -70,6 +67,6 @@ export default async function decorate(block) {
   } catch (error) {
     console.error(error);
   } finally {
-    block.remove();
+    // block.closest('.enrichment-wrapper')?.remove();
   }
 }
