@@ -1,5 +1,5 @@
 import { readBlockConfig } from '../../scripts/aem.js';
-import { fetchIndex } from '../../scripts/scripts.js';
+import { fetchIndex, moveInstrumentation } from '../../scripts/scripts.js';
 import { getSkuFromUrl } from '../../scripts/commerce.js';
 import { loadFragment } from '../fragment/fragment.js';
 
@@ -55,9 +55,9 @@ export default async function decorate(block) {
           const wrapper = block.closest('.enrichment-wrapper');
           Array.from(sections[0].children)
             .forEach((child) => wrapper.parentNode.insertBefore(child, wrapper));
-          // on AEM authoring environment, move wrapper block to top of enrichment wrappers
+          // on AEM authoring environment, move UE instr to first block/default content element
           if (window.xwalk.isAuthorEnv) {
-            wrapper.parentNode.insertAdjecentElement('afterbegin', wrapper);
+            moveInstrumentation(block, wrapper.parentNode.firstChild.firstChild);
           }
         } else if (sections.length > 1) {
           // If multiple sections, insert them after section of block
@@ -71,9 +71,6 @@ export default async function decorate(block) {
   } catch (error) {
     console.error(error);
   } finally {
-    // if not rendered from AEM authoring environment, remove enrichment wrapper
-    if (!window.xwalk.isAuthorEnv) {
-      block.closest('.enrichment-wrapper')?.remove();
-    }
+    block.closest('.enrichment-wrapper')?.remove();
   }
 }
