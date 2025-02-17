@@ -57,7 +57,7 @@ export default async function decorate(block) {
             .forEach((child) => wrapper.parentNode.insertBefore(child, wrapper));
           // on AEM authoring environment, move UE instr to first block/default content element
           if (window.xwalk.isAuthorEnv) {
-            moveInstrumentation(block, wrapper.parentNode.firstChild.firstChild);
+            moveInstrumentation(block, wrapper.parentNode.firstElementChild.firstElementChild);
           }
         } else if (sections.length > 1) {
           // If multiple sections, insert them after section of block
