@@ -5,3 +5,4 @@ mountpoints:
     suffix: ".html"
 folders:
   /products/: /products/default
+  

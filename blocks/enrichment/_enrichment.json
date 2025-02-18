@@ -24,7 +24,7 @@
       "id": "enrichment",
       "fields": [
         {
-          "component": "multiselect",
+          "component": "select",
           "name": "type",
           "label": "Type",
           "description": "Type of page",
@@ -41,7 +41,7 @@
           ]
         },
         {
-          "component": "multiselect",
+          "component": "select",
           "name": "position",
           "label": "Position",
           "description": "Position of the enrichment on the page",
