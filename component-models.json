@@ -188,11 +188,10 @@
     "id": "enrichment",
     "fields": [
       {
-        "component": "multiselect",
+        "component": "select",
         "name": "type",
         "label": "Type",
         "description": "Type of page",
-        "maxSize": 1,
         "options": [
           {
             "name": "Product",
@@ -205,11 +204,10 @@
         ]
       },
       {
-        "component": "multiselect",
+        "component": "select",
         "name": "position",
         "label": "Position",
         "description": "Position of the enrichment on the page",
-        "maxSize": 1,
         "options": [
           {
             "name": "Below Product",
