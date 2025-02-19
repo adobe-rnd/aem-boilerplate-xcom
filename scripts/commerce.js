@@ -147,7 +147,14 @@ export function renderPrice(product, format, html = (strings, ...values) => stri
 export function getSkuFromUrl() {
   const path = window.location.pathname;
   const result = path.match(/\/products\/[\w|-]+\/([\w|-]+)$/);
-  return result?.[1] ?? '24-WG080';
+  let sku = result?.[1];
+  // Xwalk: If in AEM authoring environment, try to get fallback sku from page metadata
+  // if url does not resolve to a valid sku
+  if (!sku && window.xwalk.isAuthorEnv) {
+    sku = document.querySelector('meta[name="sku-fallback"]')?.getAttribute('content');
+  }
+
+  return sku;
 }
 
 export function getOptionsUIDsFromUrl() {

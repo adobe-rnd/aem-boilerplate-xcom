@@ -1,0 +1,69 @@
+{
+  "models": [
+    {
+      "id": "enrichment-metadata",
+      "fields":
+      [
+        {
+          "component": "text",
+          "name": "template",
+          "label": "Template",
+          "valueType": "string",
+          "value": "enrichment",
+          "readOnly": true
+        },
+        {
+          "component": "text",
+          "name": "title",
+          "label": "Title",
+          "valueType": "string",
+          "value": "",
+          "description": "Title of the enrichment"
+        },
+        {
+          "component": "text",
+          "name": "enrichment-products",
+          "label": "Product SKU's to match with",
+          "valueType": "string",
+          "multi": true
+        },
+        {
+          "component": "text",
+          "name": "enrichment-categories",
+          "label": "Product Categories to match with",
+          "valueType": "string",
+          "multi": true
+        },
+        {
+          "component": "text",
+          "name": "enrichment-positions",
+          "label": "Positions to match with",
+          "valueType": "string",
+          "multi": true
+        }
+      ]
+    },
+    {
+      "id": "pdp-metadata",
+      "fields":
+      [
+        {
+          "component": "text",
+          "name": "template",
+          "label": "Template",
+          "valueType": "string",
+          "value": "pdp",
+          "readOnly": true
+        },
+        {
+          "component": "text",
+          "name": "sku-fallback",
+          "label": "Fallback SKU",
+          "valueType": "string",
+          "value": "24-WG080",
+          "description": "Authoring Fallback SKU in case URL doesnt resolve to SKU"
+        }
+      ]
+    }
+  ]
+}

@@ -1,1 +1,38 @@
 /* stylelint-disable no-empty-source */
+
+.enrichment-wrapper {
+  position: relative;
+}
+
+.enrichment.block::before {
+  content: "Enrichment";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 20px;
+  font-weight: bold;
+  color: rgb(0 0 0 / 20%);
+  z-index: -1;
+}
+
+.enrichment.block {
+  display: flex;
+  border: dashed 3px lightgrey;
+}
+
+.enrichment.block > div {
+  flex-grow: 1;
+  padding: 10px;
+  display:flex;
+  justify-content: center;
+}
+
+.enrichment.block > div > div {
+  padding: 10px;
+  }
+
+.enrichment.block > div > div:first-child {
+font-weight: bold;
+}
+

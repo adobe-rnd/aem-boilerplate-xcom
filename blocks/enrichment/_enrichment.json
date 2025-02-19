@@ -27,7 +27,7 @@
           "component": "select",
           "name": "type",
           "label": "Type",
-          "description": "Type of page",
+          "description": "What enrichment type to match with",
           "options": [
             {
               "name": "Product",
@@ -43,7 +43,7 @@
           "component": "select",
           "name": "position",
           "label": "Position",
-          "description": "Position of the enrichment on the page",
+          "description": "Position to match with",
           "options": [
             {
               "name": "Below Product",
@@ -52,6 +52,14 @@
             {
               "name": "Above Product",
               "value": "above-product"
+            },
+            {
+              "name": "Below Category",
+              "value": "below-category"
+            },
+            {
+              "name": "Above Product",
+              "value": "above-category"
             }
           ]
         }       
