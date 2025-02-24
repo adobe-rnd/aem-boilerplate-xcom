@@ -7,7 +7,8 @@
     "/content/xwalk-commerce/placeholders:/placeholders.json",
     "/content/xwalk-commerce/configs:/configs.json",
     "/content/xwalk-commerce/configs-dev:/configs-dev.json",
-    "/content/xwalk-commerce/configs-stage:/configs-stage.json"
+    "/content/xwalk-commerce/configs-stage:/configs-stage.json",
+    "/content/xwalk-commerce.resource/enrichment/enrichment.json:/enrichment/enrichment.json"
   ],
   "includes": [
     "/content/xwalk-commerce/"
