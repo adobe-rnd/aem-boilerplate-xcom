@@ -6,7 +6,7 @@ import { loadFragment } from '../fragment/fragment.js';
 export default async function decorate(block) {
   // XWALK: if viewed in AEM, do not replace block with enrichment
   // fragments, keep existing block as 'placeholder' for UE editing
-  if (window.xwalk.isAuthorEnv) return;
+  if (window.xwalk?.isAuthorEnv) return;
 
   const { type, position } = readBlockConfig(block);
 
