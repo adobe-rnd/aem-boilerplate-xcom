@@ -4,6 +4,10 @@ import { getSkuFromUrl } from '../../scripts/commerce.js';
 import { loadFragment } from '../fragment/fragment.js';
 
 export default async function decorate(block) {
+  // XWALK: if viewed in AEM, do not replace block with enrichment
+  // fragments, keep existing block as 'placeholder' for UE editing
+  if (window.xwalk.isAuthorEnv) return;
+
   const { type, position } = readBlockConfig(block);
 
   try {
@@ -39,7 +43,7 @@ export default async function decorate(block) {
     const index = await fetchIndex('enrichment/enrichment');
     const matchingFragments = index.data
       .filter((fragment) => Object.keys(filters).every((filterKey) => {
-        // XWALK: no need to parse
+        // XWALK: in xwalk arrays are returned as arrays, no need to parse
         // const values = JSON.parse(fragment[filterKey]);
         const values = fragment[filterKey];
         // XWALK: there is a space in front of all but the first values of an array
@@ -57,14 +61,8 @@ export default async function decorate(block) {
         if (sections.length === 1) {
           block.closest('.section').classList.add(...sections[0].classList);
           const wrapper = block.closest('.enrichment-wrapper');
-          const firstEnrichmentWrapper = sections[0].firstElementChild;
           Array.from(sections[0].children)
             .forEach((child) => wrapper.parentNode.insertBefore(child, wrapper));
-          // if in AEM authoring environment, move enrichment wrapper to top
-          // of enrichment content
-          if (window.xwalk.isAuthorEnv && firstEnrichmentWrapper) {
-            wrapper.parentNode.insertBefore(wrapper, firstEnrichmentWrapper);
-          }
         } else if (sections.length > 1) {
           // If multiple sections, insert them after section of block
           const blockSection = block.closest('.section');
@@ -77,9 +75,6 @@ export default async function decorate(block) {
   } catch (error) {
     console.error(error);
   } finally {
-    // if not rendered from AEM authoring environment, remove block
-    if (!window.xwalk.isAuthorEnv) {
-      block.closest('.enrichment-wrapper')?.remove();
-    }
+    block.closest('.enrichment-wrapper')?.remove();
   }
 }
