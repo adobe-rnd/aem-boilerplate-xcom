@@ -303,7 +303,6 @@
                   "model": "commerce-cart",
                   "key-value": true,
                   "start-shopping-url": "/",
-                  "cart-url": "/cart",
                   "checkout-url": "/checkout",
                   "hide-heading": false,
                   "hide-attributes": false,

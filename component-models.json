@@ -166,12 +166,6 @@
       },
       {
         "component": "aem-content",
-        "name": "cart-url",
-        "label": "Cart URL",
-        "description": "Link to full shopping Cart"
-      },
-      {
-        "component": "aem-content",
         "name": "checkout-url",
         "label": "Checkout URL",
         "description": "Link to Checkout page"
