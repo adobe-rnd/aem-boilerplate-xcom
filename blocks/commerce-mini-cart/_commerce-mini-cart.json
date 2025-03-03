@@ -25,19 +25,19 @@
       "id": "commerce-mini-cart",
       "fields": [
         {
-          "component": "aem-content-picker",
+          "component": "aem-content",
           "name": "start-shopping-url",
           "label": "Start Shopping URL",
           "description": "Link to the start shopping page"
         },
         {
-          "component": "aem-content-picker",
+          "component": "aem-content",
           "name": "cart-url",
           "label": "Cart URL",
           "description": "Link to full shopping Cart"
         },
         {
-          "component": "aem-content-picker",
+          "component": "aem-content",
           "name": "checkout-url",
           "label": "Checkout URL",
           "description": "Link to Checkout page"
