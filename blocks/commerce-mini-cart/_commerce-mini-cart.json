@@ -11,9 +11,9 @@
               "name": "commerce-mini-cart",
               "model": "commerce-mini-cart",
               "key-value": true,
-              "start-shopping-url": "",
-              "cart-url": "",
-              "checkout-url": ""
+              "start-shopping-url": "/",
+              "cart-url": "/cart",
+              "checkout-url": "/checkout"
             }
           }
         }
