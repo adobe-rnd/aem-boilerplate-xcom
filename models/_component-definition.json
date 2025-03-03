@@ -59,6 +59,21 @@
           "...": "../blocks/enrichment/_*.json#/definitions"
         }
       ]
+    },
+    {
+      "title": "Commerce",
+      "id": "commerce",
+      "components": [
+        {
+          "...": "../blocks/commerce-mini-cart/_*.json#/definitions"
+        },
+        {
+          "...": "../blocks/commerce-cart/_*.json#/definitions"
+        },
+        {
+          "...": "../blocks/commerce-checkout/_*.json#/definitions"
+        }
+      ]
     }
   ]
 }
