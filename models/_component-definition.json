@@ -66,6 +66,9 @@
       "components": [
         {
           "...": "../blocks/commerce-mini-cart/_*.json#/definitions"
+        },
+        {
+          "...": "../blocks/commerce-cart/_*.json#/definitions"
         }
       ]
     }
