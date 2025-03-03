@@ -11,9 +11,9 @@
               "name": "commerce-mini-cart",
               "model": "commerce-mini-cart",
               "key-value": true,
-              "start-shopping-url": "/",
-              "cart-url": "/cart",
-              "checkout-url": "/checkout"
+              "start-shopping-url": "/content/xwalk-commerce",
+              "cart-url": "/content/xwalk-commerce/cart",
+              "checkout-url": "content/xwalk-commerce/checkout"
             }
           }
         }
