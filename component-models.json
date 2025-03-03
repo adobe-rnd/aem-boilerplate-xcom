@@ -156,7 +156,7 @@
     ]
   },
   {
-    "id": "mini-cart",
+    "id": "commerce-mini-cart",
     "fields": [
       {
         "component": "aem-content-picker",
