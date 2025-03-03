@@ -59,6 +59,15 @@
           "...": "../blocks/enrichment/_*.json#/definitions"
         }
       ]
+    },
+    {
+      "title": "Cart",
+      "id": "cart",
+      "components": [
+        {
+          "...": "../blocks/commerce-mini-cart/_*.json#/definitions"
+        }
+      ]
     }
   ]
 }
