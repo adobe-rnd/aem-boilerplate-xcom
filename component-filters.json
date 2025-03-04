@@ -17,7 +17,7 @@
       "columns",
       "fragment",
       "product-teaser",
-      "product-recommendation",
+      "product-recommendations",
       "product-list-page"
     ]
   },
@@ -33,7 +33,7 @@
       "columns",
       "fragment",
       "product-teaser",
-      "product-recommendation"
+      "product-recommendations"
     ]
   },
   {
@@ -49,7 +49,7 @@
       "fragment",
       "enrichment",
       "product-teaser",
-      "product-recommendation"
+      "product-recommendations"
     ]
   },
   {
@@ -69,7 +69,9 @@
       "commerce-customer-details",
       "commerce-order-cost-summary",
       "commerce-order-product-list",
-      "commerce-order-returns"
+      "commerce-order-returns",
+      "product-teaser",
+      "product-recommendations"
     ]
   },
   {

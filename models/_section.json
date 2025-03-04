@@ -77,7 +77,9 @@
         "commerce-customer-details",
         "commerce-order-cost-summary",
         "commerce-order-product-list",
-        "commerce-order-returns"
+        "commerce-order-returns",
+        "product-teaser",
+        "product-recommendations"
       ]
     }
   ]
