@@ -479,5 +479,18 @@
         "description": "Authoring Fallback SKU in case URL doesnt resolve to SKU"
       }
     ]
+  },
+  {
+    "id": "order-details-metadata",
+    "fields": [
+      {
+        "component": "text",
+        "name": "template",
+        "label": "Template",
+        "valueType": "string",
+        "value": "order-details",
+        "readOnly": true
+      }
+    ]
   }
 ]
