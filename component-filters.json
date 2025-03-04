@@ -6,6 +6,39 @@
     ]
   },
   {
+    "id": "section",
+    "components": [
+      "text",
+      "image",
+      "button",
+      "title",
+      "hero",
+      "cards",
+      "columns",
+      "fragment"
+    ]
+  },
+  {
+    "id": "order-details-section",
+    "components": [
+      "text",
+      "image",
+      "button",
+      "title",
+      "hero",
+      "cards",
+      "columns",
+      "fragment",
+      "commerce-order-header",
+      "commerce-order-status",
+      "commerce-shipping-status",
+      "commerce-customer-details",
+      "commerce-order-cost-summary",
+      "commerce-order-product-list",
+      "commerce-order-returns"
+    ]
+  },
+  {
     "id": "cards",
     "components": [
       "card"

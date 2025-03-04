@@ -8,7 +8,8 @@
           "page": {
             "resourceType": "core/franklin/components/section/v1/section",
             "template": {
-              "model": "section"
+              "model": "section",
+              "filter": "section"
             }
           }
         }
@@ -51,6 +52,26 @@
         "cards",
         "columns",
         "fragment"
+      ]
+    },
+    {
+      "id": "order-details-section",
+      "components": [
+        "text",
+        "image",
+        "button",
+        "title",
+        "hero",
+        "cards",
+        "columns",
+        "fragment",
+        "commerce-order-header",
+        "commerce-order-status",
+        "commerce-shipping-status",
+        "commerce-customer-details",
+        "commerce-order-cost-summary",
+        "commerce-order-product-list",
+        "commerce-order-returns"
       ]
     }
   ]

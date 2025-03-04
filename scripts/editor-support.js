@@ -13,6 +13,29 @@ import { decorateMain } from './scripts.js';
 window.xwalk = window.xwalk || {};
 window.xwalk.isAuthorEnv = true;
 
+// set the filter for an UE editable
+function setUEFilter(element, filter) {
+  element.dataset.aueFilter = filter;
+}
+
+/**
+ * See:
+ * https://experienceleague.adobe.com/en/docs/experience-manager-cloud-service/content/implementing/developing/universal-editor/attributes-types#data-properties
+ */
+function updateUEInstrumentation() {
+  const main = document.querySelector('main');
+  const template = document.querySelector('meta[name="template"]')?.content;
+  const sections = main.querySelectorAll('.section');
+
+  // ----- if order details template -----
+  if (template === 'order-details') {
+    // update section filters
+    sections.forEach((section) => {
+      setUEFilter(section, 'order-details-section');
+    });
+  }
+}
+
 async function applyChanges(event) {
   // redecorate default content and blocks on patches (in the properties rail)
   const { detail } = event;
@@ -102,8 +125,15 @@ function attachEventListners(main) {
   ].forEach((eventType) => main?.addEventListener(eventType, async (event) => {
     event.stopPropagation();
     const applied = await applyChanges(event);
-    if (!applied) window.location.reload();
+    if (applied) {
+      updateUEInstrumentation();
+    } else {
+      window.location.reload();
+    }
   }));
 }
 
 attachEventListners(document.querySelector('main'));
+
+// update UE component filters on page load
+updateUEInstrumentation();
