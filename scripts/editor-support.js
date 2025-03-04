@@ -41,11 +41,32 @@ function updateUEInstrumentation() {
       setUEFilter(section, 'enrichment-section');
     });
   }
-  // ----- if product template -----
+  // ----- if product detail page template -----
   if (template === 'pdp') {
     // update section filters
     sections.forEach((section) => {
       setUEFilter(section, 'pdp-section');
+    });
+  }
+  // ----- if cart template -----
+  if (template === 'cart') {
+    // update section filters
+    sections.forEach((section) => {
+      setUEFilter(section, 'cart-section');
+    });
+  }
+  // ----- if mini-cart template -----
+  if (template === 'mini-cart') {
+    // update section filters
+    sections.forEach((section) => {
+      setUEFilter(section, 'mini-cart-section');
+    });
+  }
+  // ----- if product list page template -----
+  if (template === 'plp') {
+    // update section filters
+    sections.forEach((section) => {
+      setUEFilter(section, 'plp-section');
     });
   }
 }
