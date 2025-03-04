@@ -488,8 +488,7 @@
         "name": "template",
         "label": "Template",
         "valueType": "string",
-        "value": "order-details",
-        "readOnly": true
+        "value": "order-details"
       }
     ]
   }
