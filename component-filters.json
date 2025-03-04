@@ -17,8 +17,7 @@
       "columns",
       "fragment",
       "product-teaser",
-      "product-recommendations",
-      "product-list-page"
+      "product-recommendations"
     ]
   },
   {
@@ -37,6 +36,23 @@
     ]
   },
   {
+    "id": "plp-section",
+    "components": [
+      "text",
+      "image",
+      "button",
+      "title",
+      "hero",
+      "cards",
+      "columns",
+      "fragment",
+      "enrichment",
+      "product-teaser",
+      "product-recommendations",
+      "product-list-page"
+    ]
+  },
+  {
     "id": "pdp-section",
     "components": [
       "text",
@@ -48,6 +64,37 @@
       "columns",
       "fragment",
       "enrichment",
+      "product-details",
+      "product-teaser",
+      "product-recommendations"
+    ]
+  },
+  {
+    "id": "mini-cart-section",
+    "components": [
+      "text",
+      "image",
+      "button",
+      "title",
+      "hero",
+      "cards",
+      "columns",
+      "fragment",
+      "commerce-mini-cart"
+    ]
+  },
+  {
+    "id": "cart-section",
+    "components": [
+      "text",
+      "image",
+      "button",
+      "title",
+      "hero",
+      "cards",
+      "columns",
+      "fragment",
+      "commerce-cart",
       "product-teaser",
       "product-recommendations"
     ]

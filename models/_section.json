@@ -46,8 +46,7 @@
       "components": [
         {"...": "./_common-blocks.json"},
         "product-teaser",
-        "product-recommendations",
-        "product-list-page"
+        "product-recommendations"
       ]
     },
     {
@@ -59,10 +58,37 @@
       ]
     },
     {
+      "id": "plp-section",
+      "components": [
+        {"...": "./_common-blocks.json"},
+        "enrichment",
+        "product-teaser",
+        "product-recommendations",
+        "product-list-page"
+      ]
+    },
+    {
       "id": "pdp-section",
       "components": [
         {"...": "./_common-blocks.json"},
         "enrichment",
+        "product-details",
+        "product-teaser",
+        "product-recommendations"
+      ]
+    },
+    {
+      "id": "mini-cart-section",
+      "components": [
+        {"...": "./_common-blocks.json"},
+        "commerce-mini-cart"
+      ]
+    },
+    {
+      "id": "cart-section",
+      "components": [
+        {"...": "./_common-blocks.json"},
+        "commerce-cart",
         "product-teaser",
         "product-recommendations"
       ]
