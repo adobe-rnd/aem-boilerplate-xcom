@@ -91,6 +91,48 @@
           "readOnly": true
         }
       ]
+    },
+    {
+      "id": "plp-metadata",
+      "fields":
+      [
+        {
+          "component": "text",
+          "name": "template",
+          "label": "Template",
+          "valueType": "string",
+          "value": "plp",
+          "readOnly": true
+        }
+      ]
+    },
+    {
+      "id": "cart-metadata",
+      "fields":
+      [
+        {
+          "component": "text",
+          "name": "template",
+          "label": "Template",
+          "valueType": "string",
+          "value": "cart",
+          "readOnly": true
+        }
+      ]
+    },
+    {
+      "id": "mini-cart-metadata",
+      "fields":
+      [
+        {
+          "component": "text",
+          "name": "template",
+          "label": "Template",
+          "valueType": "string",
+          "value": "mini-cart",
+          "readOnly": true
+        }
+      ]
     }
   ]
 }
