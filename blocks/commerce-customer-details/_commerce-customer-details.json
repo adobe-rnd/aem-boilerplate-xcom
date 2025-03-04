@@ -1,0 +1,22 @@
+{
+  "definitions": [
+    {
+      "title": "Customer Details",
+      "id": "commerce-customer-details",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block",
+            "template": {
+              "name": "Commerce Customer Details",
+              "model": "commerce-customer-details",
+              "key-value": true
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [],
+  "filters": []
+}
