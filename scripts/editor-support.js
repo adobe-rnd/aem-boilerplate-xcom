@@ -25,7 +25,7 @@ function setUEFilter(element, filter) {
 function updateUEInstrumentation() {
   const main = document.querySelector('main');
   const template = document.querySelector('meta[name="template"]')?.content;
-  const sections = main.querySelectorAll('.section');
+  const sections = main.querySelectorAll('[data-aue-model="section"]');
 
   // ----- if order details template -----
   if (template === 'order-details') {
