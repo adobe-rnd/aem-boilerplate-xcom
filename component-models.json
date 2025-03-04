@@ -418,6 +418,18 @@
     ]
   },
   {
+    "id": "page-metadata",
+    "fields": [
+      {
+        "component": "text",
+        "name": "template",
+        "label": "Template",
+        "valueType": "string",
+        "value": ""
+      }
+    ]
+  },
+  {
     "id": "enrichment-metadata",
     "fields": [
       {
