@@ -46,7 +46,7 @@
       "components": [
         {"...": "./_common-blocks.json"},
         "product-teaser",
-        "product-recommendation",
+        "product-recommendations",
         "product-list-page"
       ]
     },
@@ -55,7 +55,7 @@
       "components": [
         {"...": "./_common-blocks.json"},
         "product-teaser",
-        "product-recommendation"
+        "product-recommendations"
       ]
     },
     {
@@ -64,7 +64,7 @@
         {"...": "./_common-blocks.json"},
         "enrichment",
         "product-teaser",
-        "product-recommendation"
+        "product-recommendations"
       ]
     },
     {
