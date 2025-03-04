@@ -34,6 +34,20 @@ function updateUEInstrumentation() {
       setUEFilter(section, 'order-details-section');
     });
   }
+  // ----- if enrichment template -----
+  if (template === 'enrichment') {
+    // update section filters
+    sections.forEach((section) => {
+      setUEFilter(section, 'enrichment-section');
+    });
+  }
+  // ----- if product template -----
+  if (template === 'pdp') {
+    // update section filters
+    sections.forEach((section) => {
+      setUEFilter(section, 'pdp-section');
+    });
+  }
 }
 
 async function applyChanges(event) {

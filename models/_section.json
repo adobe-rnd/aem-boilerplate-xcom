@@ -44,27 +44,33 @@
     {
       "id": "section",
       "components": [
-        "text",
-        "image",
-        "button",
-        "title",
-        "hero",
-        "cards",
-        "columns",
-        "fragment"
+        {"...": "./_common-blocks.json"},
+        "product-teaser",
+        "product-recommendation",
+        "product-list-page"
+      ]
+    },
+    {
+      "id": "enrichment-section",
+      "components": [
+        {"...": "./_common-blocks.json"},
+        "product-teaser",
+        "product-recommendation"
+      ]
+    },
+    {
+      "id": "pdp-section",
+      "components": [
+        {"...": "./_common-blocks.json"},
+        "enrichment",
+        "product-teaser",
+        "product-recommendation"
       ]
     },
     {
       "id": "order-details-section",
       "components": [
-        "text",
-        "image",
-        "button",
-        "title",
-        "hero",
-        "cards",
-        "columns",
-        "fragment",
+        {"...": "./_common-blocks.json"},
         "commerce-order-header",
         "commerce-order-status",
         "commerce-shipping-status",

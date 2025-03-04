@@ -15,7 +15,41 @@
       "hero",
       "cards",
       "columns",
-      "fragment"
+      "fragment",
+      "product-teaser",
+      "product-recommendation",
+      "product-list-page"
+    ]
+  },
+  {
+    "id": "enrichment-section",
+    "components": [
+      "text",
+      "image",
+      "button",
+      "title",
+      "hero",
+      "cards",
+      "columns",
+      "fragment",
+      "product-teaser",
+      "product-recommendation"
+    ]
+  },
+  {
+    "id": "pdp-section",
+    "components": [
+      "text",
+      "image",
+      "button",
+      "title",
+      "hero",
+      "cards",
+      "columns",
+      "fragment",
+      "enrichment",
+      "product-teaser",
+      "product-recommendation"
     ]
   },
   {
