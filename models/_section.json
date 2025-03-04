@@ -8,7 +8,8 @@
           "page": {
             "resourceType": "core/franklin/components/section/v1/section",
             "template": {
-              "model": "section"
+              "model": "section",
+              "filter": "section"
             }
           }
         }
@@ -43,15 +44,75 @@
     {
       "id": "section",
       "components": [
-        "text",
-        "image",
-        "button",
-        "title",
-        "hero",
-        "cards",
-        "columns",
-        "fragment",
+        {"...": "./_common-blocks.json"},
+        "product-teaser",
         "product-recommendations"
+      ]
+    },
+    {
+      "id": "enrichment-section",
+      "components": [
+        {"...": "./_common-blocks.json"},
+        "product-teaser",
+        "product-recommendations"
+      ]
+    },
+    {
+      "id": "plp-section",
+      "components": [
+        {"...": "./_common-blocks.json"},
+        "enrichment",
+        "product-teaser",
+        "product-recommendations",
+        "product-list-page"
+      ]
+    },
+    {
+      "id": "pdp-section",
+      "components": [
+        {"...": "./_common-blocks.json"},
+        "enrichment",
+        "product-details",
+        "product-teaser",
+        "product-recommendations"
+      ]
+    },
+    {
+      "id": "mini-cart-section",
+      "components": [
+        {"...": "./_common-blocks.json"},
+        "commerce-mini-cart"
+      ]
+    },
+    {
+      "id": "cart-section",
+      "components": [
+        {"...": "./_common-blocks.json"},
+        "commerce-cart",
+        "product-teaser",
+        "product-recommendations"
+      ]
+    },
+    {
+      "id": "order-details-section",
+      "components": [
+        {"...": "./_common-blocks.json"},
+        "commerce-order-header",
+        "commerce-order-status",
+        "commerce-shipping-status",
+        "commerce-customer-details",
+        "commerce-order-cost-summary",
+        "commerce-order-product-list",
+        "commerce-order-returns",
+        "product-teaser",
+        "product-recommendations"
+      ]
+    },
+    {
+      "id": "checkout-section",
+      "components": [
+        {"...": "./_common-blocks.json"},
+        "commerce-checkout"
       ]
     }
   ]

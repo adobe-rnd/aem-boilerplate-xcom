@@ -6,6 +6,9 @@
     ]
   },
   {
+    "...": "./_section.json#/filters"
+  },
+  {
     "...": "../blocks/*/_*.json#/filters"
   }
 ]

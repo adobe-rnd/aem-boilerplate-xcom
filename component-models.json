@@ -298,7 +298,7 @@
             "value": "below-category"
           },
           {
-            "name": "Above Product",
+            "name": "Above Category",
             "value": "above-category"
           }
         ]
@@ -418,6 +418,18 @@
     ]
   },
   {
+    "id": "page-metadata",
+    "fields": [
+      {
+        "component": "text",
+        "name": "template",
+        "label": "Template",
+        "valueType": "string",
+        "value": ""
+      }
+    ]
+  },
+  {
     "id": "enrichment-metadata",
     "fields": [
       {
@@ -477,6 +489,71 @@
         "valueType": "string",
         "value": "24-WG080",
         "description": "Authoring Fallback SKU in case URL doesnt resolve to SKU"
+      }
+    ]
+  },
+  {
+    "id": "order-details-metadata",
+    "fields": [
+      {
+        "component": "text",
+        "name": "template",
+        "label": "Template",
+        "valueType": "string",
+        "value": "order-details",
+        "readOnly": true
+      }
+    ]
+  },
+  {
+    "id": "plp-metadata",
+    "fields": [
+      {
+        "component": "text",
+        "name": "template",
+        "label": "Template",
+        "valueType": "string",
+        "value": "plp",
+        "readOnly": true
+      }
+    ]
+  },
+  {
+    "id": "cart-metadata",
+    "fields": [
+      {
+        "component": "text",
+        "name": "template",
+        "label": "Template",
+        "valueType": "string",
+        "value": "cart",
+        "readOnly": true
+      }
+    ]
+  },
+  {
+    "id": "mini-cart-metadata",
+    "fields": [
+      {
+        "component": "text",
+        "name": "template",
+        "label": "Template",
+        "valueType": "string",
+        "value": "mini-cart",
+        "readOnly": true
+      }
+    ]
+  },
+  {
+    "id": "checkout-metadata",
+    "fields": [
+      {
+        "component": "text",
+        "name": "template",
+        "label": "Template",
+        "valueType": "string",
+        "value": "checkout",
+        "readOnly": true
       }
     ]
   }

@@ -61,8 +61,8 @@
       ]
     },
     {
-      "title": "Commerce",
-      "id": "commerce",
+      "title": "Cart",
+      "id": "cart",
       "components": [
         {
           "...": "../blocks/commerce-mini-cart/_*.json#/definitions"
@@ -72,6 +72,21 @@
         },
         {
           "...": "../blocks/commerce-checkout/_*.json#/definitions"
+        }
+      ]
+    },
+    {
+      "title": "Order",
+      "id": "order",
+      "components": [
+        {
+          "...": "../blocks/commerce-order-*/_*.json#/definitions"
+        },
+        {
+          "...": "../blocks/commerce-shipping-status/_*.json#/definitions"
+        },
+        {
+          "...": "../blocks/commerce-customer-details/_*.json#/definitions"
         }
       ]
     }
