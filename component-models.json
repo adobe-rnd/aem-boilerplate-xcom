@@ -298,7 +298,7 @@
             "value": "below-category"
           },
           {
-            "name": "Above Product",
+            "name": "Above Category",
             "value": "above-category"
           }
         ]
@@ -540,6 +540,19 @@
         "label": "Template",
         "valueType": "string",
         "value": "mini-cart",
+        "readOnly": true
+      }
+    ]
+  },
+  {
+    "id": "checkout-metadata",
+    "fields": [
+      {
+        "component": "text",
+        "name": "template",
+        "label": "Template",
+        "valueType": "string",
+        "value": "checkout",
         "readOnly": true
       }
     ]

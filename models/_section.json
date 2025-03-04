@@ -107,6 +107,13 @@
         "product-teaser",
         "product-recommendations"
       ]
+    },
+    {
+      "id": "checkout-section",
+      "components": [
+        {"...": "./_common-blocks.json"},
+        "commerce-checkout"
+      ]
     }
   ]
 }

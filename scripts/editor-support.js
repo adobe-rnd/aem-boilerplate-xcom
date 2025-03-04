@@ -69,6 +69,13 @@ function updateUEInstrumentation() {
       setUEFilter(section, 'plp-section');
     });
   }
+  // ----- if checkout template -----
+  if (template === 'checkout') {
+    // update section filters
+    sections.forEach((section) => {
+      setUEFilter(section, 'checkout-section');
+    });
+  }
 }
 
 async function applyChanges(event) {

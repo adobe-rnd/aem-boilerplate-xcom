@@ -133,6 +133,20 @@
           "readOnly": true
         }
       ]
+    },
+    {
+      "id": "checkout-metadata",
+      "fields":
+      [
+        {
+          "component": "text",
+          "name": "template",
+          "label": "Template",
+          "valueType": "string",
+          "value": "checkout",
+          "readOnly": true
+        }
+      ]
     }
   ]
 }

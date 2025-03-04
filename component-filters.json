@@ -122,6 +122,20 @@
     ]
   },
   {
+    "id": "checkout-section",
+    "components": [
+      "text",
+      "image",
+      "button",
+      "title",
+      "hero",
+      "cards",
+      "columns",
+      "fragment",
+      "commerce-checkout"
+    ]
+  },
+  {
     "id": "cards",
     "components": [
       "card"
