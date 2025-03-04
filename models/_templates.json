@@ -74,7 +74,8 @@
           "name": "template",
           "label": "Template",
           "valueType": "string",
-          "value": "order-details"
+          "value": "order-details",
+          "readOnly": true
         }
       ]
     }
