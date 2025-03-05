@@ -139,6 +139,20 @@
           "readOnly": true
         }
       ]
+    },
+    {
+      "id": "search-order-metadata",
+      "fields":
+      [
+        {
+          "component": "text",
+          "name": "template",
+          "label": "Template",
+          "valueType": "string",
+          "value": "search-order",
+          "readOnly": true
+        }
+      ]
     }
   ]
 }

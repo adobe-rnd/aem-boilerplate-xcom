@@ -87,6 +87,9 @@
         },
         {
           "...": "../blocks/commerce-customer-details/_*.json#/definitions"
+        },
+        {
+          "...": "../blocks/commerce-search-order/_*.json#/definitions"
         }
       ]
     }

@@ -27,54 +27,13 @@ function updateUEInstrumentation() {
   const main = document.querySelector('main');
   const template = document.querySelector('meta[name="template"]')?.content;
   const sections = main.querySelectorAll('[data-aue-model="section"]');
+  const templates = ['order-details', 'enrichment', 'pdp', 'cart', 'mini-cart', 'plp', 'checkout', 'search-order'];
 
-  // ----- if order details template -----
-  if (template === 'order-details') {
+  // updated section filters according to the template
+  if (templates.includes(template)) {
     // update section filters
     sections.forEach((section) => {
-      setUEFilter(section, 'order-details-section');
-    });
-  }
-  // ----- if enrichment template -----
-  if (template === 'enrichment') {
-    // update section filters
-    sections.forEach((section) => {
-      setUEFilter(section, 'enrichment-section');
-    });
-  }
-  // ----- if product detail page template -----
-  if (template === 'pdp') {
-    // update section filters
-    sections.forEach((section) => {
-      setUEFilter(section, 'pdp-section');
-    });
-  }
-  // ----- if cart template -----
-  if (template === 'cart') {
-    // update section filters
-    sections.forEach((section) => {
-      setUEFilter(section, 'cart-section');
-    });
-  }
-  // ----- if mini-cart template -----
-  if (template === 'mini-cart') {
-    // update section filters
-    sections.forEach((section) => {
-      setUEFilter(section, 'mini-cart-section');
-    });
-  }
-  // ----- if product list page template -----
-  if (template === 'plp') {
-    // update section filters
-    sections.forEach((section) => {
-      setUEFilter(section, 'plp-section');
-    });
-  }
-  // ----- if checkout template -----
-  if (template === 'checkout') {
-    // update section filters
-    sections.forEach((section) => {
-      setUEFilter(section, 'checkout-section');
+      setUEFilter(section, `${template}-section`);
     });
   }
 }

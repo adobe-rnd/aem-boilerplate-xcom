@@ -114,6 +114,13 @@
         {"...": "./_common-blocks.json"},
         "commerce-checkout"
       ]
+    },
+    {
+      "id": "search-order-section",
+      "components": [
+        {"...": "./_common-blocks.json"},
+        "commerce-search-order"
+      ]
     }
   ]
 }
