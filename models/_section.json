@@ -121,6 +121,13 @@
         {"...": "./_common-blocks.json"},
         "commerce-search-order"
       ]
+    },
+    {
+      "id": "search-section",
+      "components": [
+        {"...": "./_common-blocks.json"},
+        "commerce-product-list-page"
+      ]
     }
   ]
 }

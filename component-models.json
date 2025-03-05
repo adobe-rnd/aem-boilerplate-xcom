@@ -561,5 +561,18 @@
         "readOnly": true
       }
     ]
+  },
+  {
+    "id": "search-metadata",
+    "fields": [
+      {
+        "component": "text",
+        "name": "template",
+        "label": "Template",
+        "valueType": "string",
+        "value": "search",
+        "readOnly": true
+      }
+    ]
   }
 ]
