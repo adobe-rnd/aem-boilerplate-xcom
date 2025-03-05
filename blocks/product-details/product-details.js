@@ -199,7 +199,7 @@ export default async function decorate(block) {
           const values = pdpApi.getProductConfigurationValues();
 
           if (values?.sku) {
-            const wishlist = await import(`${window.hlx.codeBasePath}/scripts/wishlist/api.js`);
+            const wishlist = await import('../../scripts/wishlist/api.js');
             await wishlist.addToWishlist(values.sku);
           }
         } catch (error) {
