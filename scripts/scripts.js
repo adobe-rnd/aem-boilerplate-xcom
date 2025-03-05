@@ -210,7 +210,7 @@ async function loadEager(doc) {
     || Object.keys(getAllMetadata('campaign')).length
     || Object.keys(getAllMetadata('audience')).length) {
     // eslint-disable-next-line import/no-relative-packages
-    const { loadEager: runEager } = await import('../plugins/experimentation/src/index.js');
+    const { loadEager: runEager } = await import(`${window.hlx.codeBasePath}/plugins/experimentation/src/index.js`);
     await runEager(document, { audiences: AUDIENCES, overrideMetadataFields: ['placeholders'] }, pluginContext);
   }
 
@@ -226,19 +226,19 @@ async function loadEager(doc) {
     await import('./initializers/pdp.js');
 
     // Preload PDP Dropins assets
-    preloadFile('./__dropins__/storefront-pdp/api.js', 'script');
-    preloadFile('./__dropins__/storefront-pdp/render.js', 'script');
-    preloadFile('./__dropins__/storefront-pdp/containers/ProductHeader.js', 'script');
-    preloadFile('./__dropins__/storefront-pdp/containers/ProductPrice.js', 'script');
-    preloadFile('./__dropins__/storefront-pdp/containers/ProductShortDescription.js', 'script');
-    preloadFile('./__dropins__/storefront-pdp/containers/ProductOptions.js', 'script');
-    preloadFile('./__dropins__/storefront-pdp/containers/ProductQuantity.js', 'script');
-    preloadFile('./__dropins__/storefront-pdp/containers/ProductDescription.js', 'script');
-    preloadFile('./__dropins__/storefront-pdp/containers/ProductAttributes.js', 'script');
-    preloadFile('./__dropins__/storefront-pdp/containers/ProductGallery.js', 'script');
+    preloadFile(`${window.hlx.codeBasePath}/scripts/__dropins__/storefront-pdp/api.js`, 'script');
+    preloadFile(`${window.hlx.codeBasePath}/scripts/__dropins__/storefront-pdp/render.js`, 'script');
+    preloadFile(`${window.hlx.codeBasePath}/scripts/__dropins__/storefront-pdp/containers/ProductHeader.js`, 'script');
+    preloadFile(`${window.hlx.codeBasePath}/scripts/__dropins__/storefront-pdp/containers/ProductPrice.js`, 'script');
+    preloadFile(`${window.hlx.codeBasePath}/scripts/__dropins__/storefront-pdp/containers/ProductShortDescription.js`, 'script');
+    preloadFile(`${window.hlx.codeBasePath}/scripts/__dropins__/storefront-pdp/containers/ProductOptions.js`, 'script');
+    preloadFile(`${window.hlx.codeBasePath}/scripts/__dropins__/storefront-pdp/containers/ProductQuantity.js`, 'script');
+    preloadFile(`${window.hlx.codeBasePath}/scripts/__dropins__/storefront-pdp/containers/ProductDescription.js`, 'script');
+    preloadFile(`${window.hlx.codeBasePath}/scripts/__dropins__/storefront-pdp/containers/ProductAttributes.js`, 'script');
+    preloadFile(`${window.hlx.codeBasePath}/scripts/__dropins__/storefront-pdp/containers/ProductGallery.js`, 'script');
   } else if (document.body.querySelector('main .product-list-page')) {
     pageType = 'Category';
-    preloadFile(`${window.hlx.codeBasePath}/scripts/widgets/search.js`, 'script');
+    preloadFile('widgets/search.js', 'script');
   } else if (document.body.querySelector('main .product-list-page-custom')) {
     // TODO Remove this bracket if not using custom PLP
     pageType = 'Category';
@@ -247,7 +247,7 @@ async function loadEager(doc) {
 
     if (category && urlpath) {
       // eslint-disable-next-line import/no-unresolved, import/no-absolute-path
-      const { preloadCategory } = await import('../blocks/product-list-page-custom/product-list-page-custom.js');
+      const { preloadCategory } = await import(`${window.hlx.codeBasePath}/blocks/product-list-page-custom/product-list-page-custom.js`);
       preloadCategory({ id: category, urlPath: urlpath });
     }
   } else if (document.body.querySelector('main .commerce-cart')) {
