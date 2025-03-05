@@ -24,7 +24,7 @@
             "resourceType": "core/franklin/components/section/v1/section",
             "template": {
               "model": "columns-section",
-              "filter": "section"
+              "filter": "account-section"
             }
           }
         }
@@ -59,6 +59,12 @@
       "fields": [
         {
           "component": "text",
+          "name": "name",
+          "label": "Section Name",
+          "description": "The label shown for this section in the Content Tree"
+        },
+        {
+          "component": "text",
           "name": "column-width",
           "label": "Column Width",
           "value": "50%"
@@ -70,11 +76,11 @@
           "options": [
             {
               "name": "Big",
-              "value": "spacing-big"
+              "value": "Big"
             },
             {
               "name": "Small",
-              "value": "spacing-small"
+              "value": "Small"
             }
           ]
         }
