@@ -28,7 +28,8 @@ function updateUEInstrumentation() {
   const template = document.querySelector('meta[name="template"]')?.content;
   const sections = main.querySelectorAll('[data-aue-model="section"]');
   const templates = ['order-details', 'enrichment', 'pdp', 'cart', 'mini-cart', 'plp',
-    'checkout', 'search-order', 'search', 'login', 'forgot-password', 'create-account'];
+    'checkout', 'search-order', 'search', 'login', 'forgot-password', 'create-account',
+    'account'];
 
   // updated section filters according to the template
   if (templates.includes(template)) {
@@ -36,6 +37,11 @@ function updateUEInstrumentation() {
     sections.forEach((section) => {
       setUEFilter(section, `${template}-section`);
     });
+  }
+
+  // allow column sections in account template
+  if (templates.includes('account')) {
+    setUEFilter(main, `${template}-main`);
   }
 }
 

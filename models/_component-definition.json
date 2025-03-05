@@ -105,6 +105,24 @@
         },
         {
           "...": "../blocks/commerce-create-account/_*.json#/definitions"
+        },
+        {
+          "...": "../blocks/commerce-account-sidebar/_*.json#/definitions"
+        },
+        {
+          "...": "../blocks/commerce-account-header/_*.json#/definitions"
+        },
+        {
+          "...": "../blocks/commerce-orders-list/_*.json#/definitions"
+        },
+        {
+          "...": "../blocks/commerce-addresses/_*.json#/definitions"
+        },
+        {
+          "...": "../blocks/commerce-customer-information/_*.json#/definitions"
+        },
+        {
+          "...": "../blocks/commerce-returns-list/_*.json#/definitions"
         }
       ]
     }

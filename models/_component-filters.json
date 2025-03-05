@@ -6,6 +6,13 @@
     ]
   },
   {
+    "id": "account-main",
+    "components": [
+      "section",
+      "column-section"
+    ]
+  },
+  {
     "...": "./_section.json#/filters"
   },
   {

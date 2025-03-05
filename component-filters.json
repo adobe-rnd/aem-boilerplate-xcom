@@ -6,6 +6,13 @@
     ]
   },
   {
+    "id": "account-main",
+    "components": [
+      "section",
+      "column-section"
+    ]
+  },
+  {
     "id": "section",
     "components": [
       "text",
@@ -203,6 +210,25 @@
       "columns",
       "fragment",
       "commerce-create-account"
+    ]
+  },
+  {
+    "id": "account-section",
+    "components": [
+      "text",
+      "image",
+      "button",
+      "title",
+      "hero",
+      "cards",
+      "columns",
+      "fragment",
+      "commerce-account-sidebar",
+      "commerce-account-header",
+      "commerce-orders-list",
+      "commerce-addresses",
+      "commerce-customer-information",
+      "commerce-returns-list"
     ]
   },
   {

@@ -118,6 +118,32 @@
     ]
   },
   {
+    "id": "columns-section",
+    "fields": [
+      {
+        "component": "text",
+        "name": "column-width",
+        "label": "Column Width",
+        "value": "50%"
+      },
+      {
+        "component": "select",
+        "name": "gap",
+        "label": "Gap",
+        "options": [
+          {
+            "name": "Big",
+            "value": "spacing-big"
+          },
+          {
+            "name": "Small",
+            "value": "spacing-small"
+          }
+        ]
+      }
+    ]
+  },
+  {
     "id": "card",
     "fields": [
       {
@@ -152,6 +178,28 @@
         "name": "rows",
         "value": "",
         "label": "Rows"
+      }
+    ]
+  },
+  {
+    "id": "commerce-account-header",
+    "fields": [
+      {
+        "component": "text",
+        "name": "title",
+        "label": "Account Header",
+        "value": "My Account"
+      }
+    ]
+  },
+  {
+    "id": "commerce-adresses",
+    "fields": [
+      {
+        "component": "boolean",
+        "name": "minified-view",
+        "label": "Minified View",
+        "value": true
       }
     ]
   },
@@ -228,6 +276,28 @@
         "name": "checkout-url",
         "label": "Checkout URL",
         "description": "Link to Checkout page"
+      }
+    ]
+  },
+  {
+    "id": "commerce-orders-list",
+    "fields": [
+      {
+        "component": "boolean",
+        "name": "minified-view",
+        "label": "Minified View",
+        "value": true
+      }
+    ]
+  },
+  {
+    "id": "commerce-returns-list",
+    "fields": [
+      {
+        "component": "boolean",
+        "name": "minified-view",
+        "label": "Minified View",
+        "value": true
       }
     ]
   },
@@ -610,6 +680,19 @@
         "label": "Template",
         "valueType": "string",
         "value": "create-account",
+        "readOnly": true
+      }
+    ]
+  },
+  {
+    "id": "account-metadata",
+    "fields": [
+      {
+        "component": "text",
+        "name": "template",
+        "label": "Template",
+        "valueType": "string",
+        "value": "account",
         "readOnly": true
       }
     ]
