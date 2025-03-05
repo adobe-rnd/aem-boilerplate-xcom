@@ -142,6 +142,13 @@
         {"...": "./_common-blocks.json"},
         "commerce-forgot-password"
       ]
+    },
+    {
+      "id": "create-account-section",
+      "components": [
+        {"...": "./_common-blocks.json"},
+        "commerce-create-account"
+      ]
     }
   ]
 }

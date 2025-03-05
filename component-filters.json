@@ -192,6 +192,20 @@
     ]
   },
   {
+    "id": "create-account-section",
+    "components": [
+      "text",
+      "image",
+      "button",
+      "title",
+      "hero",
+      "cards",
+      "columns",
+      "fragment",
+      "commerce-create-account"
+    ]
+  },
+  {
     "id": "cards",
     "components": [
       "card"

@@ -102,6 +102,9 @@
         },
         {
           "...": "../blocks/commerce-forgot-password/_*.json#/definitions"
+        },
+        {
+          "...": "../blocks/commerce-create-account/_*.json#/definitions"
         }
       ]
     }
