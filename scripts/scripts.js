@@ -238,7 +238,7 @@ async function loadEager(doc) {
     preloadFile('./__dropins__/storefront-pdp/containers/ProductGallery.js', 'script');
   } else if (document.body.querySelector('main .product-list-page')) {
     pageType = 'Category';
-    preloadFile(`${window.hlx.codeBasePath}/scripts/widgets/search.js`, 'script');
+    preloadFile('./widgets/search.js', 'script');
   } else if (document.body.querySelector('main .product-list-page-custom')) {
     // TODO Remove this bracket if not using custom PLP
     pageType = 'Category';
