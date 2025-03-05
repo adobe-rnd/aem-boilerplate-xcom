@@ -86,7 +86,7 @@
                 "resourceType": "core/franklin/components/section/v1/section",
                 "template": {
                   "model": "columns-section",
-                  "filter": "section"
+                  "filter": "account-section"
                 }
               }
             }

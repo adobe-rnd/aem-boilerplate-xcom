@@ -9,7 +9,7 @@
     "id": "account-main",
     "components": [
       "section",
-      "column-section"
+      "columns-section"
     ]
   },
   {
