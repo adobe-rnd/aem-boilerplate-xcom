@@ -27,7 +27,7 @@ function updateUEInstrumentation() {
   const main = document.querySelector('main');
   const template = document.querySelector('meta[name="template"]')?.content;
   const sections = main.querySelectorAll('[data-aue-model="section"]');
-  const templates = ['order-details', 'enrichment', 'pdp', 'cart', 'mini-cart', 'plp', 
+  const templates = ['order-details', 'enrichment', 'pdp', 'cart', 'mini-cart', 'plp',
     'checkout', 'search-order', 'search'];
 
   // updated section filters according to the template
