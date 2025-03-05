@@ -67,14 +67,6 @@
           "valueType": "string",
           "value": "pdp",
           "readOnly": true
-        },
-        {
-          "component": "text",
-          "name": "sku-fallback",
-          "label": "Fallback SKU",
-          "valueType": "string",
-          "value": "24-WG080",
-          "description": "Authoring Fallback SKU in case URL doesnt resolve to SKU"
         }
       ]
     },

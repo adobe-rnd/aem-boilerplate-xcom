@@ -150,8 +150,8 @@ export function getSkuFromUrl() {
   let sku = result?.[1];
   // Xwalk: If in AEM authoring environment, try to get fallback sku from page metadata
   // if url does not resolve to a valid sku
-  if (!sku && window.xwalk.isAuthorEnv) {
-    sku = document.querySelector('meta[name="sku-fallback"]')?.getAttribute('content');
+  if (!sku && window.xwalk.previewSku) {
+    sku = window.xwalk.previewSku;
   }
 
   return sku;
