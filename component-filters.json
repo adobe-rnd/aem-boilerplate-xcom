@@ -178,6 +178,20 @@
     ]
   },
   {
+    "id": "forgot-password-section",
+    "components": [
+      "text",
+      "image",
+      "button",
+      "title",
+      "hero",
+      "cards",
+      "columns",
+      "fragment",
+      "commerce-forgot-password"
+    ]
+  },
+  {
     "id": "cards",
     "components": [
       "card"

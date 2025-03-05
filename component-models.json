@@ -587,5 +587,18 @@
         "readOnly": true
       }
     ]
+  },
+  {
+    "id": "forgot-password-metadata",
+    "fields": [
+      {
+        "component": "text",
+        "name": "template",
+        "label": "Template",
+        "valueType": "string",
+        "value": "forgot-password",
+        "readOnly": true
+      }
+    ]
   }
 ]

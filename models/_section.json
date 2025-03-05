@@ -135,6 +135,13 @@
         {"...": "./_common-blocks.json"},
         "commerce-login"
       ]
+    },
+    {
+      "id": "forgot-password-section",
+      "components": [
+        {"...": "./_common-blocks.json"},
+        "commerce-forgot-password"
+      ]
     }
   ]
 }

@@ -99,6 +99,9 @@
       "components": [
         {
           "...": "../blocks/commerce-login/_*.json#/definitions"
+        },
+        {
+          "...": "../blocks/commerce-forgot-password/_*.json#/definitions"
         }
       ]
     }
