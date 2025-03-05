@@ -164,6 +164,20 @@
     ]
   },
   {
+    "id": "login-section",
+    "components": [
+      "text",
+      "image",
+      "button",
+      "title",
+      "hero",
+      "cards",
+      "columns",
+      "fragment",
+      "commerce-login"
+    ]
+  },
+  {
     "id": "cards",
     "components": [
       "card"

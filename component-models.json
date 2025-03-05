@@ -574,5 +574,18 @@
         "readOnly": true
       }
     ]
+  },
+  {
+    "id": "login-metadata",
+    "fields": [
+      {
+        "component": "text",
+        "name": "template",
+        "label": "Template",
+        "valueType": "string",
+        "value": "login",
+        "readOnly": true
+      }
+    ]
   }
 ]

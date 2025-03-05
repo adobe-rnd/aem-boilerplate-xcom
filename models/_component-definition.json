@@ -92,6 +92,15 @@
           "...": "../blocks/commerce-search-order/_*.json#/definitions"
         }
       ]
+    },
+    {
+      "title": "Account",
+      "id": "account",
+      "components": [
+        {
+          "...": "../blocks/commerce-login/_*.json#/definitions"
+        }
+      ]
     }
   ]
 }
