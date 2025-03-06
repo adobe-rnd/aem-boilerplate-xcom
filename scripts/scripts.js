@@ -169,7 +169,7 @@ function buildTemplateColumns(doc) {
 }
 
 async function applyTemplates(doc) {
-  if (doc.body.classList.contains('columns')) {
+  if (doc.body.classList.contains('columns') || doc.body.classList.contains('account')) {
     buildTemplateColumns(doc);
   }
 }
