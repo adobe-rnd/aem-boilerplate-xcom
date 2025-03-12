@@ -8,7 +8,6 @@
   {
     "id": "columns-main",
     "components": [
-      "section",
       "columns-section"
     ]
   },
