@@ -10,6 +10,7 @@
 .commerce-returns-list.placeholder.block {
   display: flex;
   border: dashed 3px lightgrey;
+  padding: 10px;
 }
 
 .commerce-returns-list.placeholder.block > div {
