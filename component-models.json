@@ -702,5 +702,44 @@
         "readOnly": true
       }
     ]
+  },
+  {
+    "id": "orders-metadata",
+    "fields": [
+      {
+        "component": "text",
+        "name": "template",
+        "label": "Template",
+        "valueType": "string",
+        "value": "orders",
+        "readOnly": true
+      }
+    ]
+  },
+  {
+    "id": "address-metadata",
+    "fields": [
+      {
+        "component": "text",
+        "name": "template",
+        "label": "Template",
+        "valueType": "string",
+        "value": "address",
+        "readOnly": true
+      }
+    ]
+  },
+  {
+    "id": "returns-metadata",
+    "fields": [
+      {
+        "component": "text",
+        "name": "template",
+        "label": "Template",
+        "valueType": "string",
+        "value": "returns",
+        "readOnly": true
+      }
+    ]
   }
 ]
