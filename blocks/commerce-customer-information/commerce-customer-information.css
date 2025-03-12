@@ -8,9 +8,11 @@
 }
 
 .commerce-customer-information.placeholder.block {
+  min-height: 50px;
   display: flex;
   border: dashed 3px lightgrey;
   padding: 10px;
+  margin-bottom: 10px;
 }
 
 .commerce-customer-information.placeholder.block > div {
