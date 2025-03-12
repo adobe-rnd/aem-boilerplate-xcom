@@ -170,7 +170,7 @@ function buildTemplateColumns(doc) {
 }
 
 async function applyTemplates(doc) {
-  const templates = ['account', 'orders', 'address', 'returns'];
+  const templates = ['account', 'orders', 'address', 'returns', 'account-order-details'];
   templates.forEach((template) => {
     if (doc.body.classList.contains(template)) {
       buildTemplateColumns(doc);
