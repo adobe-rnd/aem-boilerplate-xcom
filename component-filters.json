@@ -243,7 +243,6 @@
       "columns",
       "fragment",
       "commerce-account-sidebar",
-      "commerce-account-header",
       "commerce-orders-list"
     ]
   },
@@ -259,7 +258,6 @@
       "columns",
       "fragment",
       "commerce-account-sidebar",
-      "commerce-account-header",
       "commerce-addresses"
     ]
   },
@@ -275,7 +273,6 @@
       "columns",
       "fragment",
       "commerce-account-sidebar",
-      "commerce-account-header",
       "commerce-returns-list"
     ]
   },

@@ -578,7 +578,7 @@
                   "name": "Commerce Orders List",
                   "model": "commerce-orders-list",
                   "key-value": true,
-                  "minified-view": true
+                  "minified-view": false
                 }
               }
             }
@@ -595,7 +595,7 @@
                   "name": "Commerce Adresses",
                   "model": "commerce-addresses",
                   "key-value": true,
-                  "minified-view": true
+                  "minified-view": false
                 }
               }
             }
@@ -628,7 +628,7 @@
                   "name": "Commerce Returns List",
                   "model": "commerce-returns-list",
                   "key-value": true,
-                  "minified-view": true
+                  "minified-view": false
                 }
               }
             }

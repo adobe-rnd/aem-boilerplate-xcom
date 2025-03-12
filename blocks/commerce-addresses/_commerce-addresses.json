@@ -20,7 +20,7 @@
   ],
   "models": [
     {
-      "id": "commerce-adresses",
+      "id": "commerce-addresses",
       "fields": [
         {
           "component": "boolean",

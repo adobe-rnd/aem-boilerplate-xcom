@@ -199,13 +199,13 @@
     ]
   },
   {
-    "id": "commerce-adresses",
+    "id": "commerce-addresses",
     "fields": [
       {
         "component": "boolean",
         "name": "minified-view",
         "label": "Minified View",
-        "value": true
+        "value": false
       }
     ]
   },
@@ -292,7 +292,7 @@
         "component": "boolean",
         "name": "minified-view",
         "label": "Minified View",
-        "value": true
+        "value": false
       }
     ]
   },
@@ -303,7 +303,7 @@
         "component": "boolean",
         "name": "minified-view",
         "label": "Minified View",
-        "value": true
+        "value": false
       }
     ]
   },
