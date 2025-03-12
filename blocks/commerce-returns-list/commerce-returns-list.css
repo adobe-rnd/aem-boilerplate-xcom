@@ -1,1 +1,36 @@
 /* stylelint-disable no-empty-source */
+.commerce-returns-list-wrapper :has(>.commerce-returns-list.placeholder.block) {
+  position: relative;
+}
+
+.commerce-returns-list.placeholder.block::before {
+  content: "Returns List";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 20px;
+  font-weight: bold;
+  color: rgb(0 0 0 / 20%);
+  z-index: -1;
+}
+
+.commerce-returns-list.placeholder.block {
+  display: flex;
+  border: dashed 3px lightgrey;
+}
+
+.commerce-returns-list.placeholder.block > div {
+  flex-grow: 1;
+  padding: 10px;
+  display:flex;
+  justify-content: center;
+}
+
+.commerce-returns-list.placeholder.block > div > div {
+  padding: 10px;
+  }
+
+  .commerce-returns-list.placeholder.block > div > div:first-child {
+font-weight: bold;
+}
