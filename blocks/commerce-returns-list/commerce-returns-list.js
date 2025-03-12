@@ -17,7 +17,7 @@ import '../../scripts/initializers/order.js';
 
 export default async function decorate(block) {
   // Xwalk: if in AEM author and not authenticated show placeholder instead
-  if (window.xwalk.isAuthorEnv && !checkIsAuthenticated()) {
+  if (window.xwalk?.isAuthorEnv && !checkIsAuthenticated()) {
     block.classList.add('placeholder');
     return;
   }
