@@ -11,7 +11,7 @@
               "name": "Commerce Returns List",
               "model": "commerce-returns-list",
               "key-value": true,
-              "minified-view": true
+              "minified-view": false
             }
           }
         }
@@ -26,7 +26,7 @@
           "component": "boolean",
           "name": "minified-view",
           "label": "Minified View",
-          "value": true
+          "value": false
         }
       ]
     }
