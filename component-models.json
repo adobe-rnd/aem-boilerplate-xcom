@@ -741,5 +741,18 @@
         "readOnly": true
       }
     ]
+  },
+  {
+    "id": "account-order-details-metadata",
+    "fields": [
+      {
+        "component": "text",
+        "name": "template",
+        "label": "Template",
+        "valueType": "string",
+        "value": "account-order-details",
+        "readOnly": true
+      }
+    ]
   }
 ]

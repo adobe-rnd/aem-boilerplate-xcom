@@ -232,6 +232,20 @@
         "commerce-account-sidebar",
         "commerce-returns-list"
       ]
+    },
+    {
+      "id": "account-order-details-section",
+      "components": [
+        {"...": "./_common-blocks.json"},
+        "commerce-account-sidebar",
+        "commerce-order-header",
+        "commerce-order-status",
+        "commerce-shipping-status",
+        "commerce-customer-details",
+        "commerce-order-cost-summary",
+        "commerce-order-product-list",
+        "commerce-order-returns"
+      ]
     }
   ]
 }
