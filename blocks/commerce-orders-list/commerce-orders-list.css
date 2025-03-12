@@ -1,5 +1,5 @@
 .commerce-orders-list.placeholder.block::before {
-  content: "Returns List";
+  content: "Orders List";
   position: absolute;
   font-size: 20px;
   font-weight: bold;
