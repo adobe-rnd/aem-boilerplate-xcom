@@ -9,10 +9,10 @@ export default async function decorate(block) {
   const sidebarItems = Array.from(sidebarItemsConfig).map((item) => {
     const itemParams = Array.from(item.querySelectorAll('ol > li'));
     const itemConfig = {
-      itemTitle: item.childNodes[0]?.textContent.trim() || 'Default Title',
+      itemTitle: item.querySelector('a')?.textContent.trim() || 'Default Title',
+      itemLink: item.querySelector('a')?.getAttribute('href') || '#',
       itemSubtitle: itemParams[0]?.innerText || '',
-      itemLink: itemParams[1]?.innerText || '#',
-      itemIcon: itemParams[2]?.innerText || 'Placeholder',
+      itemIcon: itemParams[1]?.innerText || 'Placeholder',
     };
 
     const menuItemEl = document.createElement('a');
