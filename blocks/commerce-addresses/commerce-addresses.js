@@ -10,6 +10,12 @@ import { CUSTOMER_ADDRESS_PATH, CUSTOMER_LOGIN_PATH } from '../../scripts/consta
 import '../../scripts/initializers/account.js';
 
 export default async function decorate(block) {
+  // Xwalk: if in AEM author and not authenticated show placeholder instead
+  if (window.xwalk.isAuthorEnv && !checkIsAuthenticated()) {
+    block.classList.add('placeholder');
+    return;
+  }
+
   const {
     'minified-view': minifiedViewConfig = 'false',
   } = readBlockConfig(block);
