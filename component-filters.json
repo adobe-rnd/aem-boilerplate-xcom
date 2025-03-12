@@ -232,6 +232,54 @@
     ]
   },
   {
+    "id": "orders-section",
+    "components": [
+      "text",
+      "image",
+      "button",
+      "title",
+      "hero",
+      "cards",
+      "columns",
+      "fragment",
+      "commerce-account-sidebar",
+      "commerce-account-header",
+      "commerce-orders-list"
+    ]
+  },
+  {
+    "id": "address-section",
+    "components": [
+      "text",
+      "image",
+      "button",
+      "title",
+      "hero",
+      "cards",
+      "columns",
+      "fragment",
+      "commerce-account-sidebar",
+      "commerce-account-header",
+      "commerce-addresses"
+    ]
+  },
+  {
+    "id": "returns-section",
+    "components": [
+      "text",
+      "image",
+      "button",
+      "title",
+      "hero",
+      "cards",
+      "columns",
+      "fragment",
+      "commerce-account-sidebar",
+      "commerce-account-header",
+      "commerce-returns-list"
+    ]
+  },
+  {
     "id": "cards",
     "components": [
       "card"

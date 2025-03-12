@@ -208,6 +208,33 @@
         "commerce-customer-information",
         "commerce-returns-list"
       ]
+    },
+    {
+      "id": "orders-section",
+      "components": [
+        {"...": "./_common-blocks.json"},
+        "commerce-account-sidebar",
+        "commerce-account-header",
+        "commerce-orders-list"
+      ]
+    },
+    {
+      "id": "address-section",
+      "components": [
+        {"...": "./_common-blocks.json"},
+        "commerce-account-sidebar",
+        "commerce-account-header",
+        "commerce-addresses"
+      ]
+    },
+    {
+      "id": "returns-section",
+      "components": [
+        {"...": "./_common-blocks.json"},
+        "commerce-account-sidebar",
+        "commerce-account-header",
+        "commerce-returns-list"
+      ]
     }
   ]
 }
