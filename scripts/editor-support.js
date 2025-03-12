@@ -42,7 +42,7 @@ function updateUEInstrumentation() {
 
   // templates with column design have additional section type
   if (columnTemplates.includes(template)) {
-    setUEFilter(main, `${template}-main`);
+    setUEFilter(main, 'columns-main');
   }
 }
 
