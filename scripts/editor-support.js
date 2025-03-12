@@ -43,7 +43,6 @@ function updateUEInstrumentation() {
   // templates with column design have additional section type
   if (columnTemplates.includes(template)) {
     setUEFilter(main, 'columns-main');
-    document.body.classList.add('columns');
   }
 }
 

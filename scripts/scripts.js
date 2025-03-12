@@ -150,6 +150,7 @@ function buildAutoBlocks(_main) {
  * @param {Element} main The container element
  */
 function buildTemplateColumns(doc) {
+  document.body.classList.add('columns');
   const columns = doc.querySelectorAll('main > div.section[data-column-width]');
 
   columns.forEach((column) => {
