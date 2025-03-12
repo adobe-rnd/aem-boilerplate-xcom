@@ -9,6 +9,12 @@ import { CUSTOMER_LOGIN_PATH } from '../../scripts/constants.js';
 import '../../scripts/initializers/account.js';
 
 export default async function decorate(block) {
+  // Xwalk: if in AEM author and not authenticated show placeholder instead
+  if (window.xwalk.isAuthorEnv && !checkIsAuthenticated()) {
+    block.classList.add('placeholder');
+    return;
+  }
+
   if (!checkIsAuthenticated()) {
     window.location.href = CUSTOMER_LOGIN_PATH;
   } else {

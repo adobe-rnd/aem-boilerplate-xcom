@@ -1,1 +1,29 @@
-/* stylelint-disable no-empty-source */
+.commerce-customer-information.placeholder.block::before {
+  content: "Customer Information";
+  position: absolute;
+  font-size: 20px;
+  font-weight: bold;
+  color: rgb(0 0 0 / 20%);
+  z-index: -1;
+}
+
+.commerce-customer-information.placeholder.block {
+  display: flex;
+  border: dashed 3px lightgrey;
+  padding: 10px;
+}
+
+.commerce-customer-information.placeholder.block > div {
+  flex-grow: 1;
+  padding: 10px;
+  display:flex;
+  justify-content: center;
+}
+
+.commerce-customer-information.placeholder.block > div > div {
+  padding: 10px;
+  }
+
+  .commerce-customer-information.placeholder.block > div > div:first-child {
+font-weight: bold;
+}
