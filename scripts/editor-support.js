@@ -30,6 +30,7 @@ function updateUEInstrumentation() {
   const templates = ['order-details', 'enrichment', 'pdp', 'cart', 'mini-cart', 'plp',
     'checkout', 'search-order', 'search', 'login', 'forgot-password', 'create-account',
     'account'];
+  const columnTemplates = ['account', 'orders', 'address', 'returns'];
 
   // updated section filters according to the template
   if (templates.includes(template)) {
@@ -39,8 +40,8 @@ function updateUEInstrumentation() {
     });
   }
 
-  // allow column sections in account template
-  if (templates.includes('account')) {
+  // templates with column design have additional section type
+  if (columnTemplates.includes(template)) {
     setUEFilter(main, `${template}-main`);
   }
 }
