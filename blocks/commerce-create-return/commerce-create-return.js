@@ -12,6 +12,11 @@ export default async function decorate(block) {
   // Xwalk: if in AEM author and not authenticated show placeholder instead
   if (window.xwalk?.isAuthorEnv && !checkIsAuthenticated()) {
     block.classList.add('placeholder');
+    Object.defineProperty(
+      window.location,
+      'replace',
+      { value: window.location.replace },
+    );
     return;
   }
 
