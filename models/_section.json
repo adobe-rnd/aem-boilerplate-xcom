@@ -271,6 +271,20 @@
         {"...": "./_common-blocks.json"},
         "commerce-create-return"
       ]
+    },
+    {
+      "id": "confirm-account-section",
+      "components": [
+        {"...": "./_common-blocks.json"},
+        "commerce-confirm-account"
+      ]
+    },
+    {
+      "id": "create-password-section",
+      "components": [
+        {"...": "./_common-blocks.json"},
+        "commerce-create-password"
+      ]
     }
   ]
 }

@@ -31,7 +31,7 @@ function updateUEInstrumentation() {
   const templates = ['order-details', 'enrichment', 'pdp', 'cart', 'mini-cart', 'plp',
     'checkout', 'search-order', 'search', 'login', 'forgot-password', 'create-account',
     'account', 'orders', 'address', 'returns', 'account-order-details', 'order-status',
-    'create-return', 'return-details'];
+    'create-return', 'return-details', 'confirm-account', 'create-password'];
   const columnTemplates = ['account', 'orders', 'address', 'returns', 'account-order-details'];
 
   // updated section filters according to the template

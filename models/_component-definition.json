@@ -123,6 +123,12 @@
         },
         {
           "...": "../blocks/commerce-returns-list/_*.json#/definitions"
+        },
+        {
+          "...": "../blocks/commerce-create-password/_*.json#/definitions"
+        },
+        {
+          "...": "../blocks/commerce-confirm-account/_*.json#/definitions"
         }
       ]
     },

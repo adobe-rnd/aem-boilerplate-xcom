@@ -793,5 +793,31 @@
         "readOnly": true
       }
     ]
+  },
+  {
+    "id": "confirm-account-metadata",
+    "fields": [
+      {
+        "component": "text",
+        "name": "template",
+        "label": "Template",
+        "valueType": "string",
+        "value": "confirm-account",
+        "readOnly": true
+      }
+    ]
+  },
+  {
+    "id": "create-password-metadata",
+    "fields": [
+      {
+        "component": "text",
+        "name": "template",
+        "label": "Template",
+        "valueType": "string",
+        "value": "create-password",
+        "readOnly": true
+      }
+    ]
   }
 ]

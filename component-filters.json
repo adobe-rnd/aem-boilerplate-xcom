@@ -343,6 +343,34 @@
     ]
   },
   {
+    "id": "confirm-account-section",
+    "components": [
+      "text",
+      "image",
+      "button",
+      "title",
+      "hero",
+      "cards",
+      "columns",
+      "fragment",
+      "commerce-confirm-account"
+    ]
+  },
+  {
+    "id": "create-password-section",
+    "components": [
+      "text",
+      "image",
+      "button",
+      "title",
+      "hero",
+      "cards",
+      "columns",
+      "fragment",
+      "commerce-create-password"
+    ]
+  },
+  {
     "id": "cards",
     "components": [
       "card"
