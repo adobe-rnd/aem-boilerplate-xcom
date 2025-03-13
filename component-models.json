@@ -754,5 +754,18 @@
         "readOnly": true
       }
     ]
+  },
+  {
+    "id": "order-status-metadata",
+    "fields": [
+      {
+        "component": "text",
+        "name": "template",
+        "label": "Template",
+        "valueType": "string",
+        "value": "order-status",
+        "readOnly": true
+      }
+    ]
   }
 ]

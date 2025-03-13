@@ -297,6 +297,20 @@
     ]
   },
   {
+    "id": "order-status-section",
+    "components": [
+      "text",
+      "image",
+      "button",
+      "title",
+      "hero",
+      "cards",
+      "columns",
+      "fragment",
+      "commerce-search-order"
+    ]
+  },
+  {
     "id": "cards",
     "components": [
       "card"

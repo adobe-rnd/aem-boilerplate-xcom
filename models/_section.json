@@ -246,6 +246,13 @@
         "commerce-order-product-list",
         "commerce-order-returns"
       ]
+    },
+    {
+      "id": "order-status-section",
+      "components": [
+        {"...": "./_common-blocks.json"},
+        "commerce-search-order"
+      ]
     }
   ]
 }
