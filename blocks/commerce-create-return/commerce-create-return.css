@@ -3,3 +3,35 @@
 body:not(.columns) main div.order-create-return {
     margin-top: var(--spacing-large);
 }
+
+.commerce-create-return.placeholder.block::before {
+    content: "Create Return";
+    position: absolute;
+    font-size: 20px;
+    font-weight: bold;
+    color: rgb(0 0 0 / 20%);
+    z-index: -1;
+  }
+  
+  .commerce-create-return.placeholder.block {
+    min-height: 50px;
+    display: flex;
+    border: dashed 3px lightgrey;
+    padding: 10px;
+    margin-bottom: 10px;
+  }
+  
+  .commerce-create-return.placeholder.block > div {
+    flex-grow: 1;
+    padding: 10px;
+    display:flex;
+    justify-content: center;
+  }
+  
+  .commerce-create-return.placeholder.block > div > div {
+    padding: 10px;
+    }
+  
+    .commerce-create-return.placeholder.block > div > div:first-child {
+  font-weight: bold;
+  }
