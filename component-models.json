@@ -767,5 +767,31 @@
         "readOnly": true
       }
     ]
+  },
+  {
+    "id": "return-details-metadata",
+    "fields": [
+      {
+        "component": "text",
+        "name": "template",
+        "label": "Template",
+        "valueType": "string",
+        "value": "return-details",
+        "readOnly": true
+      }
+    ]
+  },
+  {
+    "id": "create-return-metadata",
+    "fields": [
+      {
+        "component": "text",
+        "name": "template",
+        "label": "Template",
+        "valueType": "string",
+        "value": "create-return",
+        "readOnly": true
+      }
+    ]
   }
 ]

@@ -30,7 +30,8 @@ function updateUEInstrumentation() {
   const sections = main.querySelectorAll('[data-aue-model$="section"]');
   const templates = ['order-details', 'enrichment', 'pdp', 'cart', 'mini-cart', 'plp',
     'checkout', 'search-order', 'search', 'login', 'forgot-password', 'create-account',
-    'account', 'orders', 'address', 'returns', 'account-order-details', 'order-status'];
+    'account', 'orders', 'address', 'returns', 'account-order-details', 'order-status',
+    'create-return', 'return-details'];
   const columnTemplates = ['account', 'orders', 'address', 'returns', 'account-order-details'];
 
   // updated section filters according to the template

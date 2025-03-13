@@ -311,6 +311,38 @@
     ]
   },
   {
+    "id": "return-details-section",
+    "components": [
+      "text",
+      "image",
+      "button",
+      "title",
+      "hero",
+      "cards",
+      "columns",
+      "fragment",
+      "commerce-return-header",
+      "commerce-order-status",
+      "commerce-shipping-status",
+      "commerce-customer-details",
+      "commerce-order-product-list"
+    ]
+  },
+  {
+    "id": "create-return-section",
+    "components": [
+      "text",
+      "image",
+      "button",
+      "title",
+      "hero",
+      "cards",
+      "columns",
+      "fragment",
+      "commerce-create-return"
+    ]
+  },
+  {
     "id": "cards",
     "components": [
       "card"

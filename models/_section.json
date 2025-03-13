@@ -253,6 +253,24 @@
         {"...": "./_common-blocks.json"},
         "commerce-search-order"
       ]
+    },
+    {
+      "id": "return-details-section",
+      "components": [
+        {"...": "./_common-blocks.json"},
+        "commerce-return-header",
+        "commerce-order-status",
+        "commerce-shipping-status",
+        "commerce-customer-details",
+        "commerce-order-product-list"
+      ]
+    },
+    {
+      "id": "create-return-section",
+      "components": [
+        {"...": "./_common-blocks.json"},
+        "commerce-create-return"
+      ]
     }
   ]
 }
