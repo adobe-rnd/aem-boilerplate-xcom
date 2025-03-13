@@ -1,7 +1,7 @@
 {
   "definitions": [
     {
-      "title": "Status",
+      "title": "Order Status",
       "id": "commerce-order-status",
       "plugins": {
         "xwalk": {
