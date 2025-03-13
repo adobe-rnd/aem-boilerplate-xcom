@@ -15,7 +15,7 @@ export const CREATE_RETURN_PATH = `${rootPath}/create-return${ext}`;
 export const SALES_GUEST_VIEW_PATH = `${rootPath}/sales/guest/view/`;
 
 // CUSTOMER
-export const CUSTOMER_PATH = `${rootPath}/customer${ext}`;
+export const CUSTOMER_PATH = `${rootPath}/customer`;
 export const CUSTOMER_ORDER_DETAILS_PATH = `${CUSTOMER_PATH}${ORDER_DETAILS_PATH}${ext}`;
 export const CUSTOMER_RETURN_DETAILS_PATH = `${CUSTOMER_PATH}${RETURN_DETAILS_PATH}${ext}`;
 export const CUSTOMER_CREATE_RETURN_PATH = `${CUSTOMER_PATH}${CREATE_RETURN_PATH}${ext}`;
