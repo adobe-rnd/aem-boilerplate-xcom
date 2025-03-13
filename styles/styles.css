@@ -160,8 +160,18 @@
   src: local('Arial');
 }
 
-html, body {
+html,body {
   height: 100%;
+}
+
+html.adobe-ue-preview,
+html.adobe-ue-edit {
+  height: unset
+}
+
+html.adobe-ue-preview body,
+html.adobe-ue-edit body {
+  height: unset
 }
 
 html {
