@@ -9,7 +9,7 @@ export const CREATE_RETURN_PATH = '/create-return';
 export const SALES_GUEST_VIEW_PATH = '/sales/guest/view/';
 
 // CUSTOMER
-export const CUSTOMER_PATH = '/customer';
+export const CUSTOMER_PATH = window.xwalk?.isAuthorEnv ? `${window.hlx.aemRoot}/customer` : '/customer';
 export const CUSTOMER_ORDER_DETAILS_PATH = `${CUSTOMER_PATH}${ORDER_DETAILS_PATH}`;
 export const CUSTOMER_RETURN_DETAILS_PATH = `${CUSTOMER_PATH}${RETURN_DETAILS_PATH}`;
 export const CUSTOMER_CREATE_RETURN_PATH = `${CUSTOMER_PATH}${CREATE_RETURN_PATH}`;
