@@ -105,7 +105,7 @@ async function handleUserOrdersRedirects(
     // XWalk: prevent redirect on author if there is no valid order/token
     // otherwise the page cant be edited eg. return-details, create-return
     // eslint-disable-next-line no-lonely-if
-    if (window.hlx?.isAuthorEnv) {
+    if (window.xwalk?.isAuthorEnv) {
       targetPath = null;
     } else {
       targetPath = !orderRef ? ORDER_STATUS_PATH : null;
