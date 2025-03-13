@@ -125,6 +125,18 @@
           "...": "../blocks/commerce-returns-list/_*.json#/definitions"
         }
       ]
+    },
+    {
+      "title": "Return",
+      "id": "return",
+      "components": [
+        {
+          "...": "../blocks/commerce-return-header/_*.json#/definitions"
+        },
+        {
+          "...": "../blocks/commerce-create-return/_*.json#/definitions"
+        }
+      ]
     }
   ]
 }
