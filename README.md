@@ -1,4 +1,4 @@
-# WIP: Crosswalk + Adobe Commerce Boilerplate
+# Edge Delivery Services with AEM Authoring Boilerplate for Commerce
 This project boilerplate is for AEM Authoring with Edge Delivery Services (aka Crosswalk) projects that integrate with Adobe Commerce.
 
 ## Documentation
@@ -59,7 +59,13 @@ See also [Developer Tutorial](https://experienceleague.adobe.com/en/docs/experie
 1. Create a new repository based on the `aem-boilerplate-xwalk-commerce` template 
 2. Install all dependencies using `npm i`.
 3. Add the [AEM Code Sync GitHub App](https://github.com/apps/aem-code-sync) to the repository, so your code changes get synced with EDS.
-5. [todo] create a new site in AEM using the site template XXX
-4. Update the mountpoint in `fstab.yaml`
-5. Update the path mappings in `paths.json`
-6. Update your Adobe Commerce SaaS configuration in the `configuration` sheet in your AEM site.
+4. Create a new site in AEM using the [site template](https://github.com/adobe-rnd/aem-boilerplate-xcom/releases) provided with the boilerplate release
+5. Update the mountpoint in [`fstab.yaml`](https://github.com/adobe-rnd/aem-boilerplate-xcom/blob/main/fstab.yaml)
+6. Update the path mappings in [`paths.json`](https://github.com/adobe-rnd/aem-boilerplate-xcom/blob/main/paths.json)
+7. publish the pages to see them in action on aem.page or aem.live
+8. To use you own Adobe Commerce SaaS configuration you must update it in the `configs` sheet in your AEM site.
+
+## Notes
+- some commerce blocks dont show the final output in UE but placeholders, e.g. account related blocks, enrichment. To see them in action you have to preview or publish the page.
+- folder mapping is used on EDS (publish) to map virtual product pages to a an existing page template (/products/default). if you open the the template page in UE, to be able to see the pdp block, one product has been [hardcoded](https://github.com/adobe-rnd/aem-boilerplate-xcom/blob/main/scripts/editor-support.js#L15) for now. Will be replaced with a product picker once available.
+- It is [recommended](https://experienceleague.adobe.com/developer/commerce/storefront/seo/metadata/) uploading product metadata into Edge Delivery Services so that it can be rendered server-side on product detail pages, see `/products/default/metadata` spreadheet. There is a tool that can help you create this data, see [here](https://experienceleague.adobe.com/developer/commerce/storefront/seo/metadata/#generate-metadata).

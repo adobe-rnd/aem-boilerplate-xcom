@@ -1,16 +1,16 @@
 {
   "mappings": [
-    "/content/xwalk-commerce/:/",
-    "/content/xwalk-commerce/configuration:/.helix/config.json",
-    "/content/xwalk-commerce/headers:/.helix/headers.json",
-    "/content/xwalk-commerce/metadata:/metadata.json",
-    "/content/xwalk-commerce/placeholders:/placeholders.json",
-    "/content/xwalk-commerce/configs:/configs.json",
-    "/content/xwalk-commerce/configs-dev:/configs-dev.json",
-    "/content/xwalk-commerce/configs-stage:/configs-stage.json",
-    "/content/xwalk-commerce.resource/enrichment/enrichment.json:/enrichment/enrichment.json"
+    "/content/<sitename>/:/",
+    "/content/<sitename>/configuration:/.helix/config.json",
+    "/content/<sitename>/headers:/.helix/headers.json",
+    "/content/<sitename>/metadata:/metadata.json",
+    "/content/<sitename>/placeholders:/placeholders.json",
+    "/content/<sitename>/configs:/configs.json",
+    "/content/<sitename>/configs-dev:/configs-dev.json",
+    "/content/<sitename>/configs-stage:/configs-stage.json",
+    "/content/<sitename>.resource/enrichment/enrichment.json:/enrichment/enrichment.json"
   ],
   "includes": [
-    "/content/xwalk-commerce/"
+    "/content/<sitename>/"
   ]
 }
