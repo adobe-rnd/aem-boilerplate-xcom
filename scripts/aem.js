@@ -521,7 +521,7 @@ async function fetchPlaceholders(prefix = 'default') {
   window.placeholders = window.placeholders || {};
   if (!window.placeholders[prefix]) {
     window.placeholders[prefix] = new Promise((resolve) => {
-      const url = getMetadata('placeholders') || `${prefix === 'default' ? '' : prefix}/placeholders.json`;
+      const url = getMetadata('placeholders') || `${prefix === 'default' ? '' : prefix}${window.hlx.codeBasePath}/placeholders.json`;
       fetch(url)
         .then((resp) => {
           if (resp.ok) {

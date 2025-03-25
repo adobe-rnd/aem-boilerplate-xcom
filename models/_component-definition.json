@@ -45,6 +45,12 @@
         },
         {
           "...": "../blocks/content-fragment/_*.json#/definitions"
+        },
+        {
+          "...": "../blocks/image-gallery/_*.json#/definitions"
+        },
+        {
+          "...": "../blocks/gallery-image/_*.json#/definitions"
         }
       ]
     },

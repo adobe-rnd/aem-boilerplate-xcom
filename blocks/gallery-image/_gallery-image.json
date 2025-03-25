@@ -1,0 +1,46 @@
+{
+  "definitions": [
+    {
+      "title": "Gallery Image",
+      "id": "gallery-image",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "name": "Gallery Image", 
+              "model": "gallery-image",
+              "image": "/content/dam/test/content-at-scale.png"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "gallery-image",
+      "fields": [
+        {
+          "component": "reference",
+          "valueType": "string",
+          "name": "image",
+          "label": "Image"
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "alt",
+          "label": "Alt Text"
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "caption",
+          "label": "Caption"
+        }
+      ]
+    }
+  ],
+  "filters": []
+} 
