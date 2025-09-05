@@ -13,17 +13,17 @@ import {
 import { products } from "../../fixtures";
 import { signUpUser } from "../../actions";
 
-describe("Verify guest user can manage products across wishlist and cart", { tags: "@skipSaas" }, () => {
-  it.skip("Successfully add simple product to wishlist, move it to cart, return this to wishlist and remove it", () => {
+describe("Verify guest user can manage products across wishlist and cart", () => {
+  beforeEach(() => {
     cy.visit("");
     cy.get(".wishlist-wrapper").should('be.visible').click();
-
     // Wait for wishlist page to load and assert empty state
     assertWishlistEmptyWithWait();
+  });
 
-    // Navigate to product with proper hover and wait
-    cy.get(".nav-drop").first().should('be.visible').trigger("mouseenter");
-    cy.contains("Youth Tee").should('be.visible').click();
+  it("Successfully add simple product to wishlist, move it to cart, return this to wishlist and remove it", () => {
+    // Navigate to PDP
+    cy.visit(products.simple.urlPath);
 
     // Wait for container to exist
     cy.get('.product-details__buttons__add-to-wishlist').should('exist');
@@ -33,12 +33,11 @@ describe("Verify guest user can manage products across wishlist and cart", { tag
       .should('be.visible')
       .and('not.be.disabled');
 
-    // Click the wishlist button
+    // Click the wishlist toggle button
     cy.get('.product-details__buttons__add-to-wishlist [data-testid="wishlist-toggle"]')
       .click();
 
     // Wait for wishlist operation to complete by checking for success indicators
-    // Give it a moment for the state to change, then proceed
     cy.wait(1000);
 
     // Navigate back to wishlist and verify item was added
@@ -117,11 +116,6 @@ describe("Verify guest user can manage products across wishlist and cart", { tag
   });
 
   it("Successfully add configurable product with all required options to wishlist, move it to cart and return this to wishlist", () => {
-    cy.visit("");
-    cy.get(".wishlist-wrapper").should('be.visible').click();
-
-    // Wait for wishlist page to load and assert empty state
-    assertWishlistEmptyWithWait();
     cy.visit(products.configurable.urlPathWithOptions);
 
     // Wait for container to exist
@@ -132,12 +126,11 @@ describe("Verify guest user can manage products across wishlist and cart", { tag
       .should('be.visible')
       .and('not.be.disabled');
 
-    // Click the wishlist button
+    // Click the wishlist toggle button
     cy.get('.product-details__buttons__add-to-wishlist [data-testid="wishlist-toggle"]')
       .click();
 
     // Wait for wishlist operation to complete by checking for success indicators
-    // Give it a moment for the state to change, then proceed
     cy.wait(1000);
 
     // Navigate back to wishlist and verify item was added
@@ -154,10 +147,10 @@ describe("Verify guest user can manage products across wishlist and cart", { tag
 
     assertWishlistTitleHasLink(
       "Configurable product",
-      "/products/cypress-configurable-product-latest/CYPRESS456"
+      "/products/cypress-configurable-product-latest-red/CYPRESS456"
     )(".commerce-wishlist-wrapper");
 
-    assertWishlistProductImage("/adb192.jpg")(".commerce-wishlist-wrapper");
+    assertWishlistProductImage(Cypress.env('productWithOptionImageNameConfigurable'))(".commerce-wishlist-wrapper");
 
     assertWishlistItemHasOptions('color', 'red')(".wishlist-wishlist__content");
 
@@ -217,12 +210,7 @@ describe("Verify guest user can manage products across wishlist and cart", { tag
     assertWishlistEmptyWithWait();
   });
 
-  it.skip("Successfully add configurable product with no required options to wishlist, redirects to PDP and remove it", () => {
-    cy.visit("");
-    cy.get(".wishlist-wrapper").should('be.visible').click();
-
-    // Wait for wishlist page to load and assert empty state
-    assertWishlistEmptyWithWait();
+  it("Successfully add configurable product with no required options to wishlist, redirects to PDP and remove it", () => {
     cy.visit(products.configurable.urlPath);
 
     // Wait for container to exist
@@ -233,12 +221,11 @@ describe("Verify guest user can manage products across wishlist and cart", { tag
       .should('be.visible')
       .and('not.be.disabled');
 
-    // Click the wishlist button
+    // Click the wishlist toggle button
     cy.get('.product-details__buttons__add-to-wishlist [data-testid="wishlist-toggle"]')
       .click();
 
     // Wait for wishlist operation to complete by checking for success indicators
-    // Give it a moment for the state to change, then proceed
     cy.wait(1000);
 
     // Navigate back to wishlist and verify item was added
@@ -292,15 +279,8 @@ describe("Verify guest user can manage products across wishlist and cart", { tag
   });
 
   it("Successfully merge wishlist", () => {
-    cy.visit("");
-    cy.get(".wishlist-wrapper").should('be.visible').click();
-
-    // Wait for wishlist page to load and assert empty state
-    assertWishlistEmptyWithWait();
-
-    // Navigate to product with proper hover and wait
-    cy.get(".nav-drop").first().should('be.visible').trigger("mouseenter");
-    cy.contains("Youth Tee").should('be.visible').click();
+    // Navigate to PDP
+    cy.visit(products.simple.urlPath);
 
     // Wait for container to exist
     cy.get('.product-details__buttons__add-to-wishlist').should('exist');
@@ -310,12 +290,11 @@ describe("Verify guest user can manage products across wishlist and cart", { tag
       .should('be.visible')
       .and('not.be.disabled');
 
-    // Click the wishlist button
+    // Click the wishlist toggle button
     cy.get('.product-details__buttons__add-to-wishlist [data-testid="wishlist-toggle"]')
       .click();
 
     // Wait for wishlist operation to complete by checking for success indicators
-    // Give it a moment for the state to change, then proceed
     cy.wait(1000);
 
     // Navigate back to wishlist and verify item was added
