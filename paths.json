@@ -1,12 +1,17 @@
 {
   "mappings": [
-    "/content/aem-boilerplate-commerce/:/",
-    "/content/aem-boilerplate-commerce/configuration:/.helix/config.json",
-    "/content/aem-boilerplate-commerce/headers:/.helix/headers.json",
-    "/content/aem-boilerplate-commerce/metadata:/metadata.json",
-    "/content/aem-boilerplate-commerce.resource/enrichment/enrichment.json:/enrichment/enrichment.json"
+    "/:/",
+    "/content/toyota_demo/:/",
+    "/content/toyota_demo/configuration:/.helix/config.json",
+    "/content/toyota_demo/headers:/.helix/headers.json",
+    "/content/toyota_demo/metadata:/metadata.json",
+    "/content/toyota_demo.resource/enrichment/enrichment.json:/enrichment/enrichment.json"
   ],
   "includes": [
-    "/content/aem-boilerplate-commerce/"
+    "/content/toyota_demo/",
+    "/content/forms/af/",
+    "/content/dam/",
+    "/adobe/forms/af/",
+    "/adobe/assets/"
   ]
 }

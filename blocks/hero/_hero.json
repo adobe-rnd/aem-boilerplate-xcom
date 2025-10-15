@@ -40,6 +40,37 @@
           "value": "",
           "label": "Text",
           "valueType": "string"
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "buttonText",
+          "label": "Button Text",
+          "value": ""
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "buttonLink",
+          "label": "Button Link",
+          "value": ""
+        },
+        {
+          "component": "select",
+          "name": "buttonType",
+          "label": "Button Type",
+          "valueType": "string",
+          "options": [
+            {
+              "name": "primary",
+              "value": "primary"
+            },
+            {
+              "name": "secondary",
+              "value": "secondary"
+            }
+          ],
+          "value": "primary"
         }
       ]
     }

@@ -210,7 +210,9 @@ export default async function decorate(block) {
   /** Wishlist */
   const wishlist = document.createRange().createContextualFragment(`
      <div class="wishlist-wrapper nav-tools-wrapper">
-       <button type="button" class="nav-wishlist-button" aria-label="Wishlist"></button>
+       <button type="button" class="nav-wishlist-button" aria-label="Wishlist">
+         <span class="wishlist-text">Wishlist</span>
+       </button>
        <div class="wishlist-panel nav-tools-panel"></div>
      </div>
    `);
@@ -231,7 +233,9 @@ export default async function decorate(block) {
 
   const minicart = document.createRange().createContextualFragment(`
      <div class="minicart-wrapper nav-tools-wrapper">
-       <button type="button" class="nav-cart-button" aria-label="Cart"></button>
+       <button type="button" class="nav-cart-button" aria-label="Cart">
+         <span class="cart-text">Cart</span>
+       </button>
        <div class="minicart-panel nav-tools-panel"></div>
      </div>
    `);
@@ -332,7 +336,9 @@ export default async function decorate(block) {
   /** Search */
   const search = document.createRange().createContextualFragment(`
   <div class="search-wrapper nav-tools-wrapper">
-    <button type="button" class="nav-search-button">Search</button>
+    <button type="button" class="nav-search-button">
+      <span class="search-text">Search</span>
+    </button>
     <div class="nav-search-input nav-search-panel nav-tools-panel">
       <div id="search-bar-input"></div>
       <div class="search-bar-result"></div>
