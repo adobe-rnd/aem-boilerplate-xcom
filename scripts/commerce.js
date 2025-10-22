@@ -275,7 +275,11 @@ export async function loadCommerceLazy() {
  * Initializes commerce configuration
  */
 export async function initializeCommerce() {
-  initializeConfig(await getConfigFromSession());
+  initializeConfig(await getConfigFromSession(), {
+    match: (key) => {
+      return window.location.pathname.match(`^(/content/.*)?${key}`);
+    },
+  });
   return initializeDropins();
 }
 
