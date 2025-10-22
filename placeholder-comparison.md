@@ -27,8 +27,8 @@ None
 
 | Key | Old Value | New Value |
 |-----|-----------|-----------|
-| Auth.FormText.urlError | Please enter a valid URL e.g. https://www.website.com. | Please enter a valid URL, e.g., https://www.website.com. |
-| Auth.EmailConfirmationForm.subtitle | We've sent an email to | We`ve sent an email to |
+| Auth.FormText.urlError | Please enter a valid URL e.g. https://www.website.com. | Please enter a valid URL, e.g. https://www.website.com. |
+
 
 ### New Entries (CSV format)
 None
@@ -190,10 +190,7 @@ Search.SortBy.highToLow,High to Low
 None
 
 ### Changed Entries
-
-| Key | Old Value | New Value |
-|-----|-----------|-----------|
-| Wishlist.Login.sync | " to sync your saved items across all your devices." | , to sync your saved items across all your devices. |
+None
 
 ### New Entries (CSV format)
 None
