@@ -11,7 +11,11 @@ None
 
 ### Changed Entries
 
-None
+| Key | Old Value | New Value |
+|-----|-----------|-----------|
+| Account.minifiedView.CustomerInformation.changePassword.passwordValidationMessage.chartThreeSymbols | Use characters | Use characters, numbers and symbols |
+| Account.minifiedView.CustomerInformation.changePassword.passwordValidationMessage.chartFourSymbols | Use uppercase characters | Use uppercase characters, lowercase characters, numbers and symbols |
+| Account.FormText.urlError | Please enter a valid URL | Please enter a valid URL, e.g., http://www.adobe.com. |
 
 ### New Entries (CSV format)
 None
@@ -27,8 +31,11 @@ None
 
 | Key | Old Value | New Value |
 |-----|-----------|-----------|
-| Auth.FormText.urlError | Please enter a valid URL e.g. https://www.website.com. | Please enter a valid URL, e.g. https://www.website.com. |
-
+| Auth.PasswordValidationMessage.chartThreeSymbols | Use characters numbers and symbols | Use characters, numbers and symbols |
+| Auth.PasswordValidationMessage.chartFourSymbols | Use uppercase characters lowercase characters numbers and symbols | Use uppercase characters, lowercase characters, numbers and symbols |
+| Auth.SignUpForm.subscribedDefaultText | Subscribe to our newsletter and be the first to know about new arrivals sales and exclusive offers. | Subscribe to our newsletter and be the first to know about new arrivals, sales and exclusive offers. |
+| Auth.FormText.urlError | Please enter a valid URL e.g. https://www.website.com. | Please enter a valid URL, e.g., https://www.website.com. |
+| Auth.EmailConfirmationForm.subtitle | We've sent an email to | We`ve sent an email to |
 
 ### New Entries (CSV format)
 None
@@ -70,7 +77,19 @@ None
 None
 
 ### New Entries (CSV format)
-None
+
+```csv
+Key,Value
+Global.Cancel,Cancel
+Global.ViewAllDetails,View all details
+Global.ProductLoadError,Failed to load product details
+Global.Search,Search
+Global.SearchViewAll,View all
+Global.Filters,Filters
+Dropin.PriceRange.from.label,From
+Dropin.PriceRange.to.label,To
+Dropin.PriceRange.asLowAs.label,As low as
+```
 
 ---
 
@@ -194,3 +213,5 @@ None
 
 ### New Entries (CSV format)
 None
+
+---
