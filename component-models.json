@@ -503,6 +503,13 @@
         "valueType": "string",
         "value": "pdp",
         "readOnly": true
+      },
+      {
+        "component": "text",
+        "name": "sku",
+        "label": "SKU",
+        "valueType": "string",
+        "description": "Set SKU of the product if value is case sensitive"
       }
     ]
   },
