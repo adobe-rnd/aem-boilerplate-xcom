@@ -36,3 +36,8 @@ Major changes are described and documented as part of pull requests and tracked 
 ### Placeholder Comparison
 
 See [Placeholder Comparison](placeholder-comparison.md) for changes in the placeholder files between release 0.4 and 0.6
+
+### Product Pages
+ Folder mapping is no longer configured by default as its [deprecated](https://www.aem.live/developer/folder-mapping). To keep it easily demoable, static product pages have been created as part ot the site template for all products listed on the homepage. 
+ 
+ Instead of folder mapping use the [AEM Commerce Prerenderer](https://github.com/adobe-rnd/aem-commerce-prerender) tool to generate static product detail pages from dynamic data sources like Adobe Commerce Catalog Service.
