@@ -139,27 +139,20 @@
   --type-details-overline-letter-spacing: 0.16em;
 
   /* Additional tokens */
-  --type-fixed-font-family: 'Roboto Mono', menlo, consolas, 'Liberation Mono',
-    monospace;
+  --type-fixed-font-family: adobe-clean, "Roboto Mono", menlo, consolas, "Liberation Mono", monospace, system-ui, sans-serif;
   --background-color: var(--color-neutral-50);
   --nav-height: 6.4rem;
 }
 
-/* fallback fonts */
+/* fallback font */
 @font-face {
-  font-family: roboto-condensed-fallback;
-  size-adjust: 88.82%;
-  src: local('Arial');
+  font-family: adobe-clean;
+  size-adjust: 100%;
+  src: local("Helvetica");
 }
-
-@font-face {
-  font-family: roboto-fallback;
-  size-adjust: 99.529%;
-  src: local('Arial');
-}
-
-html,body {
-  height: 100%;
+  
+html, body {
+  min-height: 100%;
 }
 
 html.adobe-ue-preview,
@@ -482,6 +475,10 @@ body.columns main > .section:empty {
   body.columns main {
       padding: var(--spacing-large) var(--spacing-big);
   }
+}
+
+.dropin-product-item-card {
+  border: unset;
 }
 
 @media (min-width: 900px) {

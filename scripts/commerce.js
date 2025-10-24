@@ -267,11 +267,6 @@ export async function loadCommerceLazy() {
   // Initialize Adobe Client Data Layer
   await import('./acdl/adobe-client-data-layer.min.js');
 
-  // Initialize Adobe Client Data Layer validation
-  if (sessionStorage.getItem('acdl:debug')) {
-    import('./acdl/validate.js');
-  }
-
   // Track history
   trackHistory();
 }
@@ -280,7 +275,9 @@ export async function loadCommerceLazy() {
  * Initializes commerce configuration
  */
 export async function initializeCommerce() {
-  initializeConfig(await getConfigFromSession());
+  initializeConfig(await getConfigFromSession(), {
+    match: (key) => window.location.pathname.match(`^(/content/.*)?${key}`),
+  });
   return initializeDropins();
 }
 
@@ -500,9 +497,9 @@ export async function fetchPlaceholders(path) {
         });
 
         // Merge the new placeholders into the global merged object
-        Object.assign(window.placeholders._merged, placeholders);
+        const merged = Object.assign(window.placeholders._merged, placeholders);
 
-        resolve(placeholders);
+        resolve(merged);
       })
       .catch((error) => {
         console.error(`Error loading placeholders for path: ${path}${fallback ? ` and fallback: ${fallback}` : ''}`, error);
@@ -592,7 +589,7 @@ export async function commerceEndpointWithQueryParams() {
  * Extracts the SKU from the current URL path.
  * @returns {string|null} The SKU extracted from the URL, or null if not found
  */
-export function getSkuFromUrl() {
+function getSkuFromUrl() {
   const path = window.location.pathname;
   const result = path.match(/\/products\/[\w|-]+\/([\w|-]+)(\.html)?$/);
   let sku = result?.[1];
@@ -603,6 +600,18 @@ export function getSkuFromUrl() {
   }
 
   return sku;
+}
+
+export function getProductLink(urlKey, sku) {
+  return rootLink(`/products/${urlKey}/${sku}`.toLowerCase());
+}
+
+/**
+ * Gets the product SKU from metadata or URL fallback.
+ * @returns {string|null} The SKU from metadata or URL, or null if not found
+ */
+export function getProductSku() {
+  return getMetadata('sku') || getSkuFromUrl();
 }
 
 /**

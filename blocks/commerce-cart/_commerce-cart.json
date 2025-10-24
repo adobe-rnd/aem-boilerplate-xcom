@@ -17,7 +17,8 @@
               "hide-attributes": false,
               "enable-item-quantity-update": true,
               "enable-item-remove": true,
-              "enable-estimate-shipping": true
+              "enable-estimate-shipping": true,
+              "undo-remove-item": false
             }
           }
         }
@@ -69,6 +70,12 @@
           "name": "enable-estimate-shipping",
           "label": "Enable Estimate Shipping",
           "description": "Enable the ability to estimate shipping costs"
+        },
+        {
+          "component": "boolean",
+          "name": "undo-remove-item",
+          "label": "Enable Undo Remove Item",
+          "description": "Enable the ability to undo the removal of an item from the cart"
         },
         {
           "component": "number",
