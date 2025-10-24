@@ -13,7 +13,8 @@
               "key-value": true,
               "start-shopping-url": "/content/xwalk-commerce",
               "cart-url": "/content/xwalk-commerce/cart",
-              "checkout-url": "content/xwalk-commerce/checkout"
+              "checkout-url": "content/xwalk-commerce/checkout",
+              "undo-remove-item": false
             }
           }
         }
@@ -47,6 +48,12 @@
           "name": "enable-updating-product",
           "label": "Enable Updating Product",
           "description": "Enable Updating Product"
+        },
+        {
+          "component": "boolean",
+          "name": "undo-remove-item",
+          "label": "Enable Undo Remove Item",
+          "description": "Enable the ability to undo the removal of an item from the cart"
         }
       ]
     }

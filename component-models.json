@@ -255,6 +255,12 @@
         "description": "Enable the ability to estimate shipping costs"
       },
       {
+        "component": "boolean",
+        "name": "undo-remove-item",
+        "label": "Enable Undo Remove Item",
+        "description": "Enable the ability to undo the removal of an item from the cart"
+      },
+      {
         "component": "number",
         "name": "max-items",
         "label": "Max Items",
@@ -288,6 +294,12 @@
         "name": "enable-updating-product",
         "label": "Enable Updating Product",
         "description": "Enable Updating Product"
+      },
+      {
+        "component": "boolean",
+        "name": "undo-remove-item",
+        "label": "Enable Undo Remove Item",
+        "description": "Enable the ability to undo the removal of an item from the cart"
       }
     ]
   },
