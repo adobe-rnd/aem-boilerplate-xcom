@@ -6,9 +6,7 @@
 
 import { getRootPath } from '@dropins/tools/lib/aem/configs.js';
 import { decorateMain } from '../../scripts/scripts.js';
-import {
-  loadSections,
-} from '../../scripts/aem.js';
+import { loadSections } from '../../scripts/aem.js';
 
 /**
  * Loads a fragment.
