@@ -8,7 +8,6 @@
     move-to-http-header="true"
   >
   <title>Page not found</title>
-<<<<<<< HEAD
   <meta
     http-equiv="Content-Security-Policy"
     content="script-src 'nonce-aem' 'strict-dynamic' 'unsafe-inline' http: https:; base-uri 'self'; object-src 'none';"
@@ -24,15 +23,12 @@
         }
     }
   </script>
-=======
->>>>>>> xwalk
   <script nonce="aem" type="text/javascript">
     window.isErrorPage = true;
     window.errorCode = '404';
   </script>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta property="og:title" content="Page not found">
-<<<<<<< HEAD
   <script nonce="aem" type="module">
     await fetch('/metadata.json')
       .then((res) => res.json())
@@ -69,8 +65,6 @@
         console.error(err);
       });
   </script>
-=======
->>>>>>> xwalk
   <script nonce="aem" src="/scripts/scripts.js" type="module"></script>
   <script nonce="aem" type="module">
     window.addEventListener('load', () => {
