@@ -29,6 +29,22 @@ import '../../scripts/initializers/wishlist.js';
 const isMobile = window.matchMedia('only screen and (max-width: 900px)').matches;
 
 /**
+ * Validates and returns a product view history entry if valid
+ * @param {Object} entry - The history entry to validate
+ * @returns {Object|null} - Validated history entry or null if invalid
+ */
+function getValidHistoryEntry(entry) {
+  // Basic validation to ensure the entry has necessary properties
+  if (entry && typeof entry === 'object' && entry.sku && entry.date) {
+    return {
+      sku: entry.sku,
+      date: entry.date,
+    };
+  }
+  return null;
+}
+
+/**
  * Gets product view history from localStorage
  * @param {string} storeViewCode - The store view code
  * @returns {Array} - Array of view history items
@@ -36,7 +52,16 @@ const isMobile = window.matchMedia('only screen and (max-width: 900px)').matches
 function getProductViewHistory(storeViewCode) {
   try {
     const viewHistory = window.localStorage.getItem(`${storeViewCode}:productViewHistory`) || '[]';
-    return JSON.parse(viewHistory);
+    const parsedHistory = JSON.parse(viewHistory);
+    if (!Array.isArray(parsedHistory)) {
+      throw new Error('Product view history is not an array');
+    }
+    const validHistory = parsedHistory.map(getValidHistoryEntry).filter((entry) => entry !== null);
+    if (validHistory.length === 0) {
+      // If no valid entries, clear the history to prevent future parsing issues
+      window.localStorage.removeItem(`${storeViewCode}:productViewHistory`);
+    }
+    return validHistory;
   } catch (e) {
     window.localStorage.removeItem(`${storeViewCode}:productViewHistory`);
     console.error('Error parsing product view history', e);
@@ -63,6 +88,12 @@ function getPurchaseHistory(storeViewCode) {
 export default async function decorate(block) {
   const labels = await fetchPlaceholders();
 
+  // Hide configuration rows if they exist
+  const children = [...block.children];
+  children.forEach((child) => {
+    child.style.display = 'none';
+  });
+
   // Configuration
   const { currentsku, recid } = readBlockConfig(block);
 
@@ -74,6 +105,7 @@ export default async function decorate(block) {
   `);
 
   const $list = fragment.querySelector('.recommendations__list');
+  const $wrapper = fragment.querySelector('.recommendations__wrapper');
 
   block.appendChild(fragment);
 
@@ -220,7 +252,7 @@ export default async function decorate(block) {
               });
             },
           },
-        })(block),
+        })($wrapper),
       ]);
     } finally {
       isLoading = false;

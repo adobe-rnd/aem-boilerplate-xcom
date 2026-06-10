@@ -1,0 +1,57 @@
+{
+  "definitions": [
+    {
+      "title": "Targeted Block",
+      "id": "targeted-block",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block",
+            "template": {
+              "name": "Targeted Block",
+              "model": "targeted-block",
+              "key-value": true
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "targeted-block",
+      "fields": [
+        {
+          "component": "richtext",
+          "name": "content",
+          "label": "Content"
+        },
+        {
+          "component": "text",
+          "name": "customerGroups",
+          "label": "Customer Groups",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "name": "customerSegments",
+          "label": "Customer Segments",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "name": "type",
+          "label": "Type",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "name": "fragment",
+          "label": "Fragment",
+          "valueType": "string"
+        }
+      ]
+    }
+  ],
+  "filters": []
+}
