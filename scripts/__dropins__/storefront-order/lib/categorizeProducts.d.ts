@@ -1,5 +1,19 @@
+/********************************************************************
+ * ADOBE CONFIDENTIAL
+ *
+ *  Copyright 2024 Adobe
+ *  All Rights Reserved.
+ *
+ * NOTICE:  All information contained herein is, and remains
+ * the property of Adobe and its suppliers, if any. The intellectual
+ * and technical concepts contained herein are proprietary to Adobe
+ * and its suppliers and are protected by all applicable intellectual
+ * property laws, including trade secret and copyright laws.
+ * Dissemination of this information or reproduction of this material
+ * is strictly forbidden unless prior written permission is obtained
+ * from Adobe.
+ *******************************************************************/
 import { OrderDataModel, OrderItemModel } from '../data/models';
-
 export declare const categorizeProducts: (order: OrderDataModel) => {
     returnedList: {
         totalQuantity: number;
@@ -8,7 +22,8 @@ export declare const categorizeProducts: (order: OrderDataModel) => {
             recipientName: string;
             message: string;
         };
-        giftWrappingPrice: import('../types/index').MoneyProps;
+        giftWrappingAvailable: boolean;
+        giftWrappingPrice: import("../types").MoneyProps;
         productGiftWrapping: {
             uid: string;
             design: string;
@@ -17,57 +32,57 @@ export declare const categorizeProducts: (order: OrderDataModel) => {
                 url: string;
                 label: string;
             };
-            price: import('../types/index').MoneyProps;
+            price: import("../types").MoneyProps;
         }[];
         taxCalculations: {
             includeAndExcludeTax: {
-                originalPrice: import('../types/index').MoneyProps;
-                baseOriginalPrice: import('../types/index').MoneyProps;
-                baseDiscountedPrice: import('../types/index').MoneyProps;
-                baseExcludingTax: import('../types/index').MoneyProps;
+                originalPrice: import("../types").MoneyProps;
+                baseOriginalPrice: import("../types").MoneyProps;
+                baseDiscountedPrice: import("../types").MoneyProps;
+                baseExcludingTax: import("../types").MoneyProps;
             };
             excludeTax: {
-                originalPrice: import('../types/index').MoneyProps;
-                baseOriginalPrice: import('../types/index').MoneyProps;
-                baseDiscountedPrice: import('../types/index').MoneyProps;
-                baseExcludingTax: import('../types/index').MoneyProps;
+                originalPrice: import("../types").MoneyProps;
+                baseOriginalPrice: import("../types").MoneyProps;
+                baseDiscountedPrice: import("../types").MoneyProps;
+                baseExcludingTax: import("../types").MoneyProps;
             };
             includeTax: {
-                singleItemPrice: import('../types/index').MoneyProps;
-                baseOriginalPrice: import('../types/index').MoneyProps;
-                baseDiscountedPrice: import('../types/index').MoneyProps;
+                singleItemPrice: import("../types").MoneyProps;
+                baseOriginalPrice: import("../types").MoneyProps;
+                baseDiscountedPrice: import("../types").MoneyProps;
             };
         };
-        productSalePrice: import('../types/index').MoneyProps;
-        status?: string | undefined;
-        currentReturnOrderQuantity?: number | undefined;
+        productSalePrice: import("../types").MoneyProps;
+        status?: string;
+        currentReturnOrderQuantity?: number;
         eligibleForReturn: boolean;
-        productSku?: string | undefined;
-        type?: string | undefined;
-        discounted?: boolean | undefined;
+        productSku?: string;
+        type?: string;
+        discounted?: boolean;
         id: string;
-        productName?: string | undefined;
-        productUrlKey?: string | undefined;
-        regularPrice?: import('../types/index').MoneyProps | undefined;
-        price: import('../types/index').MoneyProps;
-        product?: import('../data/models').OrderItemProductModel | undefined;
-        selectedOptions?: {
+        productName?: string;
+        productUrlKey?: string;
+        regularPrice?: import("../types").MoneyProps;
+        price: import("../types").MoneyProps;
+        product?: import("../data/models").OrderItemProductModel;
+        selectedOptions?: Array<{
             label: string;
             value: any;
-        }[] | undefined;
+        }>;
         thumbnail?: {
             label: string;
             url: string;
-        } | undefined;
+        };
         downloadableLinks: {
             count: number;
             result: string;
         } | null;
         prices: {
-            priceIncludingTax: import('../types/index').MoneyProps;
-            originalPrice: import('../types/index').MoneyProps;
-            originalPriceIncludingTax: import('../types/index').MoneyProps;
-            price: import('../types/index').MoneyProps;
+            priceIncludingTax: import("../types").MoneyProps;
+            originalPrice: import("../types").MoneyProps;
+            originalPriceIncludingTax: import("../types").MoneyProps;
+            price: import("../types").MoneyProps;
             discounts: [{
                 label: string;
                 amount: {
@@ -76,10 +91,10 @@ export declare const categorizeProducts: (order: OrderDataModel) => {
             }];
         };
         itemPrices: {
-            priceIncludingTax: import('../types/index').MoneyProps;
-            originalPrice: import('../types/index').MoneyProps;
-            originalPriceIncludingTax: import('../types/index').MoneyProps;
-            price: import('../types/index').MoneyProps;
+            priceIncludingTax: import("../types").MoneyProps;
+            originalPrice: import("../types").MoneyProps;
+            originalPriceIncludingTax: import("../types").MoneyProps;
+            price: import("../types").MoneyProps;
             discounts: [{
                 label: string;
                 amount: {
@@ -88,9 +103,9 @@ export declare const categorizeProducts: (order: OrderDataModel) => {
             }];
         };
         bundleOptions: Record<string, string> | null;
-        totalInclTax: import('../types/index').MoneyProps;
-        priceInclTax: import('../types/index').MoneyProps;
-        total: import('../types/index').MoneyProps;
+        totalInclTax: import("../types").MoneyProps;
+        priceInclTax: import("../types").MoneyProps;
+        total: import("../types").MoneyProps;
         configurableOptions: Record<string, string | number | boolean> | undefined;
         giftCard?: {
             senderName: string;
@@ -98,18 +113,17 @@ export declare const categorizeProducts: (order: OrderDataModel) => {
             recipientEmail: string;
             recipientName: string;
             message: string;
-        } | undefined;
+        };
         quantityCanceled: number;
         quantityInvoiced: number;
         quantityOrdered: number;
         quantityRefunded: number;
         quantityReturned: number;
         quantityShipped: number;
-        requestQuantity?: number | undefined;
-        returnableQuantity?: number | undefined;
+        requestQuantity?: number;
+        returnableQuantity?: number;
         quantityReturnRequested: number;
     }[];
     canceledItems: OrderItemModel[];
     nonCanceledItems: OrderItemModel[];
 };
-//# sourceMappingURL=categorizeProducts.d.ts.map

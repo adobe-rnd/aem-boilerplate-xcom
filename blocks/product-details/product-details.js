@@ -71,8 +71,21 @@ function updateAddToCartButtonText(addToCartInstance, inCart, labels) {
   }
 }
 
+/**
+ * Formats numeric attribute values for display (e.g., "10.000000" → "10").
+ * Non-numeric values are returned as-is.
+ */
+function formatNumericAttributeValue(value) {
+  const trimmed = value.trim();
+  if (!/^[+-]?\d+(\.\d+)?$/.test(trimmed)) return value;
+  return new Intl.NumberFormat(document.documentElement.lang).format(Number(trimmed));
+}
+
 export default async function decorate(block) {
-  const product = events.lastPayload('pdp/data') ?? null;
+  const eventProduct = events.lastPayload('pdp/data') ?? null;
+  // bug: the pdp sends an object with event data even if product is not found.
+  const product = eventProduct?.sku ? eventProduct : null;
+
   const labels = await fetchPlaceholders();
 
   // Read itemUid from URL
@@ -81,6 +94,9 @@ export default async function decorate(block) {
 
   // State to track if we are in update mode
   let isUpdateMode = false;
+
+  // State to track if the current product/variant is out of stock
+  let isOutOfStock = false;
 
   // Layout
   const fragment = document.createRange().createContextualFragment(`
@@ -102,6 +118,7 @@ export default async function decorate(block) {
             <div class="product-details__buttons__add-to-cart"></div>
             <div class="product-details__buttons__add-to-wishlist"></div>
           </div>
+          <div class="product-details__add-to-cart-status" role="status" aria-live="polite"></div>
         </div>
         <div class="product-details__description"></div>
         <div class="product-details__attributes"></div>
@@ -120,6 +137,10 @@ export default async function decorate(block) {
   const $giftCardOptions = fragment.querySelector('.product-details__gift-card-options');
   const $addToCart = fragment.querySelector('.product-details__buttons__add-to-cart');
   const $wishlistToggleBtn = fragment.querySelector('.product-details__buttons__add-to-wishlist');
+  // Kept mounted at all times so the "Adding to Cart" status is reliably
+  // announced instead of relying on the button's text/disabled state
+  // changing, which isn't announced by screen readers on its own.
+  const $addToCartStatus = fragment.querySelector('.product-details__add-to-cart-status');
   const $description = fragment.querySelector('.product-details__description');
   const $attributes = fragment.querySelector('.product-details__attributes');
 
@@ -127,22 +148,26 @@ export default async function decorate(block) {
 
   const gallerySlots = {
     CarouselThumbnail: (ctx) => {
-      tryRenderAemAssetsImage(ctx, {
-        ...imageSlotConfig(ctx),
-        wrapper: document.createElement('span'),
-      });
+      if (ctx.mediaType === 'image') {
+        tryRenderAemAssetsImage(ctx, {
+          ...imageSlotConfig(ctx),
+          wrapper: document.createElement('span'),
+        });
+      }
     },
 
     CarouselMainImage: (ctx) => {
-      tryRenderAemAssetsImage(ctx, {
-        ...imageSlotConfig(ctx),
-      });
+      if (ctx.mediaType === 'image') {
+        tryRenderAemAssetsImage(ctx, {
+          ...imageSlotConfig(ctx),
+        });
+      }
     },
   };
 
   // Alert
   let inlineAlert = null;
-  const routeToWishlist = '/wishlist';
+  const routeToWishlist = rootLink('/wishlist');
 
   const [
     _galleryMobile,
@@ -164,6 +189,7 @@ export default async function decorate(block) {
       peak: false,
       gap: 'small',
       loop: false,
+      videos: true, // Display videos if available
       imageParams: {
         ...IMAGES_SIZES,
       },
@@ -178,6 +204,7 @@ export default async function decorate(block) {
       peak: true,
       gap: 'small',
       loop: false,
+      videos: true, // Display videos if available
       imageParams: {
         ...IMAGES_SIZES,
       },
@@ -217,7 +244,9 @@ export default async function decorate(block) {
     pdpRendered.render(ProductDescription, {})($description),
 
     // Attributes
-    pdpRendered.render(ProductAttributes, {})($attributes),
+    pdpRendered.render(ProductAttributes, {
+      formatValue: formatNumericAttributeValue,
+    })($attributes),
 
     // Wishlist button - WishlistToggle Container
     wishlistRender.render(WishlistToggle, {
@@ -239,6 +268,7 @@ export default async function decorate(block) {
           children: buttonActionText,
           disabled: true,
         }));
+        $addToCartStatus.textContent = buttonActionText ?? 'Adding to Cart';
 
         // get the current selection values
         const values = pdpApi.getProductConfigurationValues();
@@ -302,19 +332,25 @@ export default async function decorate(block) {
       } finally {
         // Reset button text using the helper function which respects the current mode
         updateAddToCartButtonText(addToCart, isUpdateMode, labels);
-        // Re-enable button
+        // Re-enable button, unless the current variant is out of stock
         addToCart.setProps((prev) => ({
           ...prev,
-          disabled: false,
+          disabled: isOutOfStock,
         }));
+        $addToCartStatus.textContent = '';
       }
     },
   })($addToCart);
 
   // Lifecycle Events
+  events.on('pdp/data', (data) => {
+    isOutOfStock = data?.inStock === false;
+    addToCart.setProps((prev) => ({ ...prev, disabled: isOutOfStock }));
+  }, { eager: true });
+
   events.on('pdp/valid', (valid) => {
-    // update add to cart button disabled state based on product selection validity
-    addToCart.setProps((prev) => ({ ...prev, disabled: !valid }));
+    // update add to cart button disabled state based on product selection validity and stock status
+    addToCart.setProps((prev) => ({ ...prev, disabled: isOutOfStock || !valid }));
   }, { eager: true });
 
   // Handle option changes
@@ -450,15 +486,20 @@ async function setJsonLdProduct(product) {
   };
 
   if (variants.length > 1) {
-    ldJson.offers.push(...variants.map((variant) => ({
-      '@type': 'Offer',
-      name: variant.product.name,
-      image: variant.product.images[0]?.url,
-      price: variant.product.price.final.amount.value,
-      priceCurrency: variant.product.price.final.amount.currency,
-      availability: variant.product.inStock ? 'http://schema.org/InStock' : 'http://schema.org/OutOfStock',
-      sku: variant.product.sku,
-    })));
+    ldJson.offers.push(...variants
+      // A variant can come back without a resolved product (e.g. an
+      // unavailable option combination); skip those so JSON-LD generation
+      // doesn't throw on null property access.
+      .filter((variant) => variant.product)
+      .map((variant) => ({
+        '@type': 'Offer',
+        name: variant.product.name,
+        image: variant.product.images?.[0]?.url,
+        price: variant.product.price?.final?.amount?.value,
+        priceCurrency: variant.product.price?.final?.amount?.currency,
+        availability: variant.product.inStock ? 'http://schema.org/InStock' : 'http://schema.org/OutOfStock',
+        sku: variant.product.sku,
+      })));
   } else {
     ldJson.offers.push({
       '@type': 'Offer',
@@ -495,7 +536,7 @@ function createMetaTag(property, content, type) {
 }
 
 function setMetaTags(product) {
-  if (!product) {
+  if (!product?.sku) {
     return;
   }
 

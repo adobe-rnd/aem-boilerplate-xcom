@@ -86,7 +86,7 @@ export default async function decorate(block) {
   block.appendChild(fragment);
 
   // Wishlist variables
-  const routeToWishlist = '/wishlist';
+  const routeToWishlist = rootLink('/wishlist');
 
   // Toggle Empty Cart
   function toggleEmptyCart(_state) {
@@ -208,6 +208,9 @@ export default async function decorate(block) {
 
             UI.render(Button, {
               children: placeholders?.Global?.CartEditButton,
+              // Every cart item renders its own Edit button, so the accessible
+              // name must include the product name to distinguish them.
+              'aria-label': `${placeholders?.Global?.CartEditButton} ${ctx.item.name}`,
               variant: 'tertiary',
               size: 'medium',
               icon: h(Icon, { source: 'Edit' }),
@@ -253,7 +256,6 @@ export default async function decorate(block) {
 
     // Order Summary
     provider.render(OrderSummary, {
-      routeProduct: createProductLink,
       routeCheckout: checkoutURL ? () => rootLink(checkoutURL) : undefined,
       slots: {
         EstimateShipping: async (ctx) => {

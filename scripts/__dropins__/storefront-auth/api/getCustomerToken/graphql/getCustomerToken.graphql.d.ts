@@ -2,7 +2,7 @@
  * ADOBE CONFIDENTIAL
  * __________________
  *
- *  Copyright 2024 Adobe
+ *  Copyright 2026 Adobe
  *  All Rights Reserved.
  *
  * NOTICE:  All information contained herein is, and remains
@@ -15,4 +15,3 @@
  * from Adobe.
  *******************************************************************/
 export declare const GET_CUSTOMER_TOKEN = "\n  mutation GET_CUSTOMER_TOKEN($email: String!, $password: String!) {\n    generateCustomerToken(email: $email, password: $password) {\n      token\n    }\n  }\n";
-//# sourceMappingURL=getCustomerToken.graphql.d.ts.map

@@ -1,14 +1,22 @@
 /* eslint-disable import/no-unresolved */
 import { ProgressSpinner, provider as UI } from '@dropins/tools/components.js';
 import { tryRenderAemAssetsImage } from '@dropins/tools/lib/aem/assets.js';
+import { ORDER_DETAILS_PATH, rootLink } from '../../scripts/commerce.js';
+import { getUserTokenCookie } from '../../scripts/initializers/index.js';
 import createModal from '../modal/modal.js';
 
 /**
  * Displays an overlay spinner in the specified container
  * @param {Object} loaderRef - Ref object to store the spinner component
  * @param {HTMLElement} $loader - DOM element to render the spinner in
+ * @param {HTMLElement} [$loaderStatus] - Persistent live region for screen-reader announcement
  */
-export const displayOverlaySpinner = async (loaderRef, $loader) => {
+export const displayOverlaySpinner = async (loaderRef, $loader, $loaderStatus) => {
+  // Kept as a separate, persistently mounted live region so the
+  // announcement isn't missed when the spinner mounts and unmounts
+  // together with the live region attached to it.
+  if ($loaderStatus) $loaderStatus.textContent = 'Placing your order…';
+
   if (loaderRef.current) return;
 
   loaderRef.current = await UI.render(ProgressSpinner, {
@@ -20,8 +28,11 @@ export const displayOverlaySpinner = async (loaderRef, $loader) => {
  * Removes the overlay spinner and cleans up references
  * @param {Object} loaderRef - Ref object containing the spinner component
  * @param {HTMLElement} $loader - DOM element containing the spinner
+ * @param {HTMLElement} [$loaderStatus] - Persistent live region for screen-reader announcement
  */
-export const removeOverlaySpinner = (loaderRef, $loader) => {
+export const removeOverlaySpinner = (loaderRef, $loader, $loaderStatus) => {
+  if ($loaderStatus) $loaderStatus.textContent = '';
+
   if (!loaderRef.current) return;
 
   loaderRef.current.remove();
@@ -65,4 +76,22 @@ export function swatchImageSlot(ctx) {
       height: defaultImageProps.height,
     },
   });
+}
+
+/**
+ * Builds the order details URL based on authentication status
+ * @param {Object} orderData - Order data containing number and token
+ * @param {string} orderDetailsPath - Path to the order details page
+ * @returns {string} The constructed order details URL
+ */
+export function buildOrderDetailsUrl(orderData, orderDetailsPath = ORDER_DETAILS_PATH) {
+  const token = getUserTokenCookie();
+  const orderRef = token ? orderData.number : orderData.token;
+  const orderNumber = orderData.number;
+  const encodedOrderRef = encodeURIComponent(orderRef);
+  const encodedOrderNumber = encodeURIComponent(orderNumber);
+
+  return token
+    ? rootLink(`${orderDetailsPath}?orderRef=${encodedOrderRef}`)
+    : rootLink(`${orderDetailsPath}?orderRef=${encodedOrderRef}&orderNumber=${encodedOrderNumber}`);
 }

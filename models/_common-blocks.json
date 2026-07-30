@@ -3,10 +3,11 @@
   "image",
   "button",
   "title",
+  "accordion",
+  "carousel",
   "hero",
   "cards",
   "columns",
-  "fragment"
+  "fragment",
+  "targeted-block"
 ]
-
-    

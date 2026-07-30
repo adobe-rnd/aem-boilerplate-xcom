@@ -1,4 +1,4 @@
-/*! Copyright 2025 Adobe
+/*! Copyright 2026 Adobe
 All Rights Reserved. */
 const e=`
   fragment PRODUCTS_VIEW_FRAGMENT on ProductView {
@@ -7,6 +7,7 @@ const e=`
     sku
     queryType
     visibility
+    inStock
     images {
       url
     }
@@ -43,9 +44,8 @@ const e=`
     }
   }
 `,n=`
-  fragment UNIT_FRAGMENT on RecommendationUnit {
+  fragment RECOMMENDATION_UNIT_FRAGMENT on RecommendationUnit {
     displayOrder
-    pageType
     productsView {
       ...PRODUCTS_VIEW_FRAGMENT
     }
@@ -54,8 +54,9 @@ const e=`
     typeId
     unitId
     unitName
+    userError
   }
 
   ${e}
-`;export{e as PRODUCTS_VIEW_FRAGMENT,n as UNIT_FRAGMENT};
+`;export{e as PRODUCTS_VIEW_FRAGMENT,n as RECOMMENDATION_UNIT_FRAGMENT};
 //# sourceMappingURL=fragments.js.map

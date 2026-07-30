@@ -6,5 +6,7 @@
  * file in accordance with the terms of the Adobe license agreement
  * accompanying it.
  *******************************************************************/
-export declare const debounce: (fn: Function, ms: number) => (this: any, ...args: any[]) => void;
-//# sourceMappingURL=debounce.d.ts.map
+export declare const debounce: (fn: Function, ms: number) => {
+    (this: any, ...args: any[]): void;
+    cancel(): void;
+};

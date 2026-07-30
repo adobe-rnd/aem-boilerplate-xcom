@@ -2,7 +2,7 @@
  * ADOBE CONFIDENTIAL
  * __________________
  *
- *  Copyright 2024 Adobe
+ *  Copyright 2026 Adobe
  *  All Rights Reserved.
  *
  * NOTICE:  All information contained herein is, and remains
@@ -23,4 +23,4 @@ export * from './ResetPasswordForm';
 export * from './SkeletonLoader';
 export * from './Form';
 export * from './Button';
-//# sourceMappingURL=index.d.ts.map
+export * from './RemoteShoppingAssistanceConsent';

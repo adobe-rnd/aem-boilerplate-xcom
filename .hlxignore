@@ -14,3 +14,4 @@ tools/picker/src/*
 tools/pdp-metadata/*
 _*.json
 plugins/experimentation/documentation/images/*
+_*.json

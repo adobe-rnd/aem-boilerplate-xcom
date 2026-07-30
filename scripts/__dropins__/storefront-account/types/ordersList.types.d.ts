@@ -1,13 +1,33 @@
-import { SlotProps } from '@dropins/tools/types/elsie/src/lib';
+/********************************************************************
+ * ADOBE CONFIDENTIAL
+ * __________________
+ *
+ *  Copyright 2024 Adobe
+ *  All Rights Reserved.
+ *
+ * NOTICE:  All information contained herein is, and remains
+ * the property of Adobe and its suppliers, if any. The intellectual
+ * and technical concepts contained herein are proprietary to Adobe
+ * and its suppliers and are protected by all applicable intellectual
+ * property laws, including trade secret and copyright laws.
+ * Dissemination of this information or reproduction of this material
+ * is strictly forbidden unless prior written permission is obtained
+ * from Adobe.
+ *******************************************************************/
+import { SlotProps } from '@dropins/tools/lib';
 import { HTMLAttributes } from 'preact/compat';
 import { OrderDetails, OrderItem, ShipmentsTracingModel } from '../data/models';
-import { ImageProps } from '@dropins/tools/types/elsie/src/components';
-
+import { ImageProps } from '@dropins/tools/components';
 export interface OrdersListActionContext {
     orderHistoryListItem: OrderDetails;
 }
 export interface OrdersListCardContext {
     orderHistoryListItem: OrderDetails;
+}
+export interface OrdersListOrderTimeContext {
+    deliveryDateText?: string;
+    orderDate?: string;
+    orderTime?: string;
 }
 export interface OrdersListProps extends HTMLAttributes<HTMLDivElement> {
     minifiedView?: boolean;
@@ -43,6 +63,7 @@ export interface OrdersListCardProps extends HTMLAttributes<HTMLDivElement> {
     withThumbnails: boolean;
     slots?: {
         OrdersListCard?: SlotProps<OrdersListCardContext>;
+        OrdersListOrderTime?: SlotProps<OrdersListOrderTimeContext>;
         OrderItemImage?: SlotProps<{
             data: OrderItem;
             defaultImageProps: ImageProps;
@@ -71,4 +92,3 @@ export interface UseOrdersListProps {
     selectedDate: string;
     handleSetFirstOrderDate: (date: string) => void;
 }
-//# sourceMappingURL=ordersList.types.d.ts.map

@@ -27,12 +27,26 @@ async function initAnalytics() {
             websiteCode: analyticsConfig['website-code'],
             websiteId: parseInt(analyticsConfig['website-id'], 10),
             websiteName: analyticsConfig['website-name'],
+            viewId: analyticsConfig['view-id'], // applicable for ACO storefronts
+            // setting locale if defined, applicable for ACO storefronts
+            ...(analyticsConfig.locale && { locale: analyticsConfig.locale }),
           },
         },
-        { eventForwardingContext: { commerce: true, aep: false } },
+        {
+          eventForwardingContext: {
+            commerce: true,
+            aep: !!(analyticsConfig['aep-ims-org-id'] && analyticsConfig['aep-datastream-id']),
+          },
+        },
         {
           shopperContext: {
             shopperId: getUserTokenCookie() ? 'logged-in' : 'guest',
+          },
+        },
+        {
+          aepContext: {
+            imsOrgId: analyticsConfig['aep-ims-org-id'],
+            datastreamId: analyticsConfig['aep-datastream-id'],
           },
         },
       );
