@@ -5,7 +5,7 @@ import {
   loadSections,
 } from './aem.js';
 import { decorateRichtext } from './editor-support-rte.js';
-import { decorateSections } from './commerce.js';
+import { COLUMN_TEMPLATES, decorateSections } from './commerce.js';
 import {
   decorateBlock,
   decorateBlocks,
@@ -37,7 +37,6 @@ function updateUEInstrumentation() {
     'checkout', 'search-order', 'search', 'login', 'forgot-password', 'create-account',
     'account', 'orders', 'address', 'returns', 'account-order-details', 'order-status',
     'create-return', 'return-details', 'confirm-account', 'create-password', 'wishlist'];
-  const columnTemplates = ['account', 'orders', 'address', 'returns', 'account-order-details'];
 
   // updated section filters according to the template
   if (templates.includes(template)) {
@@ -48,7 +47,7 @@ function updateUEInstrumentation() {
   }
 
   // templates with column design have additional section type
-  if (columnTemplates.includes(template)) {
+  if (COLUMN_TEMPLATES.includes(template)) {
     setUEFilter(main, 'columns-main');
   }
 }

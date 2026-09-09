@@ -52,6 +52,14 @@ export const CS_FETCH_GRAPHQL = new FetchGraphQL();
 export const IS_UE = window.location.hostname.includes('ue.da.live');
 export const IS_DA = new URL(window.location.href).searchParams.has('dapreview');
 
+export const COLUMN_TEMPLATES = [
+  'account',
+  'orders',
+  'address',
+  'returns',
+  'account-order-details',
+];
+
 export function isAuthorEnvironment() {
   return IS_UE || IS_DA || window.hlx?.codeBasePath?.endsWith('.resource');
 }
@@ -380,8 +388,10 @@ function buildTemplateColumns(doc) {
  * @param {Element} doc The document element
  */
 export function applyTemplates(doc) {
-  const hasColumns = doc.querySelector('main > div.section[data-column-width]');
-  if (doc.body.classList.contains('columns') || hasColumns) {
+  const isColumnsTemplate = COLUMN_TEMPLATES.some((template) => (
+    doc.body.classList.contains(template)
+  ));
+  if (doc.body.classList.contains('columns') || isColumnsTemplate) {
     doc.body.classList.add('columns');
     buildTemplateColumns(doc);
   }
