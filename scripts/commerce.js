@@ -380,7 +380,9 @@ function buildTemplateColumns(doc) {
  * @param {Element} doc The document element
  */
 export function applyTemplates(doc) {
-  if (doc.body.classList.contains('columns')) {
+  const hasColumns = doc.querySelector('main > div.section[data-column-width]');
+  if (doc.body.classList.contains('columns') || hasColumns) {
+    doc.body.classList.add('columns');
     buildTemplateColumns(doc);
   }
 }
