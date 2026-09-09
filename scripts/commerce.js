@@ -354,10 +354,30 @@ export async function initializeCommerce() {
  */
 export function rootLink(link) {
   const root = getSiteRootPath().replace(/\/$/, '');
+  let localizedLink = link;
 
-  // If the link is already localized, do nothing
-  if (link.startsWith(root)) return link;
-  return `${root}${link}`;
+  const isAbsoluteUrl = /^[a-z][a-z\d+.-]*:/i.test(link) || link.startsWith('//');
+  if (isAbsoluteUrl) {
+    const url = new URL(link, window.location.origin);
+    if (url.origin !== window.location.origin) return link;
+    localizedLink = `${url.pathname}${url.search}${url.hash}`;
+  }
+
+  const suffixIndex = localizedLink.search(/[?#]/);
+  let pathname = suffixIndex < 0 ? localizedLink : localizedLink.slice(0, suffixIndex);
+  const suffix = suffixIndex < 0 ? '' : localizedLink.slice(suffixIndex);
+
+  if (!pathname) {
+    pathname = root;
+  } else if (root && pathname !== root && !pathname.startsWith(`${root}/`)) {
+    pathname = `${root}${pathname.startsWith('/') ? '' : '/'}${pathname}`;
+  }
+
+  if (window.hlx?.codeBasePath?.endsWith('.resource') && !pathname.endsWith('.html')) {
+    pathname = `${pathname.replace(/\/$/, '')}.html`;
+  }
+
+  return `${pathname}${suffix}`;
 }
 
 /**
