@@ -3,11 +3,12 @@ import { getCookie } from '@dropins/tools/lib.js';
 import { events } from '@dropins/tools/event-bus.js';
 import { initializers } from '@dropins/tools/initializer.js';
 import { isAemAssetsEnabled } from '@dropins/tools/lib/aem/assets.js';
-import { getConfigValue, getRootPath } from '@dropins/tools/lib/aem/configs.js';
+import { getConfigValue } from '@dropins/tools/lib/aem/configs.js';
 import { CORE_FETCH_GRAPHQL, CS_FETCH_GRAPHQL, fetchPlaceholders } from '../commerce.js';
+import getSiteRootPath from '../site-root.js';
 
 const DROPIN_WEBSITE_COOKIE = 'dropin_website_path';
-const getWebsitePath = () => getRootPath() || '/';
+const getWebsitePath = () => getSiteRootPath() || '/';
 const clearCookie = (name) => { document.cookie = `${name}=; path=/; Max-Age=0`; };
 
 export const getUserTokenCookie = () => getCookie('auth_dropin_user_token');

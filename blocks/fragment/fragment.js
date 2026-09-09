@@ -4,8 +4,8 @@
  * https://www.aem.live/developer/block-collection/fragment
  */
 
-import { getRootPath } from '@dropins/tools/lib/aem/configs.js';
 import { decorateMain } from '../../scripts/scripts.js';
+import getSiteRootPath from '../../scripts/site-root.js';
 import {
   loadSections,
 } from '../../scripts/aem.js';
@@ -17,7 +17,7 @@ import {
  */
 export async function loadFragment(path) {
   if (path && path.startsWith('/') && !path.startsWith('//')) {
-    const root = getRootPath().replace(/\/$/, '');
+    const root = getSiteRootPath().replace(/\/$/, '');
     const url = `${root}${path}.plain.html`;
     const resp = await fetch(url);
     if (resp.ok) {

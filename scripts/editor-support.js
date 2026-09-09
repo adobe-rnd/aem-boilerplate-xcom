@@ -1,19 +1,23 @@
 import {
-  decorateBlock,
-  decorateBlocks,
-  decorateButtons,
   decorateIcons,
-  decorateSections,
   loadBlock,
   loadScript,
   loadSections,
 } from './aem.js';
 import { decorateRichtext } from './editor-support-rte.js';
-import { decorateMain } from './scripts.js';
+import { decorateSections } from './commerce.js';
+import {
+  decorateBlock,
+  decorateBlocks,
+  decorateButtons,
+  decorateMain,
+} from './scripts.js';
 
 window.xwalk = window.xwalk || {};
 window.xwalk.isAuthorEnv = true;
 window.xwalk.previewSku = 'ADB150';
+
+let promiseChanges$ = Promise.resolve();
 
 // set the filter for an UE editable
 function setUEFilter(element, filter) {
@@ -26,6 +30,7 @@ function setUEFilter(element, filter) {
  */
 function updateUEInstrumentation() {
   const main = document.querySelector('main');
+  if (!main) return;
   const template = document.querySelector('meta[name="template"]')?.content;
   const sections = main.querySelectorAll('[data-aue-model$="section"]');
   const templates = ['order-details', 'enrichment', 'pdp', 'cart', 'mini-cart', 'plp',
@@ -49,6 +54,8 @@ function updateUEInstrumentation() {
 }
 
 async function applyChanges(event) {
+  await promiseChanges$;
+
   // redecorate default content and blocks on patches (in the properties rail)
   const { detail } = event;
 
@@ -57,7 +64,7 @@ async function applyChanges(event) {
     || detail?.request?.to?.container?.resource; // move in sections
   if (!resource) return false;
   const updates = detail?.response?.updates;
-  if (!updates.length) return false;
+  if (!updates?.length) return false;
   const { content } = updates[0];
   if (!content) return false;
 
@@ -71,6 +78,7 @@ async function applyChanges(event) {
   if (element) {
     if (element.matches('main')) {
       const newMain = parsedUpdate.querySelector(`[data-aue-resource="${resource}"]`);
+      if (!newMain) return false;
       newMain.style.display = 'none';
       element.insertAdjacentElement('afterend', newMain);
       decorateMain(newMain);
@@ -79,7 +87,7 @@ async function applyChanges(event) {
       element.remove();
       newMain.style.display = null;
       // eslint-disable-next-line no-use-before-define
-      attachEventListners(newMain);
+      attachEventListeners(newMain);
       return true;
     }
 
@@ -130,7 +138,7 @@ async function applyChanges(event) {
   return false;
 }
 
-function attachEventListners(main) {
+function attachEventListeners(main) {
   [
     'aue:content-patch',
     'aue:content-update',
@@ -140,7 +148,8 @@ function attachEventListners(main) {
     'aue:content-copy',
   ].forEach((eventType) => main?.addEventListener(eventType, async (event) => {
     event.stopPropagation();
-    const applied = await applyChanges(event);
+    promiseChanges$ = applyChanges(event);
+    const applied = await promiseChanges$;
     if (applied) {
       updateUEInstrumentation();
     } else {
@@ -149,7 +158,7 @@ function attachEventListners(main) {
   }));
 }
 
-attachEventListners(document.querySelector('main'));
+attachEventListeners(document.querySelector('main'));
 
 // update UE component filters on page load
 updateUEInstrumentation();

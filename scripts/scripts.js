@@ -2,7 +2,7 @@ import {
   loadHeader,
   loadFooter,
   decorateIcons,
-  decorateBlocks,
+  decorateBlock as decorateAemBlock,
   decorateTemplateAndTheme,
   waitForFirstImage,
   loadSection,
@@ -49,6 +49,56 @@ export function moveInstrumentation(from, to) {
       .map(({ nodeName }) => nodeName)
       .filter((attr) => attr.startsWith('data-aue-') || attr.startsWith('data-richtext-')),
   );
+}
+
+const BLOCK_CELL_WRAPPERS = new Set([
+  'P',
+  'PRE',
+  'UL',
+  'OL',
+  'PICTURE',
+  'TABLE',
+  'BLOCKQUOTE',
+  'H1',
+  'H2',
+  'H3',
+  'H4',
+  'H5',
+  'H6',
+]);
+
+function willWrapCell(cell) {
+  if (!cell.hasChildNodes()) return false;
+  const { firstElementChild } = cell;
+  const hasWrapper = firstElementChild && BLOCK_CELL_WRAPPERS.has(firstElementChild.tagName);
+  return !hasWrapper || (
+    firstElementChild.tagName === 'PICTURE'
+    && (cell.children.length > 1 || !!cell.textContent.trim())
+  );
+}
+
+export function decorateBlock(block) {
+  if (!block.classList[0] || block.dataset.blockStatus) return;
+
+  const wrappedCells = [...block.querySelectorAll(':scope > div > div')]
+    .filter(willWrapCell)
+    .map((cell) => ({
+      cell,
+      attributes: [...cell.attributes]
+        .map(({ nodeName }) => nodeName)
+        .filter((name) => name === 'class'
+          || name.startsWith('data-aue')
+          || name.startsWith('data-richtext')),
+    }));
+
+  decorateAemBlock(block);
+  wrappedCells.forEach(({ cell, attributes }) => {
+    moveAttributes(cell, cell.firstElementChild, attributes);
+  });
+}
+
+export function decorateBlocks(main) {
+  main.querySelectorAll('div.section > div > div').forEach(decorateBlock);
 }
 
 /*
@@ -174,7 +224,7 @@ function buildAutoBlocks(main) {
  * Decorates formatted links to style them as buttons.
  * @param {HTMLElement} main The main container element
  */
-function decorateButtons(main) {
+export function decorateButtons(main) {
   main.querySelectorAll('p a[href]').forEach((a) => {
     a.title = a.title || a.textContent;
     const p = a.closest('p');

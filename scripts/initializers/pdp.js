@@ -8,7 +8,7 @@ import {
   fetchPlaceholders,
   getOptionsUIDsFromUrl,
   getProductSku,
-  IS_UE,
+  isAuthorEnvironment,
   loadErrorPage,
   preloadFile,
 } from '../commerce.js';
@@ -83,8 +83,8 @@ await initializeDropin(async () => {
   const sku = getProductSku();
   const optionsUIDs = getOptionsUIDsFromUrl();
 
-  // If we cannot find a sku, and we are not in UE, there's a problem.
-  if (!sku && !IS_UE) {
+  // If we cannot find a sku outside an authoring environment, there's a problem.
+  if (!sku && !isAuthorEnvironment()) {
     return loadErrorPage();
   }
 

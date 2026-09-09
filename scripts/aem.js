@@ -28,6 +28,7 @@ function sampleRUM(checkpoint, data) {
         on: 1,
         off: 0,
         high: 10,
+        medium: 100,
         low: 1000,
       }[rate];
       const weight = rateValue !== undefined ? rateValue : 100;
@@ -156,36 +157,21 @@ function sampleRUM(checkpoint, data) {
 /**
  * Setup block utils.
  */
-function setup() {
+function setup(importUrl = import.meta.url) {
   window.hlx = window.hlx || {};
   window.hlx.RUM_MASK_URL = 'full';
   window.hlx.RUM_MANUAL_ENHANCE = true;
-  window.hlx.codeBasePath = '';
   window.hlx.lighthouse = new URLSearchParams(window.location.search).get('lighthouse') === 'on';
 
-  const scriptEl = document.querySelector('script[src$="/scripts/scripts.js"]');
-  if (scriptEl) {
-    try {
-      const scriptURL = new URL(scriptEl.src, window.location);
-      if (scriptURL.host === window.location.host) {
-        [window.hlx.codeBasePath] = scriptURL.pathname.split('/scripts/scripts.js');
-      } else {
-        [window.hlx.codeBasePath] = scriptURL.href.split('/scripts/scripts.js');
-      }
-    } catch (error) {
-      // eslint-disable-next-line no-console
-      console.log(error);
-    }
-  }
+  [window.hlx.codeBasePath] = new URL(importUrl).pathname.split('/scripts/');
 }
 
 /**
  * Auto initialization.
  */
-
 function init() {
   setup();
-  sampleRUM.collectBaseURL = window.origin;
+  sampleRUM.collectBaseURL = new URL(`${window.hlx.codeBasePath}/`, window.origin);
   sampleRUM();
 }
 
@@ -398,6 +384,7 @@ function wrapTextNodes(block) {
     'OL',
     'PICTURE',
     'TABLE',
+    'BLOCKQUOTE',
     'H1',
     'H2',
     'H3',
@@ -409,16 +396,6 @@ function wrapTextNodes(block) {
   const wrap = (el) => {
     const wrapper = document.createElement('p');
     wrapper.append(...el.childNodes);
-    [...el.attributes]
-      // move the instrumentation from the cell to the new paragraph, also keep the class
-      // in case the content is a buttton and the cell the button-container
-      .filter(({ nodeName }) => nodeName === 'class'
-        || nodeName.startsWith('data-aue')
-        || nodeName.startsWith('data-richtext'))
-      .forEach(({ nodeName, nodeValue }) => {
-        wrapper.setAttribute(nodeName, nodeValue);
-        el.removeAttribute(nodeName);
-      });
     el.append(wrapper);
   };
 
@@ -476,14 +453,14 @@ function decorateIcons(element, prefix = '') {
  * @param {Element} main The container element
  */
 function decorateSections(main) {
-  main.querySelectorAll(':scope > div:not([data-section-status])').forEach((section) => {
+  main.querySelectorAll(':scope > div').forEach((section) => {
     const wrappers = [];
     let defaultContent = false;
     [...section.children].forEach((e) => {
-      if ((e.tagName === 'DIV' && e.className) || !defaultContent) {
+      if (e.tagName === 'DIV' || !defaultContent) {
         const wrapper = document.createElement('div');
         wrappers.push(wrapper);
-        defaultContent = e.tagName !== 'DIV' || !e.className;
+        defaultContent = e.tagName !== 'DIV';
         if (defaultContent) wrapper.classList.add('default-content-wrapper');
       }
       wrappers[wrappers.length - 1].append(e);
@@ -564,50 +541,12 @@ async function loadBlock(block) {
 }
 
 /**
- * Decorates buttons within a container element.
- * @param {Element} element The container element
- */
-function decorateButtons(element) {
-  element.querySelectorAll('a').forEach((a) => {
-    a.title = a.title || a.textContent;
-    if (a.href !== a.textContent) {
-      const up = a.parentElement;
-      const twoup = a.parentElement.parentElement;
-      if (!a.querySelector('img')) {
-        if (up.childNodes.length === 1 && (up.tagName === 'P' || up.tagName === 'DIV')) {
-          a.className = 'button'; // default
-          up.classList.add('button-container');
-        }
-        if (
-          up.childNodes.length === 1
-          && up.tagName === 'STRONG'
-          && twoup.childNodes.length === 1
-          && twoup.tagName === 'P'
-        ) {
-          a.className = 'button primary';
-          twoup.classList.add('button-container');
-        }
-        if (
-          up.childNodes.length === 1
-          && up.tagName === 'EM'
-          && twoup.childNodes.length === 1
-          && twoup.tagName === 'P'
-        ) {
-          a.className = 'button secondary';
-          twoup.classList.add('button-container');
-        }
-      }
-    }
-  });
-}
-
-/**
  * Decorates a block.
  * @param {Element} block The block element
  */
 function decorateBlock(block) {
   const shortBlockName = block.classList[0];
-  if (shortBlockName && !block.dataset.blockStatus) {
+  if (shortBlockName) {
     block.classList.add('block');
     block.dataset.blockName = shortBlockName;
     block.dataset.blockStatus = 'initialized';
@@ -616,8 +555,6 @@ function decorateBlock(block) {
     blockWrapper.classList.add(`${shortBlockName}-wrapper`);
     const section = block.closest('.section');
     if (section) section.classList.add(`${shortBlockName}-container`);
-    // eslint-disable-next-line no-use-before-define
-    decorateButtons(block);
   }
 }
 
@@ -636,7 +573,12 @@ function decorateBlocks(main) {
  */
 async function loadHeader(header) {
   const headerBlock = buildBlock('header', '');
-  header.append(headerBlock);
+  const existingHeaderBlock = header.querySelector(':scope > .header');
+  if (existingHeaderBlock) {
+    existingHeaderBlock.replaceWith(headerBlock);
+  } else {
+    header.append(headerBlock);
+  }
   decorateBlock(headerBlock);
   return loadBlock(headerBlock);
 }
@@ -648,7 +590,12 @@ async function loadHeader(header) {
  */
 async function loadFooter(footer) {
   const footerBlock = buildBlock('footer', '');
-  footer.append(footerBlock);
+  const existingFooterBlock = footer.querySelector(':scope > .footer');
+  if (existingFooterBlock) {
+    existingFooterBlock.replaceWith(footerBlock);
+  } else {
+    footer.append(footerBlock);
+  }
   decorateBlock(footerBlock);
   return loadBlock(footerBlock);
 }
@@ -713,7 +660,6 @@ export {
   createOptimizedPicture,
   decorateBlock,
   decorateBlocks,
-  decorateButtons,
   decorateIcons,
   decorateSections,
   decorateTemplateAndTheme,

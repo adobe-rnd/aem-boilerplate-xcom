@@ -2,7 +2,6 @@ import { getCookie } from '@dropins/tools/lib.js';
 import {
   getHeaders,
   getConfigValue,
-  getRootPath,
   initializeConfig,
   getListOfRootPaths,
 } from '@dropins/tools/lib/aem/configs.js';
@@ -13,6 +12,7 @@ import {
   readBlockConfig,
 } from './aem.js';
 import initializeDropins from './initializers/index.js';
+import getSiteRootPath from './site-root.js';
 
 /**
  * Sanitizes the given string by:
@@ -51,6 +51,10 @@ export const CS_FETCH_GRAPHQL = new FetchGraphQL();
 // Environment checks
 export const IS_UE = window.location.hostname.includes('ue.da.live');
 export const IS_DA = new URL(window.location.href).searchParams.has('dapreview');
+
+export function isAuthorEnvironment() {
+  return IS_UE || IS_DA || window.hlx?.codeBasePath?.endsWith('.resource');
+}
 
 /**
  * Product template paths - pages that are templates and should use
@@ -268,7 +272,7 @@ export async function loadCommerceEager() {
  * @param {Element} main - The main element
  */
 export function decorateLinks(main) {
-  const root = getRootPath();
+  const root = getSiteRootPath();
   const roots = getListOfRootPaths();
 
   main.querySelectorAll('a').forEach((a) => {
@@ -341,7 +345,7 @@ export async function initializeCommerce() {
  * @returns {string} - The localized link
  */
 export function rootLink(link) {
-  const root = getRootPath().replace(/\/$/, '');
+  const root = getSiteRootPath().replace(/\/$/, '');
 
   // If the link is already localized, do nothing
   if (link.startsWith(root)) return link;
@@ -403,7 +407,7 @@ export function applyTemplates(doc) {
  * const updatedPlaceholders = await fetchPlaceholders();
  */
 export async function fetchPlaceholders(path) {
-  const rootPath = getRootPath();
+  const rootPath = getSiteRootPath();
   const fallback = getMetadata('placeholders');
   window.placeholders = window.placeholders || {};
 
@@ -474,7 +478,10 @@ export async function fetchPlaceholders(path) {
 
     // path
     if (path) {
-      const pathUrl = rootPath.replace(/\/$/, `/${path}`);
+      const placeholderPath = window.hlx?.codeBasePath?.endsWith('.resource')
+        ? path.replace(/\.json$/, '.hlx.json')
+        : path;
+      const pathUrl = rootPath.replace(/\/$/, `/${placeholderPath}`);
       promises.push(getOrCreateFetch(pathUrl, path));
     }
 
@@ -563,7 +570,8 @@ export async function fetchPlaceholders(path) {
  * @returns {Promise<Object>} - The config JSON from session storage
  */
 export async function getConfigFromSession() {
-  const configURL = `${window.location.origin}/config.json`;
+  const codeBasePath = window.hlx?.codeBasePath || '';
+  const configURL = `${window.location.origin}${codeBasePath}/config.json`;
 
   try {
     const configJSON = window.sessionStorage.getItem('config');
@@ -656,8 +664,8 @@ function getDefaultSkuFromBlock() {
  * @returns {boolean} True if the current page matches a product template path
  */
 export function isProductTemplate() {
-  const root = getRootPath();
-  const { pathname } = window.location;
+  const root = getSiteRootPath();
+  const pathname = window.location.pathname.replace(/\.html$/, '').replace(/\/$/, '');
 
   return PRODUCT_TEMPLATE_PATHS.some((templatePath) => {
     const fullPath = root ? `${root}${templatePath}` : templatePath;
@@ -682,7 +690,7 @@ export function getProductLink(urlKey, sku) {
  * @returns {string|null} The SKU from metadata or URL, or null if not found
  */
 export function getProductSku() {
-  if (isProductTemplate() && (IS_UE || IS_DA)) {
+  if (isProductTemplate() && isAuthorEnvironment()) {
     return getDefaultSkuFromBlock();
   }
 
@@ -859,7 +867,7 @@ function autolinkModals(element) {
  * @param {Element} main The container element
  */
 export function decorateSections(main) {
-  main.querySelectorAll(':scope > div').forEach((section) => {
+  main.querySelectorAll(':scope > div:not([data-section-status])').forEach((section) => {
     const wrappers = [];
     let defaultContent = false;
     [...section.children].forEach((e) => {
