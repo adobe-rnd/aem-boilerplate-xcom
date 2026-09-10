@@ -21,6 +21,23 @@
           "name": "keywords",
           "multi": true,
           "label": "Keywords"
+        },
+        {
+          "component": "reference",
+          "name": "image",
+          "label": "Image"
+        },
+        {
+          "component": "text",
+          "name": "robots",
+          "label": "Robots",
+          "description": "Index control via robots"
+        },
+        {
+          "component": "text",
+          "name": "sku",
+          "label": "SKU",
+          "description": "Optional: Specify a product SKU for this page"
         }
       ]
     }

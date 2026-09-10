@@ -1,6 +1,27 @@
-/*! Copyright 2025 Adobe
+/*! Copyright 2026 Adobe
 All Rights Reserved. */
-const e=`
+const n=`
+  fragment ESTIMATE_SHIPPING_METHOD_FRAGMENT on AvailableShippingMethod {
+    amount {
+      currency
+      value
+    }
+    available
+    carrier_code
+    carrier_title
+    error_message
+    method_code
+    method_title
+    price_excl_tax {
+      value
+      currency
+    }
+    price_incl_tax {
+      value
+      currency
+    }
+  }
+`,e=`
   fragment AVAILABLE_SHIPPING_METHOD_FRAGMENT on AvailableShippingMethod {
     amount {
       currency
@@ -20,7 +41,7 @@ const e=`
       currency
     }
   }
-`,t=`
+`,_=`
   fragment SELECTED_SHIPPING_METHOD_FRAGMENT on SelectedShippingMethod {
     amount {
       currency
@@ -39,7 +60,7 @@ const e=`
       currency
     }
   }
-`,a=`
+`,E=`
   fragment BILLING_CART_ADDRESS_FRAGMENT on BillingCartAddress {
     city
     company
@@ -112,18 +133,19 @@ const e=`
   }
 
   ${e}
-  ${t}
-`,_=`
+  ${_}
+`,t=`
   fragment AVAILABLE_PAYMENT_METHOD_FRAGMENT on AvailablePaymentMethod {
     code
     title
   }
-`,E=`
+`,a=`
   fragment SELECTED_PAYMENT_METHOD_FRAGMENT on SelectedPaymentMethod {
     code
     title
+    purchase_order_number
   }
-`,o=`
+`,A=`
   fragment CHECKOUT_DATA_FRAGMENT on Cart {
     id
     is_virtual
@@ -143,17 +165,17 @@ const e=`
     }
   }
 
-  ${a}
-  ${i}
-  ${_}
   ${E}
-`,T=`
+  ${i}
+  ${t}
+  ${a}
+`,l=`
   fragment CUSTOMER_FRAGMENT on Customer {
     firstname
     lastname
     email
   }
-`,A=`
+`,o=`
   fragment NEGOTIABLE_QUOTE_BILLING_ADDRESS_FRAGMENT on NegotiableQuoteBillingAddress {
     city
     company
@@ -167,6 +189,7 @@ const e=`
         value
       }
     }
+    customer_address_uid
     fax
     firstname
     lastname
@@ -184,7 +207,7 @@ const e=`
     uid
     vat_id
   }
-`,n=`
+`,r=`
   fragment NEGOTIABLE_QUOTE_SHIPPING_ADDRESS_FRAGMENT on NegotiableQuoteShippingAddress {
     available_shipping_methods {
       ...AVAILABLE_SHIPPING_METHOD_FRAGMENT
@@ -201,6 +224,7 @@ const e=`
         value
       }
     }
+    customer_address_uid
     fax
     firstname
     lastname
@@ -223,8 +247,8 @@ const e=`
   }
 
   ${e}
-  ${t}
-`,l=`
+  ${_}
+`,T=`
   fragment NEGOTIABLE_QUOTE_FRAGMENT on NegotiableQuote {
     available_payment_methods {
       ...AVAILABLE_PAYMENT_METHOD_FRAGMENT
@@ -246,9 +270,9 @@ const e=`
     uid
   }
 
-  ${A}
-  ${n}
-  ${_}
-  ${E}
-`;export{_ as AVAILABLE_PAYMENT_METHOD_FRAGMENT,e as AVAILABLE_SHIPPING_METHOD_FRAGMENT,a as BILLING_CART_ADDRESS_FRAGMENT,o as CHECKOUT_DATA_FRAGMENT,T as CUSTOMER_FRAGMENT,A as NEGOTIABLE_QUOTE_BILLING_ADDRESS_FRAGMENT,l as NEGOTIABLE_QUOTE_FRAGMENT,n as NEGOTIABLE_QUOTE_SHIPPING_ADDRESS_FRAGMENT,E as SELECTED_PAYMENT_METHOD_FRAGMENT,t as SELECTED_SHIPPING_METHOD_FRAGMENT,i as SHIPPING_CART_ADDRESS_FRAGMENT};
+  ${o}
+  ${r}
+  ${t}
+  ${a}
+`;export{t as AVAILABLE_PAYMENT_METHOD_FRAGMENT,e as AVAILABLE_SHIPPING_METHOD_FRAGMENT,E as BILLING_CART_ADDRESS_FRAGMENT,A as CHECKOUT_DATA_FRAGMENT,l as CUSTOMER_FRAGMENT,n as ESTIMATE_SHIPPING_METHOD_FRAGMENT,o as NEGOTIABLE_QUOTE_BILLING_ADDRESS_FRAGMENT,T as NEGOTIABLE_QUOTE_FRAGMENT,r as NEGOTIABLE_QUOTE_SHIPPING_ADDRESS_FRAGMENT,a as SELECTED_PAYMENT_METHOD_FRAGMENT,_ as SELECTED_SHIPPING_METHOD_FRAGMENT,i as SHIPPING_CART_ADDRESS_FRAGMENT};
 //# sourceMappingURL=fragments.js.map

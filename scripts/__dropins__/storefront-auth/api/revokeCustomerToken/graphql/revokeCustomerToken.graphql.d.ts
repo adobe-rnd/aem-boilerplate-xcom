@@ -2,7 +2,7 @@
  * ADOBE CONFIDENTIAL
  * __________________
  *
- *  Copyright 2024 Adobe
+ *  Copyright 2026 Adobe
  *  All Rights Reserved.
  *
  * NOTICE:  All information contained herein is, and remains
@@ -15,4 +15,3 @@
  * from Adobe.
  *******************************************************************/
 export declare const REVOKE_CUSTOMER_TOKEN = "\n  mutation REVOKE_CUSTOMER_TOKEN {\n    revokeCustomerToken {\n      result\n    }\n  }\n";
-//# sourceMappingURL=revokeCustomerToken.graphql.d.ts.map

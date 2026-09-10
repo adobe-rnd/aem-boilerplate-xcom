@@ -24,4 +24,4 @@ export * from './OrderSearch';
 export * from './OrderStatus';
 export * from './ReturnsList';
 export * from './ShippingStatus';
-//# sourceMappingURL=index.d.ts.map
+export * from './OrderComments';

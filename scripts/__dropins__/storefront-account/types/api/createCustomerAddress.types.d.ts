@@ -18,11 +18,16 @@ export interface CreateCustomerAddressResponse {
     data: {
         createCustomerAddress: {
             firstname: string;
+            uid: string;
         };
     };
     errors?: {
         message: string;
     }[];
+}
+export interface CreateCustomerAddressResult {
+    firstname: string;
+    uid: string;
 }
 interface Region {
     region_id: number;
@@ -60,4 +65,3 @@ export interface AddressForm {
     vat_id?: string;
 }
 export {};
-//# sourceMappingURL=createCustomerAddress.types.d.ts.map

@@ -35,9 +35,9 @@ export declare const shippingAddressFixture: {
     };
     telephone: string;
     custom_attributes: never[];
-    available_shipping_methods: {
+    available_shipping_methods: ({
         amount: {
-            currency: import('../../../__generated__/types').CurrencyEnum;
+            currency: import("../../../__generated__/types").CurrencyEnum;
             value: number;
         };
         available: boolean;
@@ -48,17 +48,40 @@ export declare const shippingAddressFixture: {
         method_title: string;
         price_excl_tax: {
             value: number;
-            currency: import('../../../__generated__/types').CurrencyEnum;
+            currency: import("../../../__generated__/types").CurrencyEnum;
         };
         price_incl_tax: {
             value: number;
-            currency: import('../../../__generated__/types').CurrencyEnum;
+            currency: import("../../../__generated__/types").CurrencyEnum;
         };
-    }[];
+        original_amount?: undefined;
+    } | {
+        amount: {
+            currency: import("../../../__generated__/types").CurrencyEnum;
+            value: number;
+        };
+        available: boolean;
+        carrier_code: string;
+        carrier_title: string;
+        error_message: string;
+        method_code: string;
+        method_title: string;
+        original_amount: {
+            value: number;
+            currency: import("../../../__generated__/types").CurrencyEnum;
+        };
+        price_excl_tax: {
+            value: number;
+            currency: import("../../../__generated__/types").CurrencyEnum;
+        };
+        price_incl_tax: {
+            value: number;
+            currency: import("../../../__generated__/types").CurrencyEnum;
+        };
+    })[];
     selected_shipping_method: null;
     prefix: string;
     suffix: string;
     middlename: string;
     fax: string;
 };
-//# sourceMappingURL=shipping-address.d.ts.map

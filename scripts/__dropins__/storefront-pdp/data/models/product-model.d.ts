@@ -12,7 +12,8 @@ export interface ProductModel {
     metaTitle?: string;
     description?: string;
     images?: Image[];
-    prices: Prices;
+    videos?: Video[];
+    prices?: Prices;
     attributes?: Attribute[];
     options?: Option[];
     optionUIDs?: string[];
@@ -21,6 +22,7 @@ export interface ProductModel {
     externalId?: string;
     externalParentId?: string;
     variantSku?: string;
+    variantName?: string;
     productType?: ProductType | undefined;
 }
 interface Image {
@@ -28,6 +30,17 @@ interface Image {
     label: string;
     width: number;
     height: number;
+    roles?: string[];
+}
+interface Video {
+    url: string;
+    title?: string;
+    description?: string;
+    preview?: {
+        url: string;
+        label?: string;
+        roles?: string[];
+    };
 }
 interface Price {
     amount?: number;
@@ -36,9 +49,14 @@ interface Price {
     minimumAmount?: number;
     variant?: 'default' | 'strikethrough';
 }
+export interface Tier {
+    tier: Price;
+    quantity: number;
+}
 interface Prices {
     regular: Price;
     final: Price;
+    tiers: Tier[];
     visible: boolean;
 }
 export interface Option {
@@ -50,18 +68,23 @@ export interface Option {
     multiple: boolean;
     items: OptionValue[];
 }
-interface OptionValue {
+export interface OptionValue {
     id: string;
     label: string;
     inStock: boolean;
     value: string;
     selected: boolean;
+    /** Default quantity from Catalog Service for bundle option values. */
+    quantity?: number;
+    /** When true, shoppers may change this bundle option value quantity. */
+    canEditQuantity?: boolean;
     product?: any;
 }
 interface Attribute {
     id: string;
     label: string;
     value: string;
+    roles?: string[];
 }
 export {};
 //# sourceMappingURL=product-model.d.ts.map

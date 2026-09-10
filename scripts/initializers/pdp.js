@@ -1,19 +1,14 @@
-import { getHeaders } from '@dropins/tools/lib/aem/configs.js';
 import { initializers } from '@dropins/tools/initializer.js';
 import { Image, provider as UI } from '@dropins/tools/components.js';
-import {
-  initialize,
-  setEndpoint,
-  setFetchGraphQlHeaders,
-  fetchProductData,
-} from '@dropins/storefront-pdp/api.js';
+import { initialize, setEndpoint, fetchProductData } from '@dropins/storefront-pdp/api.js';
 import { isAemAssetsEnabled, tryGenerateAemAssetsOptimizedUrl } from '@dropins/tools/lib/aem/assets.js';
 import { initializeDropin } from './index.js';
 import {
+  CS_FETCH_GRAPHQL,
   fetchPlaceholders,
-  commerceEndpointWithQueryParams,
   getOptionsUIDsFromUrl,
   getProductSku,
+  isAuthorEnvironment,
   loadErrorPage,
   preloadFile,
 } from '../commerce.js';
@@ -78,26 +73,25 @@ function preloadPDPAssets() {
 }
 
 await initializeDropin(async () => {
+  // Inherit Fetch GraphQL Instance (Catalog Service)
+  setEndpoint(CS_FETCH_GRAPHQL);
+
   // Preload PDP assets immediately when this module is imported
   preloadPDPAssets();
 
-  // Set Fetch Endpoint (Service)
-  setEndpoint(await commerceEndpointWithQueryParams());
-
-  // Set Fetch Headers (Service)
-  setFetchGraphQlHeaders((prev) => ({ ...prev, ...getHeaders('cs') }));
-
+  // Fetch product data
   const sku = getProductSku();
   const optionsUIDs = getOptionsUIDsFromUrl();
+
+  // If we cannot find a sku outside an authoring environment, there's a problem.
+  if (!sku && !isAuthorEnvironment()) {
+    return loadErrorPage();
+  }
 
   const [product, labels] = await Promise.all([
     fetchProductData(sku, { optionsUIDs, skipTransform: true }).then(preloadImageMiddleware),
     fetchPlaceholders('placeholders/pdp.json'),
   ]);
-
-  if (!product?.sku) {
-    return loadErrorPage();
-  }
 
   const langDefinitions = {
     default: {
@@ -130,7 +124,7 @@ async function preloadImageMiddleware(data) {
     let imageParams = {
       ...IMAGES_SIZES,
     };
-    if (isAemAssetsEnabled) {
+    if (isAemAssetsEnabled()) {
       url = tryGenerateAemAssetsOptimizedUrl(image, data.sku, {});
       imageParams = {
         ...imageParams,

@@ -8,6 +8,7 @@ import { fetchPlaceholders, getProductLink, rootLink } from '../../scripts/comme
 
 import renderAuthCombine from './renderAuthCombine.js';
 import { renderAuthDropdown } from './renderAuthDropdown.js';
+import renderSellerAssistedBuyingBanner from './renderSellerAssistedBuyingBanner.js';
 
 // media query match that indicates mobile/tablet width
 const isDesktop = window.matchMedia('(min-width: 900px)');
@@ -22,6 +23,7 @@ function closeOnEscape(e) {
   if (e.code === 'Escape') {
     const nav = document.getElementById('nav');
     const navSections = nav.querySelector('.nav-sections');
+    if (!navSections) return;
     const navSectionExpanded = navSections.querySelector('[aria-expanded="true"]');
     if (navSectionExpanded && isDesktop.matches) {
       toggleAllNavSections(navSections);
@@ -41,6 +43,7 @@ function closeOnFocusLost(e) {
   const nav = e.currentTarget;
   if (!nav.contains(e.relatedTarget)) {
     const navSections = nav.querySelector('.nav-sections');
+    if (!navSections) return;
     const navSectionExpanded = navSections.querySelector('[aria-expanded="true"]');
     if (navSectionExpanded && isDesktop.matches) {
       toggleAllNavSections(navSections, false);
@@ -71,6 +74,7 @@ function focusNavSection() {
  * @param {Boolean} expanded Whether the element should be expanded or collapsed
  */
 function toggleAllNavSections(sections, expanded = false) {
+  if (!sections) return;
   sections
     .querySelectorAll('.nav-sections .default-content-wrapper > ul > li')
     .forEach((section) => {
@@ -92,20 +96,22 @@ function toggleMenu(nav, navSections, forceExpanded = null) {
   toggleAllNavSections(navSections, expanded || isDesktop.matches ? 'false' : 'true');
   button.setAttribute('aria-label', expanded ? 'Open navigation' : 'Close navigation');
   // enable nav dropdown keyboard accessibility
-  const navDrops = navSections.querySelectorAll('.nav-drop');
-  if (isDesktop.matches) {
-    navDrops.forEach((drop) => {
-      if (!drop.hasAttribute('tabindex')) {
-        drop.setAttribute('tabindex', 0);
-        drop.addEventListener('focus', focusNavSection);
-      }
-    });
-  } else {
-    navDrops.forEach((drop) => {
-      drop.classList.remove('active');
-      drop.removeAttribute('tabindex');
-      drop.removeEventListener('focus', focusNavSection);
-    });
+  if (navSections) {
+    const navDrops = navSections.querySelectorAll('.nav-drop');
+    if (isDesktop.matches) {
+      navDrops.forEach((drop) => {
+        if (!drop.hasAttribute('tabindex')) {
+          drop.setAttribute('tabindex', 0);
+          drop.addEventListener('focus', focusNavSection);
+        }
+      });
+    } else {
+      navDrops.forEach((drop) => {
+        drop.classList.remove('active');
+        drop.removeAttribute('tabindex');
+        drop.removeEventListener('focus', focusNavSection);
+      });
+    }
   }
 
   // enable menu collapse on escape keypress
@@ -157,6 +163,12 @@ function setupSubmenu(navSection) {
  * @param {Element} block The header block element
  */
 export default async function decorate(block) {
+  // Render a banner at the top of the page if seller assisted buying session identified
+  const sellerAssistedBuyingBanner = await renderSellerAssistedBuyingBanner();
+  if (sellerAssistedBuyingBanner && !document.querySelector('.seller-assisted-buying-banner')) {
+    document.body.insertAdjacentElement('afterbegin', sellerAssistedBuyingBanner);
+  }
+
   // load nav as fragment
   const navMeta = getMetadata('nav');
   const navPath = navMeta ? new URL(navMeta, window.location).pathname : '/nav';
@@ -234,8 +246,9 @@ export default async function decorate(block) {
 
   const minicart = document.createRange().createContextualFragment(`
      <div class="minicart-wrapper nav-tools-wrapper">
-       <button type="button" class="nav-cart-button" aria-label="Cart"></button>
-       <div class="minicart-panel nav-tools-panel"></div>
+       <button type="button" class="nav-cart-button" aria-label="Cart" aria-haspopup="dialog" aria-expanded="false" aria-controls="minicart-panel"></button>
+       <div class="minicart-panel nav-tools-panel" id="minicart-panel"></div>
+       <div class="nav-cart-status" role="status" aria-live="polite"></div>
      </div>
    `);
 
@@ -244,6 +257,11 @@ export default async function decorate(block) {
   const minicartPanel = navTools.querySelector('.minicart-panel');
 
   const cartButton = navTools.querySelector('.nav-cart-button');
+
+  // Kept mounted at all times so the item count change is reliably
+  // announced instead of being missed, since the visual badge is a
+  // `data-count` attribute rendered via CSS and isn't announced on its own.
+  const cartStatus = navTools.querySelector('.nav-cart-status');
 
   if (excludeMiniCartFromPaths.includes(window.location.pathname)) {
     cartButton.style.display = 'none';
@@ -316,20 +334,39 @@ export default async function decorate(block) {
     }
 
     togglePanel(minicartPanel, state);
+    cartButton.setAttribute(
+      'aria-expanded',
+      minicartPanel.classList.contains('nav-tools-panel--show') ? 'true' : 'false',
+    );
   }
 
   cartButton.addEventListener('click', () => toggleMiniCart(!minicartPanel.classList.contains('nav-tools-panel--show')));
 
   // Cart Item Counter
+  let previousCartQuantity;
+
   events.on('cart/data', (data) => {
     // preload mini cart fragment if user has a cart
     if (data) loadMiniCartFragment();
 
-    if (data?.totalQuantity) {
-      cartButton.setAttribute('data-count', data.totalQuantity);
+    const totalQuantity = data?.totalQuantity ?? 0;
+
+    if (totalQuantity) {
+      cartButton.setAttribute('data-count', totalQuantity);
     } else {
       cartButton.removeAttribute('data-count');
     }
+
+    // Skip the announcement for the initial value on page load so screen
+    // reader users aren't told about the cart contents before they've
+    // interacted with it; only announce actual changes.
+    if (previousCartQuantity !== undefined && previousCartQuantity !== totalQuantity) {
+      cartStatus.textContent = totalQuantity
+        ? `Cart updated, ${totalQuantity} item${totalQuantity === 1 ? '' : 's'} in cart`
+        : 'Cart updated, cart is empty';
+    }
+
+    previousCartQuantity = totalQuantity;
   }, { eager: true });
 
   /** Search */
@@ -440,6 +477,9 @@ export default async function decorate(block) {
             search({
               phrase,
               pageSize,
+              filter: [
+                { attribute: 'visibility', in: ['Search', 'Catalog, Search'] },
+              ],
             }, { scope: 'popover' });
           },
         })(searchForm);

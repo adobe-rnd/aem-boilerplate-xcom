@@ -6,7 +6,8 @@
         "component": "reference",
         "name": "image",
         "label": "Image",
-        "multi": false
+        "multi": false,
+        "valueType": "string"
       },
       {
         "component": "text",
@@ -114,6 +115,100 @@
             "value": "highlight"
           }
         ]
+      },
+      {
+        "component": "select",
+        "name": "padding",
+        "label": "Padding",
+        "options": [
+          {
+            "name": "Default",
+            "value": ""
+          },
+          {
+            "name": "Small",
+            "value": "small"
+          },
+          {
+            "name": "Medium",
+            "value": "medium"
+          },
+          {
+            "name": "Large",
+            "value": "large"
+          },
+          {
+            "name": "Big",
+            "value": "big"
+          },
+          {
+            "name": "XBig",
+            "value": "xbig"
+          },
+          {
+            "name": "XXBig",
+            "value": "xxbig"
+          },
+          {
+            "name": "Huge",
+            "value": "huge"
+          },
+          {
+            "name": "XHuge",
+            "value": "xhuge"
+          },
+          {
+            "name": "XXHuge",
+            "value": "xxhuge"
+          }
+        ]
+      },
+      {
+        "component": "select",
+        "name": "margin",
+        "label": "Margin",
+        "options": [
+          {
+            "name": "Default",
+            "value": ""
+          },
+          {
+            "name": "Small",
+            "value": "small"
+          },
+          {
+            "name": "Medium",
+            "value": "medium"
+          },
+          {
+            "name": "Large",
+            "value": "large"
+          },
+          {
+            "name": "Big",
+            "value": "big"
+          },
+          {
+            "name": "XBig",
+            "value": "xbig"
+          },
+          {
+            "name": "XXBig",
+            "value": "xxbig"
+          },
+          {
+            "name": "Huge",
+            "value": "huge"
+          },
+          {
+            "name": "XHuge",
+            "value": "xhuge"
+          },
+          {
+            "name": "XXHuge",
+            "value": "xxhuge"
+          }
+        ]
       }
     ]
   },
@@ -150,6 +245,27 @@
     ]
   },
   {
+    "id": "accordion-item",
+    "fields": [
+      {
+        "component": "richtext",
+        "valueType": "string",
+        "name": "summary",
+        "value": "",
+        "label": "Summary",
+        "required": true
+      },
+      {
+        "component": "richtext",
+        "name": "text",
+        "value": "",
+        "label": "Text",
+        "valueType": "string",
+        "required": true
+      }
+    ]
+  },
+  {
     "id": "card",
     "fields": [
       {
@@ -160,9 +276,40 @@
         "multi": false
       },
       {
+        "component": "text",
+        "valueType": "string",
+        "name": "imageAlt",
+        "label": "Alt",
+        "value": ""
+      },
+      {
         "component": "richtext",
         "name": "text",
         "value": "",
+        "label": "Text",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "carousel-item",
+    "fields": [
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "backgroundImage",
+        "label": "Background Image",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "backgroundImageAlt",
+        "label": "Background Image Alt"
+      },
+      {
+        "component": "richtext",
+        "name": "text",
         "label": "Text",
         "valueType": "string"
       }
@@ -261,12 +408,22 @@
         "description": "Enable the ability to undo the removal of an item from the cart"
       },
       {
+        "component": "boolean",
+        "name": "enable-updating-product",
+        "label": "Enable Updating Product",
+        "description": "Enable the ability to update products in the cart"
+      },
+      {
         "component": "number",
         "name": "max-items",
         "label": "Max Items",
         "description": "Maximum number of items to display in the cart"
       }
     ]
+  },
+  {
+    "id": "commerce-checkout-success",
+    "fields": []
   },
   {
     "id": "commerce-mini-cart",
@@ -302,6 +459,10 @@
         "description": "Enable the ability to undo the removal of an item from the cart"
       }
     ]
+  },
+  {
+    "id": "commerce-order-comments",
+    "fields": []
   },
   {
     "id": "commerce-orders-list",
@@ -419,7 +580,14 @@
   },
   {
     "id": "product-details",
-    "fields": []
+    "fields": [
+      {
+        "component": "text",
+        "name": "defaultSku",
+        "label": "Default SKU",
+        "description": "Optional: Specify a default product SKU if this is a template page"
+      }
+    ]
   },
   {
     "id": "product-list-page",
@@ -430,6 +598,13 @@
         "label": "URL Path",
         "valueType": "string",
         "description": "Current Category URL Path"
+      },
+      {
+        "component": "number",
+        "name": "pageSize",
+        "label": "Page Size",
+        "value": 9,
+        "description": "Number of products per page (default: 9)"
       }
     ]
   },
@@ -443,11 +618,51 @@
         "description": "Current SKU"
       },
       {
+        "component": "number",
+        "name": "currentprice",
+        "label": "Current Price",
+        "description": "Current product price"
+      },
+      {
         "component": "text",
         "name": "recid",
         "label": "Record ID",
         "description": "Record ID",
         "required": true
+      }
+    ]
+  },
+  {
+    "id": "targeted-block",
+    "fields": [
+      {
+        "component": "richtext",
+        "name": "content",
+        "label": "Content"
+      },
+      {
+        "component": "text",
+        "name": "customerGroups",
+        "label": "Customer Groups",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "customerSegments",
+        "label": "Customer Segments",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "type",
+        "label": "Type",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "fragment",
+        "label": "Fragment",
+        "valueType": "string"
       }
     ]
   },

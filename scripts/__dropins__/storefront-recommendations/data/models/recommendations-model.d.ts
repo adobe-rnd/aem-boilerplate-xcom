@@ -23,6 +23,7 @@ export interface RecommendationUnitModel {
     typeId: string;
     unitId: string;
     unitName: string;
+    userError: string;
 }
 export type PageType = 'Product';
 export interface Item {
@@ -39,6 +40,7 @@ export interface Item {
     visibility: string;
     queryType: string;
     itemType: string;
+    inStock?: boolean;
 }
 interface ItemImage {
     label: string;
@@ -63,7 +65,8 @@ export interface GraphQLResponse {
         message: string;
     }>;
     data?: {
-        recommendations: RecommendationsResponse;
+        recommendations?: RecommendationsResponse;
+        recommendationsByUnitIds?: RecommendationsResponse;
     };
 }
 export {};

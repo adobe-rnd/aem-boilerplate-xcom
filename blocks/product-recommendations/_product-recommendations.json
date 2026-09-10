@@ -28,6 +28,12 @@
           "description": "Current SKU"
         },
         {
+          "component": "number",
+          "name": "currentprice",
+          "label": "Current Price",
+          "description": "Current product price"
+        },
+        {
           "component": "text",
           "name": "recid",
           "label": "Record ID",

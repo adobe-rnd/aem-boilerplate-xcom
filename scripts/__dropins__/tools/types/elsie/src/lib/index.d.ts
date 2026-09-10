@@ -24,4 +24,5 @@ export * from './is-number';
 export * from './deviceUtils';
 export * from './get-path-value';
 export * from './get-cookie';
-//# sourceMappingURL=index.d.ts.map
+export * from './get-price-formatter';
+export * from './format-calendar-date';

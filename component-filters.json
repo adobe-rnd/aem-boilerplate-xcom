@@ -18,10 +18,13 @@
       "image",
       "button",
       "title",
+      "accordion",
+      "carousel",
       "hero",
       "cards",
       "columns",
       "fragment",
+      "targeted-block",
       "product-teaser",
       "product-recommendations"
     ]
@@ -33,10 +36,13 @@
       "image",
       "button",
       "title",
+      "accordion",
+      "carousel",
       "hero",
       "cards",
       "columns",
       "fragment",
+      "targeted-block",
       "product-teaser",
       "product-recommendations"
     ]
@@ -48,10 +54,13 @@
       "image",
       "button",
       "title",
+      "accordion",
+      "carousel",
       "hero",
       "cards",
       "columns",
       "fragment",
+      "targeted-block",
       "enrichment",
       "product-teaser",
       "product-recommendations",
@@ -65,10 +74,13 @@
       "image",
       "button",
       "title",
+      "accordion",
+      "carousel",
       "hero",
       "cards",
       "columns",
       "fragment",
+      "targeted-block",
       "enrichment",
       "product-details",
       "product-teaser",
@@ -82,10 +94,13 @@
       "image",
       "button",
       "title",
+      "accordion",
+      "carousel",
       "hero",
       "cards",
       "columns",
       "fragment",
+      "targeted-block",
       "commerce-mini-cart"
     ]
   },
@@ -96,10 +111,13 @@
       "image",
       "button",
       "title",
+      "accordion",
+      "carousel",
       "hero",
       "cards",
       "columns",
       "fragment",
+      "targeted-block",
       "commerce-cart",
       "product-teaser",
       "product-recommendations"
@@ -112,10 +130,13 @@
       "image",
       "button",
       "title",
+      "accordion",
+      "carousel",
       "hero",
       "cards",
       "columns",
       "fragment",
+      "targeted-block",
       "commerce-order-header",
       "commerce-order-status",
       "commerce-shipping-status",
@@ -124,6 +145,7 @@
       "commerce-gift-options",
       "commerce-order-product-list",
       "commerce-order-returns",
+      "commerce-order-comments",
       "product-teaser",
       "product-recommendations"
     ]
@@ -135,11 +157,15 @@
       "image",
       "button",
       "title",
+      "accordion",
+      "carousel",
       "hero",
       "cards",
       "columns",
       "fragment",
-      "commerce-checkout"
+      "targeted-block",
+      "commerce-checkout",
+      "commerce-checkout-success"
     ]
   },
   {
@@ -149,10 +175,13 @@
       "image",
       "button",
       "title",
+      "accordion",
+      "carousel",
       "hero",
       "cards",
       "columns",
       "fragment",
+      "targeted-block",
       "commerce-search-order"
     ]
   },
@@ -163,10 +192,13 @@
       "image",
       "button",
       "title",
+      "accordion",
+      "carousel",
       "hero",
       "cards",
       "columns",
       "fragment",
+      "targeted-block",
       "product-list-page"
     ]
   },
@@ -177,10 +209,13 @@
       "image",
       "button",
       "title",
+      "accordion",
+      "carousel",
       "hero",
       "cards",
       "columns",
       "fragment",
+      "targeted-block",
       "commerce-login"
     ]
   },
@@ -191,10 +226,13 @@
       "image",
       "button",
       "title",
+      "accordion",
+      "carousel",
       "hero",
       "cards",
       "columns",
       "fragment",
+      "targeted-block",
       "commerce-forgot-password"
     ]
   },
@@ -205,10 +243,13 @@
       "image",
       "button",
       "title",
+      "accordion",
+      "carousel",
       "hero",
       "cards",
       "columns",
       "fragment",
+      "targeted-block",
       "commerce-create-account"
     ]
   },
@@ -219,10 +260,13 @@
       "image",
       "button",
       "title",
+      "accordion",
+      "carousel",
       "hero",
       "cards",
       "columns",
       "fragment",
+      "targeted-block",
       "commerce-account-sidebar",
       "commerce-account-header",
       "commerce-orders-list",
@@ -238,10 +282,13 @@
       "image",
       "button",
       "title",
+      "accordion",
+      "carousel",
       "hero",
       "cards",
       "columns",
       "fragment",
+      "targeted-block",
       "commerce-account-sidebar",
       "commerce-orders-list"
     ]
@@ -253,10 +300,13 @@
       "image",
       "button",
       "title",
+      "accordion",
+      "carousel",
       "hero",
       "cards",
       "columns",
       "fragment",
+      "targeted-block",
       "commerce-account-sidebar",
       "commerce-addresses"
     ]
@@ -268,10 +318,13 @@
       "image",
       "button",
       "title",
+      "accordion",
+      "carousel",
       "hero",
       "cards",
       "columns",
       "fragment",
+      "targeted-block",
       "commerce-account-sidebar",
       "commerce-returns-list"
     ]
@@ -283,10 +336,13 @@
       "image",
       "button",
       "title",
+      "accordion",
+      "carousel",
       "hero",
       "cards",
       "columns",
       "fragment",
+      "targeted-block",
       "commerce-account-sidebar",
       "commerce-order-header",
       "commerce-order-status",
@@ -294,7 +350,8 @@
       "commerce-customer-details",
       "commerce-order-cost-summary",
       "commerce-order-product-list",
-      "commerce-order-returns"
+      "commerce-order-returns",
+      "commerce-order-comments"
     ]
   },
   {
@@ -304,10 +361,13 @@
       "image",
       "button",
       "title",
+      "accordion",
+      "carousel",
       "hero",
       "cards",
       "columns",
       "fragment",
+      "targeted-block",
       "commerce-search-order"
     ]
   },
@@ -318,10 +378,13 @@
       "image",
       "button",
       "title",
+      "accordion",
+      "carousel",
       "hero",
       "cards",
       "columns",
       "fragment",
+      "targeted-block",
       "commerce-return-header",
       "commerce-order-status",
       "commerce-shipping-status",
@@ -336,10 +399,13 @@
       "image",
       "button",
       "title",
+      "accordion",
+      "carousel",
       "hero",
       "cards",
       "columns",
       "fragment",
+      "targeted-block",
       "commerce-create-return"
     ]
   },
@@ -350,10 +416,13 @@
       "image",
       "button",
       "title",
+      "accordion",
+      "carousel",
       "hero",
       "cards",
       "columns",
       "fragment",
+      "targeted-block",
       "commerce-confirm-account"
     ]
   },
@@ -364,10 +433,13 @@
       "image",
       "button",
       "title",
+      "accordion",
+      "carousel",
       "hero",
       "cards",
       "columns",
       "fragment",
+      "targeted-block",
       "commerce-create-password"
     ]
   },
@@ -378,17 +450,32 @@
       "image",
       "button",
       "title",
+      "accordion",
+      "carousel",
       "hero",
       "cards",
       "columns",
       "fragment",
+      "targeted-block",
       "commerce-wishlist"
+    ]
+  },
+  {
+    "id": "accordion",
+    "components": [
+      "accordion-item"
     ]
   },
   {
     "id": "cards",
     "components": [
       "card"
+    ]
+  },
+  {
+    "id": "carousel",
+    "components": [
+      "carousel-item"
     ]
   },
   {

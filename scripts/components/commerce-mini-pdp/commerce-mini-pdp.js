@@ -1,13 +1,20 @@
 import { events } from '@dropins/tools/event-bus.js';
 import { render as pdpRender } from '@dropins/storefront-pdp/render.js';
-import * as pdpApi from '@dropins/storefront-pdp/api.js';
+import {
+  setEndpoint,
+  fetchProductData,
+  initialize,
+  setProductConfigurationValues,
+  getProductConfigurationValues,
+  isProductConfigurationValid,
+} from '@dropins/storefront-pdp/api.js';
 import { initializers } from '@dropins/tools/initializer.js';
-import { getHeaders } from '@dropins/tools/lib/aem/configs.js';
 import {
   InLineAlert,
   Icon,
   Button,
   Image,
+  ProgressSpinner,
   provider as UI,
 } from '@dropins/tools/components.js';
 import { h } from '@dropins/tools/preact.js';
@@ -21,10 +28,7 @@ import ProductQuantity from '@dropins/storefront-pdp/containers/ProductQuantity.
 // Initializers
 import '../../initializers/cart.js';
 
-import {
-  fetchPlaceholders,
-  commerceEndpointWithQueryParams,
-} from '../../commerce.js';
+import { fetchPlaceholders, CS_FETCH_GRAPHQL } from '../../commerce.js';
 
 import { loadCSS } from '../../aem.js';
 
@@ -63,11 +67,10 @@ export default async function createMiniPDP(cartItem, onUpdate, onClose) {
   };
 
   try {
-    // Configure PDP API endpoint and headers (same as main PDP initializer)
-    pdpApi.setEndpoint(await commerceEndpointWithQueryParams());
-    pdpApi.setFetchGraphQlHeaders((prev) => ({ ...prev, ...getHeaders('cs') }));
+    // Inherit Fetch GraphQL Instance (Catalog Service)
+    setEndpoint(CS_FETCH_GRAPHQL);
 
-    const product = await pdpApi.fetchProductData(sku, {
+    const product = await fetchProductData(sku, {
       optionsUIDs,
       skipTransform: true,
     });
@@ -77,7 +80,7 @@ export default async function createMiniPDP(cartItem, onUpdate, onClose) {
     }
 
     // Initialize PDP API with pre-selected options
-    await initializers.mountImmediately(pdpApi.initialize, {
+    await initializers.mountImmediately(initialize, {
       scope: 'modal',
       sku,
       optionsUIDs,
@@ -106,7 +109,7 @@ export default async function createMiniPDP(cartItem, onUpdate, onClose) {
     }
 
     // Set initial quantity using PDP API BEFORE rendering components
-    pdpApi.setProductConfigurationValues((prev) => ({
+    setProductConfigurationValues((prev) => ({
       ...prev,
       quantity: freshCartItem.quantity || 1,
     }), { scope: 'modal' });
@@ -140,7 +143,10 @@ export default async function createMiniPDP(cartItem, onUpdate, onClose) {
           </div>
         </div>
         <div class="mini-pdp__buttons">
-          <div class="mini-pdp__update-button"></div>
+          <div class="mini-pdp__update-button-wrapper">
+            <div class="mini-pdp__update-button"></div>
+            <div class="mini-pdp__update-spinner"></div>
+          </div>
           <div class="mini-pdp__cancel-button"></div>
           <div class="mini-pdp__buttons__redirect-to-pdp">
             <a href="/products/${product.urlKey}/${product.sku}">
@@ -156,8 +162,13 @@ export default async function createMiniPDP(cartItem, onUpdate, onClose) {
     const $gallery = fragment.querySelector('.mini-pdp__gallery');
     const $options = fragment.querySelector('.mini-pdp__options');
     const $quantity = fragment.querySelector('.mini-pdp__quantity');
+    const $updateButtonWrapper = fragment.querySelector(
+      '.mini-pdp__update-button-wrapper',
+    );
     const $updateButton = fragment.querySelector('.mini-pdp__update-button');
+    const $updateSpinner = fragment.querySelector('.mini-pdp__update-spinner');
     const $cancelButton = fragment.querySelector('.mini-pdp__cancel-button');
+    const updateButtonBusyClass = 'mini-pdp__update-button-wrapper--busy';
 
     miniPDPContainer.appendChild(fragment);
 
@@ -169,6 +180,7 @@ export default async function createMiniPDP(cartItem, onUpdate, onClose) {
     // State management
     let isLoading = false;
     let inlineAlert = null;
+    let updateSpinner = null;
 
     // Render components
     const [
@@ -212,15 +224,21 @@ export default async function createMiniPDP(cartItem, onUpdate, onClose) {
 
           try {
             isLoading = true;
+            $updateButtonWrapper.classList.add(updateButtonBusyClass);
             updateButton.setProps((prev) => ({
               ...prev,
               children: placeholders?.Global?.UpdatingInCart,
-              disabled: true,
             }));
+            // ProgressSpinner has aria-live="polite" + role="status" built in,
+            // so its label is announced to screen readers.
+            updateSpinner = await UI.render(ProgressSpinner, {
+              className: 'mini-pdp__update-spinner-icon',
+              ariaLabel: placeholders?.Global?.UpdatingInCart,
+            })($updateSpinner);
 
             // Get current product configuration
-            const values = pdpApi.getProductConfigurationValues({ scope: 'modal' });
-            const valid = pdpApi.isProductConfigurationValid({ scope: 'modal' });
+            const values = getProductConfigurationValues({ scope: 'modal' });
+            const valid = isProductConfigurationValid({ scope: 'modal' });
 
             if (!valid) {
               throw new Error('Please select all required options');
@@ -270,15 +288,16 @@ export default async function createMiniPDP(cartItem, onUpdate, onClose) {
             });
           } finally {
             isLoading = false;
+            $updateButtonWrapper.classList.remove(updateButtonBusyClass);
             updateButton.setProps((prev) => ({
               ...prev,
               children:
                 placeholders?.Global?.UpdateProductInCart,
-              disabled: false,
             }));
+            updateSpinner?.remove();
+            updateSpinner = null;
           }
         },
-        disabled: isLoading,
       })($updateButton),
 
       // Cancel button
@@ -308,7 +327,7 @@ export default async function createMiniPDP(cartItem, onUpdate, onClose) {
       (valid) => {
         updateButton.setProps((prev) => ({
           ...prev,
-          disabled: !valid || isLoading,
+          disabled: !valid,
         }));
       },
       { eager: true, scope: 'modal' },

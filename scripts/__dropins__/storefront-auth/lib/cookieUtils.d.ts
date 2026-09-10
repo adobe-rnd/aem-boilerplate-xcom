@@ -2,7 +2,7 @@
  * ADOBE CONFIDENTIAL
  * __________________
  *
- *  Copyright 2024 Adobe
+ *  Copyright 2026 Adobe
  *  All Rights Reserved.
  *
  * NOTICE:  All information contained herein is, and remains
@@ -17,4 +17,3 @@
 export declare const getCookie: (cookieName: string) => undefined;
 export declare const deleteCookie: (cookieName: string) => void;
 export declare const getCookiesLifetime: () => Promise<string>;
-//# sourceMappingURL=cookieUtils.d.ts.map

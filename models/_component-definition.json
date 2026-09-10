@@ -32,7 +32,13 @@
       "id": "blocks",
       "components": [
         {
+          "...": "../blocks/accordion/_*.json#/definitions"
+        },
+        {
           "...": "../blocks/cards/_*.json#/definitions"
+        },
+        {
+          "...": "../blocks/carousel/_*.json#/definitions"
         },
         {
           "...": "../blocks/columns/_*.json#/definitions"
@@ -42,6 +48,9 @@
         },
         {
           "...": "../blocks/hero/_*.json#/definitions"
+        },
+        {
+          "...": "../blocks/targeted-block/_*.json#/definitions"
         },
         {
           "...": "../blocks/content-fragment/_*.json#/definitions"
@@ -72,6 +81,9 @@
         },
         {
           "...": "../blocks/commerce-checkout/_*.json#/definitions"
+        },
+        {
+          "...": "../blocks/commerce-checkout-success/_*.json#/definitions"
         }
       ]
     },

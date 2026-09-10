@@ -1,4 +1,4 @@
-import { getRootPath, isMultistore } from '@dropins/tools/lib/aem/configs.js';
+import { isMultistore } from '@dropins/tools/lib/aem/configs.js';
 // Dropin Components
 import {
   Button,
@@ -8,6 +8,7 @@ import {
 // Block-level
 import createModal from '../modal/modal.js';
 import { getMetadata } from '../../scripts/aem.js';
+import getSiteRootPath from '../../scripts/site-root.js';
 import { loadFragment } from '../fragment/fragment.js';
 
 /**
@@ -28,7 +29,7 @@ function toggleStoreDropdown(sections, expanded = false) {
  * @param {Element} block The footer block element
  */
 export default async function decorate(block) {
-  const root = getRootPath();
+  const root = getSiteRootPath();
   // Load Footer as Fragment
   const footerMeta = getMetadata('footer');
   const footerPath = footerMeta ? new URL(footerMeta, window.location).pathname : '/footer';

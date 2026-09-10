@@ -1,4 +1,4 @@
-/*! Copyright 2025 Adobe
+/*! Copyright 2026 Adobe
 All Rights Reserved. */
-import{events as n}from"@dropins/tools/event-bus.js";function u(){return n.lastPayload("checkout/initialized")??null}function i(){return n.lastPayload("checkout/updated")??null}function a(){return i()??u()}function s(){var e;const t=a();return!!((e=t==null?void 0:t.shippingAddresses)!=null&&e.length)}function l(){const t=a();return(t==null?void 0:t.email)??null}export{l as a,a as b,i as g,s as h};
+import{g as s}from"../api.js";function u(n){var r;return n===void 0?!!((r=s())!=null&&r.isVirtual):!!(n!=null&&n.isVirtual)}function l(n){return!n||n.isEmpty}function o(n){var e;if(!n)return null;const r=n.shippingAddresses||[];return r.length===0?null:(e=r[0])==null?void 0:e.selectedShippingMethod}function p(n,r="shipping"){var i;return n?(r==="shipping"?(i=n.shippingAddresses)==null?void 0:i[0]:n.billingAddress)??null:null}function g(n){if(!n)return null;const{selectedPaymentMethod:r}=n;return!r||!(r!=null&&r.code)?null:n.selectedPaymentMethod}export{l as a,p as b,g as c,o as g,u as i};
 //# sourceMappingURL=events.js.map

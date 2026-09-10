@@ -30,4 +30,4 @@ export * from './ReturnOrderProductList';
 export * from './ReturnReasonForm';
 export * from './ReturnsListContent';
 export * from './ShippingStatusCard';
-//# sourceMappingURL=index.d.ts.map
+export * from './OrderComments';
