@@ -1,6 +1,9 @@
-# Edge Delivery Services with AEM Authoring Boilerplate for Commerce , Version 0.6
+# Edge Delivery Services with AEM Authoring Boilerplate for Commerce
 
 This project boilerplate is for AEM Authoring with Edge Delivery Services (aka Crosswalk) projects that integrate with Adobe Commerce.
+
+> [!NOTE]
+> Using Edge Delivery with AEM Authoring for Commerce is meant for customer that cannot adapt [Experience Workspace](https://www.aem.live/docs/ew/about), the documented default for [Adobe Commerce Storefront](https://experienceleague.adobe.com/en/tools/commerce-storefront/). If you think you need to use this Boilerplate please get in touch with us.
 
 ## Documentation
 
