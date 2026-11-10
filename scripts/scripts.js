@@ -219,7 +219,9 @@ function buildAutoBlocks(main) {
     // auto-block PDP
     const metaSku = getProductSku();
     const pdpBlock = document.querySelector('.product-details');
-    if (metaSku && !pdpBlock) {
+    const isAemAuthor = window.hlx?.codeBasePath?.endsWith('.resource')
+      || window.xwalk?.isAuthorEnv;
+    if (metaSku && !pdpBlock && !isAemAuthor) {
       buildPDPBlock(main);
     }
   } catch (error) {

@@ -11,7 +11,8 @@
               "name": "Commerce Orders List",
               "model": "commerce-orders-list",
               "key-value": true,
-              "minified-view": false
+              "minified-view": false,
+              "search": true
             }
           }
         }
@@ -27,6 +28,12 @@
           "name": "minified-view",
           "label": "Minified View",
           "value": false
+        },
+        {
+          "component": "boolean",
+          "name": "search",
+          "label": "Search Orders",
+          "value": true
         }
       ]
     }

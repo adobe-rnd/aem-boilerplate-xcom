@@ -15,7 +15,6 @@ import {
 
 window.xwalk = window.xwalk || {};
 window.xwalk.isAuthorEnv = true;
-window.xwalk.previewSku = 'ADB150';
 
 let promiseChanges$ = Promise.resolve();
 
