@@ -1,13 +1,22 @@
 ---
 name: xcom-commerce-sync
-description: "Synchronize aem-boilerplate-xcom with a tagged or integration Adobe Commerce boilerplate release while preserving Crosswalk/JCR models, AEM Author routing, Universal Editor behavior, and the sites-franklin Commerce Quick Site. Use for Commerce release syncs, upstream merges, Drop-in regeneration, DA-to-Xwalk model reconciliation, Quick Site alignment, cloud validation, paired PRs, or release preparation."
+description: "Synchronize aem-boilerplate-xcom with Adobe Commerce and aem-boilerplate-xwalk main-branch updates while preserving Crosswalk/JCR models, AEM Author routing, Universal Editor behavior, and the sites-franklin Commerce Quick Site. Use for Commerce release syncs, Crosswalk upstream updates, Drop-in regeneration, DA-to-Xwalk model reconciliation, Quick Site alignment, cloud validation, paired PRs, or release preparation."
 ---
 
 # Xcom Commerce Sync
 
 Keep the persistent xcom delta limited to Crosswalk/JCR instrumentation and unavoidable AEM Author compatibility. Prefer removing a divergence or contributing it upstream over carrying unrelated custom behavior.
 
-Read `AGENTS.md` in both repositories before changing files. Treat their instructions independently.
+Read `AGENTS.md` in each repository before changing its files. Treat their instructions independently.
+
+## Repositories
+
+- [aem-boilerplate-commerce](https://github.com/hlxsites/aem-boilerplate-commerce): upstream Commerce blocks, Drop-ins, dependencies, and storefront runtime.
+- [aem-boilerplate-xwalk](https://github.com/adobe-rnd/aem-boilerplate-xwalk): upstream AEM Sites authoring, Universal Editor, instrumentation, models, and shared runtime adaptations.
+- [aem-boilerplate-xcom](https://github.com/adobe-rnd/aem-boilerplate-xcom): integration target for both upstreams; resolve their overlapping changes here.
+- [sites-franklin](https://git.corp.adobe.com/CQ/sites-franklin): companion Commerce Quick Site content and persisted contracts.
+
+Check both upstreams on every sync. A current Commerce baseline does not imply current Crosswalk support, and Commerce's removal of UE support does not replace the Crosswalk upstream.
 
 ## Required Inputs
 
@@ -15,26 +24,31 @@ Establish these values from Git and the user before merging:
 
 - Jira issue and issue branch.
 - xcom repository and Commerce upstream remote.
-- Exact Commerce source tag, branch, and commit SHA.
+- Crosswalk upstream URL or remote, previous integrated source SHA, and selected `main` source SHA.
+- Commerce source policy: B2C `main` only; no `integration`, B2B, or feature-branch sources.
+- Exact Commerce `main` commit SHA and matching B2C release tag, if any.
 - Previous Commerce source SHA already present in xcom.
+- Merge status of the previous xcom and Quick Site PRs.
 - `sites-franklin` checkout containing `content/sites-franklin-commerce`.
 - AEM Cloud test environment and disposable Quick Site.
 - Review and release owner.
 
-Do not describe a source as "latest" when it is only the latest tagged release. List newer untagged `main` or `integration` commits and confirm whether to include them.
+Use only the `main` branch of each upstream. Fetch it, pin its exact commit SHA, and use that immutable SHA throughout the sync. Do not merge `integration`, `b2b`, `b2b-integration`, or feature branches. Integration history already promoted into `main` is expected and does not change this source policy.
+
+Release tags are descriptive labels, not an alternative source-selection policy. Record a matching `b2c-*` tag when present; when Commerce `main` is ahead of the latest B2C tag, list the additional `main` commits explicitly. Do not substitute GitHub's repository-wide "Latest" label or `/releases/latest` redirect, which may point to a B2B release.
 
 ## Workflow
 
 ### 1. Establish the Delta
 
-1. Verify both worktrees are clean and neither repository is on `main` for implementation.
+1. Verify the xcom and Quick Site worktrees are clean and establish the status of the previous paired PRs. When a previous sync is merged, start a new issue branch from current xcom `origin/main`. When it is pending, explicitly agree whether to consolidate the newer release into the existing branches and paired PRs, stack it, or supersede it. Consolidation preserves the earlier merge and adaptations as history and requires updated Jira scope, PR descriptions, source SHAs, and validation; do not require shipping the older release first or silently reuse the old issue branch.
 2. Inspect remotes instead of assuming their names or hosts.
-3. Fetch the xcom origin, Commerce upstream branches, and tags.
-4. Identify the latest tag, pending `integration` release, post-tag hotfixes, and previous sync source.
+3. Fetch the xcom origin, Commerce upstream `main`, and Crosswalk upstream `main`. Fetch tags only to identify release labels for the selected commits.
+4. Resolve both upstream `main` tips to immutable SHAs. Identify any matching B2C tag, additional post-tag `main` commits, and previous sync sources. Check whether each previous source is already an ancestor of xcom.
 5. Record the exact selected source SHA in the plan and PR.
 6. Classify the update:
 	- **Routine:** dependency, generated Drop-in, and small block-config changes.
-	- **Structural:** blocks, models, Checkout, Account, routing, or authoring contracts changed.
+	- **Structural:** blocks, models, Checkout, Account, routing, or authoring contracts changed, including upstream removal of UE support or changes to PDP auto-blocking.
 
 Start with commands equivalent to:
 
@@ -42,11 +56,21 @@ Start with commands equivalent to:
 git status --short --branch
 git remote -v
 git fetch origin --prune
-git fetch upstream --tags --prune
-git tag --merged upstream/main --sort=-creatordate
+git fetch upstream main --tags
+git rev-parse upstream/main
+git tag --list 'b2c-*' --points-at upstream/main
+git fetch <crosswalk-url-or-remote> main
+git rev-parse FETCH_HEAD
+git merge-base --is-ancestor <previous-source> HEAD
 git log --first-parent --oneline <previous-source>..<selected-source>
-git diff --name-status <previous-source>...<selected-source>
+git diff --name-status <previous-source> <selected-source>
 ```
+
+Inspect the exact source-to-source tree diff, including deletions, rather than only changed model files or a three-dot diff that can hide release-track divergence. Record decisions to adopt, adapt, retain, or remove each affected Crosswalk contract.
+
+Identify the last integrated Crosswalk source from merge parents, recorded source SHAs, or verified equivalent ports. Compare its history and tree with the selected Crosswalk source independently of the Commerce comparison. Check whether each candidate fix is already present or implemented equivalently in xcom before porting it. Record both selected upstream SHAs and unresolved Crosswalk changes in the plan and PR.
+
+Reconcile overlapping shared files against both upstreams and their callers. Do not blindly overwrite Commerce runtime with the Crosswalk tree or discard Crosswalk authoring fixes in favor of Commerce. Keep `scripts/aem.js` vendored; adapt supported wrappers and call sites instead of adding local core-library patches.
 
 Preserve upstream ancestry. Merge the selected Commerce source rather than copying its tree or squashing hundreds of upstream commits. This makes the next release merge and its reviewable delta smaller.
 
@@ -63,15 +87,25 @@ Keep the mechanical upstream merge distinguishable from later Crosswalk fixes. R
 7. Mark generated Drop-ins and lockfiles in `.gitattributes` when upstream does so.
 8. Never repair generated Drop-in files by hand; fix inputs and regenerate.
 
+Use the pinned Commerce `main` commit's dependency versions rather than silently upgrading to npm `latest`. Review deleted build scripts, dependencies, hooks, and `.hlxignore` entries for xcom consumers before accepting their removal.
+
 Review generated files separately from maintained source. Large generated diffs are expected, but unexplained maintained-source diffs are not.
 
-### 3. Translate Commerce Models to Crosswalk
+### 3. Maintain Crosswalk Authoring Contracts
 
-Diff only model, definition, and filter files changed by Commerce since the previous source. Reconcile each changed contract instead of blindly retaining old Crosswalk JSON.
+Diff changed block implementations, configuration parsing, READMEs, and authoring files since the previous source. Reconcile each changed contract instead of blindly retaining old Crosswalk JSON. When upstream no longer supplies models, derive field changes from the actual runtime consumers and documented configuration, not from nonexistent upstream partials.
+
+Upstream removal of Universal Editor support for Document Authoring does not remove xcom's AEM Sites/Universal Editor requirement. Crosswalk models and their generation pipeline are xcom-owned contracts:
+
+- Retain required block/model `_*.json` partials, `component-*.json` aggregates, and `xwalk.json` mappings.
+- Retain `build:json*`, their build dependencies, and model-generation hooks while xcom consumes them, even when Commerce deletes its equivalents.
+- Preserve authoring-file exclusions in `.hlxignore` unless repository policy explicitly changes.
+- Resolve modify/delete conflicts by checking the live xcom contract. Remove a model only when its block or field is genuinely obsolete, and update filters, definitions, and Quick Site content together.
+- Do not resurrect obsolete DA-only UE code when xcom's own editor support already supplies the behavior.
 
 For each changed or new block:
 
-- Translate DA plugin metadata to the corresponding `plugins.xwalk` page/component contract.
+- Translate remaining DA plugin metadata, or the runtime contract when metadata is absent, to the corresponding `plugins.xwalk` page/component contract.
 - Preserve Sling resource types, model names, key-value behavior, and authored defaults.
 - Use AEM-compatible field types such as `aem-content`, `number`, and `boolean` where required.
 - Represent every value that must survive AEM serialization.
@@ -97,9 +131,16 @@ Test every path assumption changed upstream. Preserve these Crosswalk behaviors 
 - Apply site-root handling consistently to products, fragments, footer, Account, Checkout, and Drop-in website cookies.
 - Accept both arrays and serialized JSON where AEM may serialize enrichment values differently.
 
+When upstream changes SKU resolution or PDP auto-blocking:
+
+- Read the selected source's precedence for metadata, authored `defaultSku`, and URL fallback; do not carry the old template-only rule forward without a verified Author requirement.
+- Reconcile auto-blocking independently of SKU selection. Preserve authored product-details blocks and avoid creating duplicates; explicitly validate synthetic blocks in Author and UE before enabling that path there.
+- Do not persist a runtime-created block or change Quick Site content architecture solely to accommodate auto-blocking without an agreed migration.
+- Remove a hardcoded `previewSku` assignment only after confirming all its readers are gone and authored/metadata preview paths work.
+
 ### 5. Reconcile Universal Editor Behavior
 
-Keep Universal Editor adaptations outside vendored `scripts/aem.js`:
+Keep Universal Editor adaptations outside vendored `scripts/aem.js`. Reconcile removed upstream `ue.js`, `ue-utils.js`, and `IS_UE` call sites against xcom's actual editor support rather than retaining or deleting those files wholesale:
 
 - Preserve `data-aue-*` and rich-text instrumentation across DOM rewrites.
 - Serialize patch processing when concurrent edits can race.
@@ -111,6 +152,8 @@ Keep Universal Editor adaptations outside vendored `scripts/aem.js`:
 - Consume authored Columns metadata before block loading.
 
 Remove an adaptation when the new Commerce code or shared AEM library now provides equivalent behavior.
+
+For upstream changes that separate DA/Experience Workspace from UE, test each environment detector and initialization path independently. Do not equate loss of `IS_UE` upstream with loss of direct AEM Author support in xcom.
 
 ### 6. Align the Commerce Quick Site
 
@@ -164,4 +207,4 @@ Use these planning ranges after inspecting the actual source delta:
   - Local AEM and Universal Editor validation: 0.5-1 day.
   - Cloud Commerce flow testing: 0.5-1 day.
 
-Revise the estimate when the selected source includes untagged integration work, major model changes, unavailable catalog fixtures, or environment/access delays.
+Revise the estimate when the selected source includes substantial post-tag `main` work, major model changes, unavailable catalog fixtures, or environment/access delays.

@@ -24,7 +24,10 @@ npm run lint
 
 Then:
 
+- Confirm both pinned upstream SHAs were selected from their respective `main` branches. Identify matching B2C release labels and any post-tag `main` commits; do not introduce separate `integration`, B2B, or feature-branch sources.
 - Run `npm run build:json` again and confirm it produces no new diff.
+- Compare the selected Crosswalk source with xcom for UE event serialization, formatted-link buttons, rich-text handling, section metadata, path mapping, and multi-field configuration. Distinguish missing behavior from equivalent fixes already ported without shared commit ancestry.
+- If upstream removed UE instrumentation, confirm xcom still has its required model partials, aggregate JSON, generation scripts/dependencies, and model-generation hook. Validate new field definitions against current block configuration consumers.
 - Confirm generated Drop-ins match their package versions.
 - Confirm `scripts/aem.js` contains no Crosswalk-only customization.
 - Run relevant unit/E2E tests for changed Commerce blocks.
@@ -77,6 +80,16 @@ Use both Author and Feature Preview. A Preview-only test does not exercise `.res
 - Verify Preview links remain clean.
 - Confirm temporary recommendation or fallback edits are restored in JCR immediately.
 
+When SKU resolution or PDP auto-blocking changed upstream, also test:
+
+- Metadata SKU and authored `defaultSku` with different values, checking the selected source's precedence.
+- An authored product-details block with only `defaultSku`, on both a template and a non-template Author page.
+- A real-SKU URL without SKU metadata, including required Author `.html` handling.
+- SKU metadata without an authored product-details block, checking intended Preview behavior and explicitly agreed Author/UE behavior for synthetic blocks.
+- An existing authored product-details block, confirming auto-blocking does not duplicate it and UE selection/editing still works.
+- A page with neither SKU metadata nor a product-details block, confirming it does not gain an unintended PDP.
+- The absence of remaining readers before removing any static `previewSku` assignment. Do not retain obsolete template-only detection as the sole preview path if upstream widened the contract.
+
 ### PLP
 
 - Verify category URL resolution and expected product count.
@@ -100,6 +113,11 @@ Use both Author and Feature Preview. A Preview-only test does not exercise `.res
 - Exercise cart and checkout far enough to validate updated placeholder keys and routing.
 - Verify Account/Checkout links and website cookies use the correct site root.
 - Do not store credentials in source, logs, comments, or skill files.
+
+### Release-specific behavior
+
+- If the selected release changes SEO, asset preloading, consent, or customer-group context, verify the affected output and flows rather than restoring removed client-side behavior automatically.
+- When DA/Experience Workspace code and xcom UE code coexist, verify their initialization paths do not both run on an Author/UE page or create duplicate headers, footers, or event handlers.
 
 ### Content endpoints
 
@@ -125,7 +143,8 @@ Use both Author and Feature Preview. A Preview-only test does not exercise `.res
 For the xcom PR:
 
 - Put the Jira link first.
-- Name the exact Commerce source tag and SHA.
+- Name the pinned Commerce `main` SHA and matching B2C release tag, if any; identify additional post-tag `main` changes.
+- Name the selected Crosswalk source SHA and summarize changes adopted, already implemented equivalently, or deliberately deferred.
 - Distinguish the full diff from the post-sync Crosswalk delta.
 - Mark generated artifacts as generated and direct review to maintained files.
 - Include before/after Feature Preview URLs and representative PDP/PLP paths.
