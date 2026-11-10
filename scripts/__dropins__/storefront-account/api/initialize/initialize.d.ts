@@ -15,7 +15,7 @@
  * from Adobe.
  *******************************************************************/
 import { Initializer, Model } from '@dropins/tools/lib';
-import { Lang } from '@dropins/tools/i18n';
+import { Lang } from '../../../node_modules/@dropins/tools/src/i18n';
 import { OrderHistoryModel } from '../../data/models';
 import { CustomerDataModelShort } from '../../data/models/customer';
 type ConfigProps = {

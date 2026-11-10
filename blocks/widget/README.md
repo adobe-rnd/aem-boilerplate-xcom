@@ -1,23 +1,13 @@
 # Widget Block
 
-## Overview
+Loads a standalone widget's HTML, CSS, and JavaScript from the site's `/widgets/` directory.
 
-The Widget block is an auto-block (not directly authored) that turns any link pointing at `/widgets/...` into a self-contained HTML/CSS/JS fragment loaded from that path. It lets authors embed a reusable, independently-versioned widget by pasting a single link, similar to the `fragment` auto-block but for standalone assets rather than page content.
+## Authoring
 
-## Usage
+Add a link to a widget HTML file, for example `/widgets/example.html` or `/widgets/category/example.html`. Query parameters on the link are copied to the widget element's `dataset` before the widget JavaScript runs.
 
-Authoring a link such as `/widgets/promo/banner.html` (or a URL with query parameters) is automatically converted into a `widget` block by `buildWidgetAutoBlocks()` in `scripts/scripts.js` during eager loading. No manual block authoring or UE model is provided for this block.
+## Behavior
 
-## Integration
+The block derives the widget name and optional subdirectory from the link path, applies widget-specific classes to the block and its section shell, and loads the HTML. It then loads the matching CSS and JavaScript assets from `window.hlx.codeBasePath/widgets/` in parallel. If the JavaScript module has a default export, it is called with the widget element.
 
-### Behavior
-
-- The block resolves the link's pathname into a widget path/name pair (everything after `/widgets/` up to the file name, minus its extension)
-- It fetches and inlines `{widgetPath}/{widgetName}.html`, loads `{widgetPath}/{widgetName}.css` via `loadCSS`, and dynamically imports `{widgetPath}/{widgetName}.js`, running the module's default export (if present) against the block element
-- After decoration, the block element and its wrapper/container elements are renamed from `widget`/`widget-wrapper`/`widget-container` to `{widgetName}`/`{widgetName}-wrapper`/`{widgetName}-container`, and the `widget` class is removed from the block element
-- Query parameters on the original link are copied onto the block element as `data-*` attributes (e.g. `?variant=dark` becomes `data-variant="dark"`)
-- The original link's `href` is preserved on the block as `data-source`
-
-### Error Handling
-
-- If the widget's HTML/CSS/JS fails to load, the fetch/import rejection is caught and logged via `console.error`; the block is left without decoration rather than throwing
+Errors during widget loading or decoration are logged to the console. The block does not provide a separate fallback UI.

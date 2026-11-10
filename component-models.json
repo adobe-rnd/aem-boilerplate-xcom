@@ -472,6 +472,12 @@
         "name": "minified-view",
         "label": "Minified View",
         "value": false
+      },
+      {
+        "component": "boolean",
+        "name": "search",
+        "label": "Search Orders",
+        "value": true
       }
     ]
   },
@@ -627,8 +633,13 @@
         "component": "text",
         "name": "recid",
         "label": "Record ID",
-        "description": "Record ID",
-        "required": true
+        "description": "Record ID"
+      },
+      {
+        "component": "text",
+        "name": "referenceKey",
+        "label": "Reference Key",
+        "description": "Recommendation unit label. Takes precedence over Record ID."
       }
     ]
   },

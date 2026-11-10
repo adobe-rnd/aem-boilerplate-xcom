@@ -21,7 +21,7 @@ import { render as wishlistRender } from '@dropins/storefront-wishlist/render.js
 // Block-level
 import { readBlockConfig } from '../../scripts/aem.js';
 import {
-  fetchPlaceholders, getProductLink, getStoreIdentifier,
+  fetchPlaceholders, getProductLink, getStoreIdentifier, isConsentGranted,
 } from '../../scripts/commerce.js';
 
 // Initializers
@@ -48,9 +48,10 @@ function getValidViewEntry(entry) {
 
 /**
  * Gets product view history from localStorage
- * @returns {Array} - Array of view history items
+ * @returns {Array|undefined} History items, or undefined when access is not allowed
  */
 export function getProductViewHistory() {
+  if (!isConsentGranted()) return undefined;
   const storeIdentifier = getStoreIdentifier();
   try {
     if (!storeIdentifier) {
@@ -90,9 +91,10 @@ function getValidPurchaseEntry(entry) {
 
 /**
  * Gets purchase history from localStorage
- * @returns {Array} - Array of purchase history items
+ * @returns {Array|undefined} History items, or undefined when access is not allowed
  */
 export function getPurchaseHistory() {
+  if (!isConsentGranted()) return undefined;
   const storeIdentifier = getStoreIdentifier();
   try {
     if (!storeIdentifier) {
@@ -126,7 +128,9 @@ export default async function decorate(block) {
   });
 
   // Configuration
-  const { currentsku, currentprice, recid } = readBlockConfig(block);
+  const {
+    currentsku, currentprice, recid, referencekey: label,
+  } = readBlockConfig(block);
 
   // Layout
   const fragment = document.createRange().createContextualFragment(`
@@ -135,7 +139,6 @@ export default async function decorate(block) {
     </div>
   `);
 
-  const $list = fragment.querySelector('.recommendations__list');
   const $wrapper = fragment.querySelector('.recommendations__wrapper');
 
   block.appendChild(fragment);
@@ -143,11 +146,13 @@ export default async function decorate(block) {
   let visibility = !isMobile;
   let isLoading = false;
   let loadTimeout = null;
+  let recommendationList;
+  let reloadPending = false;
+  let consented = isConsentGranted();
 
   async function loadRecommendation(
     context,
     isVisible,
-    container,
     forceReload = false,
   ) {
     // Only load once the recommendation becomes visible
@@ -157,28 +162,18 @@ export default async function decorate(block) {
 
     // Prevent multiple simultaneous loads
     if (isLoading) {
+      reloadPending = reloadPending || forceReload;
       return;
     }
 
-    // Only proceed if container is empty or force reload is requested
-    if (container.children.length > 0 && !forceReload) {
+    // Reuse the mounted list unless its request context changed.
+    if (recommendationList && !forceReload) {
       return;
     }
 
     isLoading = true;
 
-    // Clear container if reloading
-    if (forceReload) {
-      container.innerHTML = '';
-    }
-
     const createProductLink = (item) => getProductLink(item.urlKey, item.sku);
-
-    // Get product view history
-    context.userViewHistory = getProductViewHistory();
-
-    // Get purchase history
-    context.userPurchaseHistory = getPurchaseHistory();
 
     let recommendationsData = null;
 
@@ -205,7 +200,7 @@ export default async function decorate(block) {
       if (isACO) {
         if (currentprice != null) {
           resolvedPrice = Number(currentprice);
-        } else if (!skuFromConfig) {
+        } else if (!skuFromConfig && consented) {
           resolvedPrice = context.currentProductPrice ?? null;
         }
       }
@@ -213,13 +208,23 @@ export default async function decorate(block) {
         ? { sku: resolvedSku, ...(resolvedPrice != null && { price: resolvedPrice }) }
         : undefined;
 
-      await Promise.all([
+      const requestContext = {
+        currentProduct,
+        cartSkus: consented ? context.cartSkus : undefined,
+        userViewHistory: getProductViewHistory(),
+        userPurchaseHistory: getPurchaseHistory(),
+      };
+
+      if (recommendationList) {
+        recommendationList.remove();
+      }
+
+      [recommendationList] = await Promise.all([
         provider.render(ProductList, {
           routeProduct: createProductLink,
+          label,
           recId: recid,
-          currentProduct,
-          userViewHistory: context.userViewHistory,
-          userPurchaseHistory: context.userPurchaseHistory,
+          ...requestContext,
           slots: {
             Footer: (ctx) => {
               const wrapper = document.createElement('div');
@@ -307,20 +312,35 @@ export default async function decorate(block) {
       ]);
     } finally {
       isLoading = false;
+      if (reloadPending) {
+        reloadPending = false;
+        debouncedLoadRecommendation(true);
+      }
     }
   }
 
   const context = {};
   // Debounced loader to prevent excessive API calls
   function debouncedLoadRecommendation(forceReload = false) {
+    reloadPending = reloadPending || forceReload;
     if (loadTimeout) {
       clearTimeout(loadTimeout);
     }
 
     loadTimeout = setTimeout(() => {
-      loadRecommendation(context, visibility, $list, forceReload);
+      const reload = reloadPending;
+      reloadPending = false;
+      loadRecommendation(context, visibility, reload);
     }, 300); // 300ms debounce
   }
+
+  window.addEventListener('consent.update', () => {
+    const next = isConsentGranted();
+    if (next !== consented) {
+      consented = next;
+      debouncedLoadRecommendation(true);
+    }
+  });
 
   // Track previous context values to detect significant changes
   let previousContext = {};
@@ -329,9 +349,16 @@ export default async function decorate(block) {
     // Check if significant context changes occurred that warrant reloading recommendations
     const significantChanges = ['currentSku', 'currentProductPrice', 'pageType', 'category'];
 
-    return significantChanges.some(
+    const hasSignificantChanges = significantChanges.some(
       (key) => newContext[key] !== previousContext[key] && newContext[key] !== undefined,
     );
+
+    // cartSkus is a new array reference on every update, so compare by content
+    const cartSkusChanged = newContext.cartSkus !== undefined
+      && (newContext.cartSkus.length !== previousContext.cartSkus?.length
+        || newContext.cartSkus.some((sku, index) => sku !== previousContext.cartSkus?.[index]));
+
+    return hasSignificantChanges || cartSkusChanged;
   }
 
   function updateContext(updates) {
@@ -347,7 +374,7 @@ export default async function decorate(block) {
     previousContext = { ...context };
 
     // Load or reload recommendations based on whether significant changes occurred
-    if (hasSignificantChanges && $list.children.length > 0) {
+    if (hasSignificantChanges && recommendationList) {
       // Force reload if recommendations already exist and context changed significantly
       debouncedLoadRecommendation(true);
     } else {
@@ -357,12 +384,18 @@ export default async function decorate(block) {
   }
 
   function handleProductChanges({ productContext }) {
+    const incomingSku = productContext?.sku;
+    // Ignore productContext pushes for a different SKU once currentSku is set
+    // (e.g. the cart dropin's own add-to-cart tracking push for another product).
+    if (context.currentSku !== undefined && incomingSku !== context.currentSku) {
+      return;
+    }
     const pricing = productContext?.pricing;
     const price = pricing
       ? (pricing.specialPrice ?? pricing.regularPrice)
       : undefined;
     updateContext({
-      currentSku: productContext?.sku,
+      currentSku: incomingSku,
       currentProductPrice: price,
     });
   }
@@ -375,18 +408,19 @@ export default async function decorate(block) {
     updateContext({ pageType: pageContext?.pageType });
   }
 
-  function handleCartChanges({ shoppingCartContext }) {
-    const cartSkus = shoppingCartContext?.totalQuantity === 0
+  function handleCartChanges(cartData) {
+    const cartSkus = !cartData || cartData.totalQuantity === 0
       ? []
-      : shoppingCartContext?.items?.map(({ product }) => product.sku);
+      : cartData.items?.map((item) => item.sku) ?? [];
     updateContext({ cartSkus });
   }
+
+  events.on('cart/data', handleCartChanges, { eager: true });
 
   window.adobeDataLayer.push((dl) => {
     dl.addEventListener('adobeDataLayer:change', handlePageTypeChanges, { path: 'pageContext' });
     dl.addEventListener('adobeDataLayer:change', handleProductChanges, { path: 'productContext' });
     dl.addEventListener('adobeDataLayer:change', handleCategoryChanges, { path: 'categoryContext' });
-    dl.addEventListener('adobeDataLayer:change', handleCartChanges, { path: 'shoppingCartContext' });
   });
 
   if (isMobile) {

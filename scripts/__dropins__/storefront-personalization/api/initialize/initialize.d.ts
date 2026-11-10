@@ -15,7 +15,7 @@
  * from Adobe.
  *******************************************************************/
 import { Initializer } from '@dropins/tools/lib';
-import { Lang } from '@dropins/tools/i18n';
+import { Lang } from '../../../node_modules/@dropins/tools/src/i18n';
 type ConfigProps = {
     langDefinitions?: Lang;
 };

@@ -1,13 +1,18 @@
 // Drop-in Tools
 import { events } from '@dropins/tools/event-bus.js';
+import { getCookie } from '@dropins/tools/lib.js';
 
 import { tryRenderAemAssetsImage } from '@dropins/tools/lib/aem/assets.js';
 import { getMetadata } from '../../scripts/aem.js';
 import { loadFragment } from '../fragment/fragment.js';
-import { fetchPlaceholders, getProductLink, rootLink } from '../../scripts/commerce.js';
+import {
+  fetchPlaceholders,
+  getProductLink,
+  rootLink,
+  CUSTOMER_ACCOUNT_PATH,
+  CUSTOMER_LOGIN_PATH,
+} from '../../scripts/commerce.js';
 
-import renderAuthCombine from './renderAuthCombine.js';
-import { renderAuthDropdown } from './renderAuthDropdown.js';
 import renderSellerAssistedBuyingBanner from './renderSellerAssistedBuyingBanner.js';
 
 // media query match that indicates mobile/tablet width
@@ -94,7 +99,10 @@ function toggleMenu(nav, navSections, forceExpanded = null) {
   document.body.style.overflowY = expanded || isDesktop.matches ? '' : 'hidden';
   nav.setAttribute('aria-expanded', expanded ? 'false' : 'true');
   toggleAllNavSections(navSections, expanded || isDesktop.matches ? 'false' : 'true');
-  button.setAttribute('aria-label', expanded ? 'Open navigation' : 'Close navigation');
+  button.setAttribute(
+    'aria-label',
+    expanded ? (labels.Global?.OpenNavigation ?? 'Open navigation') : (labels.Global?.CloseNavigation ?? 'Close navigation'),
+  );
   // enable nav dropdown keyboard accessibility
   if (navSections) {
     const navDrops = navSections.querySelectorAll('.nav-drop');
@@ -128,7 +136,7 @@ function toggleMenu(nav, navSections, forceExpanded = null) {
 
 const subMenuHeader = document.createElement('div');
 subMenuHeader.classList.add('submenu-header');
-subMenuHeader.innerHTML = '<h5 class="back-link">All Categories</h5><hr />';
+subMenuHeader.innerHTML = `<h5 class="back-link">${labels.Global?.AllCategories ?? 'All Categories'}</h5><hr />`;
 
 /**
  * Sets up the submenu
@@ -198,7 +206,12 @@ export default async function decorate(block) {
     navSections
       .querySelectorAll(':scope .default-content-wrapper > ul > li')
       .forEach((navSection) => {
-        if (navSection.querySelector('ul')) navSection.classList.add('nav-drop');
+        if (navSection.querySelector('ul')) {
+          navSection.classList.add('nav-drop');
+          navSection.setAttribute('role', 'button');
+          navSection.setAttribute('aria-haspopup', 'true');
+          navSection.setAttribute('aria-expanded', 'false');
+        }
         setupSubmenu(navSection);
         navSection.addEventListener('click', (event) => {
           if (event.target.tagName === 'A') return;
@@ -225,7 +238,7 @@ export default async function decorate(block) {
   /** Wishlist */
   const wishlist = document.createRange().createContextualFragment(`
      <div class="wishlist-wrapper nav-tools-wrapper">
-       <button type="button" class="nav-wishlist-button" aria-label="Wishlist"></button>
+       <button type="button" class="nav-wishlist-button" aria-label="${labels.Global?.Wishlist ?? 'Wishlist'}"></button>
        <div class="wishlist-panel nav-tools-panel"></div>
      </div>
    `);
@@ -246,7 +259,7 @@ export default async function decorate(block) {
 
   const minicart = document.createRange().createContextualFragment(`
      <div class="minicart-wrapper nav-tools-wrapper">
-       <button type="button" class="nav-cart-button" aria-label="Cart" aria-haspopup="dialog" aria-expanded="false" aria-controls="minicart-panel"></button>
+       <button type="button" class="nav-cart-button" aria-label="${labels.Global?.Cart ?? 'Cart'}" aria-haspopup="dialog" aria-expanded="false" aria-controls="minicart-panel"></button>
        <div class="minicart-panel nav-tools-panel" id="minicart-panel"></div>
        <div class="nav-cart-status" role="status" aria-live="polite"></div>
      </div>
@@ -346,9 +359,6 @@ export default async function decorate(block) {
   let previousCartQuantity;
 
   events.on('cart/data', (data) => {
-    // preload mini cart fragment if user has a cart
-    if (data) loadMiniCartFragment();
-
     const totalQuantity = data?.totalQuantity ?? 0;
 
     if (totalQuantity) {
@@ -357,13 +367,28 @@ export default async function decorate(block) {
       cartButton.removeAttribute('data-count');
     }
 
+    cartButton.setAttribute(
+      'aria-label',
+      totalQuantity === 1
+        ? (labels.Global?.CartWithItem?.replace('{count}', totalQuantity)
+          ?? `Cart with ${totalQuantity} item`)
+        : (labels.Global?.CartWithItems?.replace('{count}', totalQuantity)
+          ?? `Cart with ${totalQuantity} items`),
+    );
+
     // Skip the announcement for the initial value on page load so screen
     // reader users aren't told about the cart contents before they've
     // interacted with it; only announce actual changes.
     if (previousCartQuantity !== undefined && previousCartQuantity !== totalQuantity) {
-      cartStatus.textContent = totalQuantity
-        ? `Cart updated, ${totalQuantity} item${totalQuantity === 1 ? '' : 's'} in cart`
-        : 'Cart updated, cart is empty';
+      if (totalQuantity) {
+        cartStatus.textContent = totalQuantity === 1
+          ? (labels.Global?.CartUpdatedWithItem?.replace('{count}', totalQuantity)
+            ?? `Cart updated, ${totalQuantity} item in cart`)
+          : (labels.Global?.CartUpdatedWithItems?.replace('{count}', totalQuantity)
+            ?? `Cart updated, ${totalQuantity} items in cart`);
+      } else {
+        cartStatus.textContent = labels.Global?.CartUpdatedEmpty ?? 'Cart updated, cart is empty';
+      }
     }
 
     previousCartQuantity = totalQuantity;
@@ -372,8 +397,8 @@ export default async function decorate(block) {
   /** Search */
   const searchFragment = document.createRange().createContextualFragment(`
   <div class="search-wrapper nav-tools-wrapper">
-    <button type="button" class="nav-search-button">Search</button>
-    <div class="nav-search-input nav-search-panel nav-tools-panel">
+    <button type="button" class="nav-search-button" aria-haspopup="dialog" aria-expanded="false" aria-controls="search-panel">${labels.Global?.Search ?? 'Search'}</button>
+    <div class="nav-search-input nav-search-panel nav-tools-panel" id="search-panel">
       <form id="search-bar-form"></form>
       <div class="search-bar-result" style="display: none;"></div>
     </div>
@@ -487,6 +512,10 @@ export default async function decorate(block) {
     }
 
     togglePanel(searchPanel, state);
+    searchButton.setAttribute(
+      'aria-expanded',
+      searchPanel.classList.contains('nav-tools-panel--show') ? 'true' : 'false',
+    );
     if (state) searchForm?.querySelector('input')?.focus();
   }
 
@@ -498,6 +527,121 @@ export default async function decorate(block) {
       overlay.classList.remove('show');
     }
   });
+
+  /** Auth Dropdown */
+  const authFrag = document.createRange().createContextualFragment(`
+    <div class="dropdown-wrapper nav-tools-wrapper">
+      <button type="button" class="nav-dropdown-button"
+        aria-haspopup="dialog" aria-expanded="false" aria-controls="login-modal">
+      </button>
+      <div class="nav-auth-menu-panel nav-tools-panel">
+        <div id="auth-dropin-container"></div>
+        <ul class="authenticated-user-menu" style="display: none;">
+          <li><a href="${rootLink(CUSTOMER_ACCOUNT_PATH)}">My Account</a></li>
+          <li><button type="button">Logout</button></li>
+        </ul>
+      </div>
+    </div>`);
+
+  navTools.append(authFrag);
+
+  const authPanel = navTools.querySelector('.nav-auth-menu-panel');
+  const authButton = navTools.querySelector('.nav-dropdown-button');
+  const authDropinContainer = navTools.querySelector('#auth-dropin-container');
+  const authMenuList = navTools.querySelector('.authenticated-user-menu');
+  const authLogoutButton = navTools.querySelector('.authenticated-user-menu > li > button');
+
+  // Reflect auth state and react to future changes (login/logout without a page reload).
+  events.on('authenticated', (isAuthenticated) => {
+    if (isAuthenticated) {
+      authMenuList.style.display = 'block';
+      authDropinContainer.style.display = 'none';
+      authButton.textContent = `Hi, ${getCookie('auth_dropin_firstname')}`;
+    } else {
+      authMenuList.style.display = 'none';
+      authDropinContainer.style.display = 'block';
+      authButton.innerHTML = `
+        <svg width="25" height="25" viewBox="0 0 24 24" aria-label="My Account">
+          <g fill="none" stroke="#000000" stroke-width="1.5">
+            <circle cx="12" cy="6" r="4"></circle>
+            <path d="M20 17.5c0 2.485 0 4.5-8 4.5s-8-2.015-8-4.5S7.582 13 12 13s8 2.015 8 4.5Z"></path>
+          </g>
+        </svg>`;
+    }
+  }, { eager: true });
+
+  // Prevent panel clicks from bubbling to the document close-handler.
+  authPanel.addEventListener('click', (e) => e.stopPropagation());
+
+  // Lazy-load the SignIn dropin once, only when needed (unauthenticated users opening the panel).
+  async function loadAuthPanel() {
+    await withLoadingState(authPanel, authButton, async () => {
+      if (!events.lastPayload('authenticated')) {
+        const { initSignIn } = await import('./renderAuth.js');
+        await initSignIn(authDropinContainer);
+      }
+    });
+  }
+
+  let authPanelRequestId = 0;
+
+  async function toggleAuthPanel(state) {
+    authPanelRequestId += 1;
+    const requestId = authPanelRequestId;
+    if (state) await loadAuthPanel();
+    // A newer request (e.g. a click-outside close) landed while we were awaiting the
+    // lazy auth module load — don't clobber it by re-asserting our now-stale state.
+    if (requestId !== authPanelRequestId) return;
+    togglePanel(authPanel, state);
+    authButton.setAttribute('aria-expanded', authPanel.classList.contains('nav-tools-panel--show') ? 'true' : 'false');
+    if (state) authPanel.focus();
+  }
+
+  authButton.addEventListener('click', () => toggleAuthPanel(!authPanel.classList.contains('nav-tools-panel--show')));
+
+  authLogoutButton.addEventListener('click', async () => {
+    const { revokeCustomerToken } = await import('@dropins/storefront-auth/api.js');
+    await revokeCustomerToken();
+    const logoutRedirects = {
+      '/checkout': rootLink('/cart'),
+      '/customer': rootLink(CUSTOMER_LOGIN_PATH),
+      '/order-details': rootLink('/'),
+    };
+    const redirected = Object.entries(logoutRedirects).some(([path, dest]) => {
+      if (window.location.pathname.includes(path)) {
+        window.location.href = dest;
+        return true;
+      }
+      return false;
+    });
+    if (!redirected) window.location.reload();
+  });
+
+  // Mobile nav — convert the Account link to open the auth modal lazily.
+  if (navSections) {
+    const accountLi = Array.from(
+      navSections.querySelectorAll('.default-content-wrapper > ul > li'),
+    ).find((li) => li.textContent.includes('Account'));
+    if (accountLi) {
+      const subItems = accountLi.querySelectorAll('ul > li');
+      const authLink = subItems[subItems.length - 1];
+      if (authLink) {
+        authLink.classList.add('authCombineNavElement');
+        authLink.innerHTML = `<button type="button">${authLink.textContent}</button>`;
+        authLink.addEventListener('click', async (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          if (events.lastPayload('authenticated')) {
+            window.location.href = rootLink(CUSTOMER_ACCOUNT_PATH);
+            return;
+          }
+          const { openAuthModal } = await import('./renderAuth.js');
+          openAuthModal(accountLi);
+          if (!isDesktop.matches) toggleMenu(nav, navSections, false);
+        });
+      }
+    }
+  }
 
   // Close panels when clicking outside
   document.addEventListener('click', (e) => {
@@ -523,6 +667,10 @@ export default async function decorate(block) {
     if (!searchPanel.contains(e.target) && !searchButton.contains(e.target)) {
       toggleSearch(false);
     }
+
+    if (!authPanel.contains(e.target) && !authButton.contains(e.target)) {
+      toggleAuthPanel(false);
+    }
   });
 
   const navWrapper = document.createElement('div');
@@ -546,7 +694,7 @@ export default async function decorate(block) {
   // hamburger for mobile
   const hamburger = document.createElement('div');
   hamburger.classList.add('nav-hamburger');
-  hamburger.innerHTML = `<button type="button" aria-controls="nav" aria-label="Open navigation">
+  hamburger.innerHTML = `<button type="button" aria-controls="nav" aria-label="${labels.Global?.OpenNavigation ?? 'Open navigation'}">
       <span class="nav-hamburger-icon"></span>
     </button>`;
   hamburger.addEventListener('click', () => {
@@ -559,10 +707,4 @@ export default async function decorate(block) {
   // prevent mobile nav behavior on window resize
   toggleMenu(nav, navSections, isDesktop.matches);
   isDesktop.addEventListener('change', () => toggleMenu(nav, navSections, isDesktop.matches));
-
-  renderAuthCombine(
-    navSections,
-    () => !isDesktop.matches && toggleMenu(nav, navSections, false),
-  );
-  renderAuthDropdown(navTools);
 }

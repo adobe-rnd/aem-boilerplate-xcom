@@ -14,10 +14,11 @@
  * is strictly forbidden unless prior written permission is obtained
  * from Adobe.
  *******************************************************************/
-import { SlotProps } from '@dropins/tools/src/lib';
+import { SlotProps } from '@dropins/tools/lib';
 import { AttributesFormModel, Country, FieldEnumList, RegionTransform } from '../data/models';
 export interface FieldsProps extends Omit<AttributesFormModel, 'options' | 'className'> {
     className?: string;
+    forceLabel?: boolean;
     fieldType: FieldEnumList;
     id: string;
     options: Country[];

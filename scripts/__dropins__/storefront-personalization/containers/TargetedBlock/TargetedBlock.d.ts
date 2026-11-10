@@ -16,7 +16,7 @@
  *******************************************************************/
 import { HTMLAttributes } from 'preact/compat';
 import { Container, SlotProps } from '@dropins/tools/lib';
-import { PersonalizationData } from "../../data/models";
+import { PersonalizationData } from '../../data/models';
 export interface TargetedBlockProps extends HTMLAttributes<HTMLDivElement> {
     slots: {
         Content: SlotProps;

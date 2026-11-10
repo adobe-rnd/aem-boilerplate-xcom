@@ -666,7 +666,8 @@
                   "name": "Commerce Orders List",
                   "model": "commerce-orders-list",
                   "key-value": true,
-                  "minified-view": false
+                  "minified-view": false,
+                  "search": true
                 }
               }
             }
