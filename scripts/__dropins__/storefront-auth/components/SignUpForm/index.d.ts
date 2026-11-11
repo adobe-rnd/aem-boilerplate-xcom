@@ -14,6 +14,5 @@
  * is strictly forbidden unless prior written permission is obtained
  * from Adobe.
  *******************************************************************/
-export * from './SignUpForm';
-export { SignUpForm as default } from './SignUpForm';
-//# sourceMappingURL=index.d.ts.map
+export * from './SignUpForm.d.ts';
+export { SignUpForm as default } from './SignUpForm.d.ts';

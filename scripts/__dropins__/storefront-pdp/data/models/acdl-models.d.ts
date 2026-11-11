@@ -22,6 +22,7 @@ export type Product = {
     name: string;
     sku: string;
     topLevelSku?: string | null;
+    variantName?: string | null;
     specialToDate?: string | null;
     specialFromDate?: string | null;
     newToDate?: string | null;
@@ -55,4 +56,3 @@ export declare enum ProductViewType {
     ComplexProductView = "ComplexProductView",
     SimpleProductView = "SimpleProductView"
 }
-//# sourceMappingURL=acdl-models.d.ts.map

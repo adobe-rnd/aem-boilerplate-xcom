@@ -2,7 +2,7 @@
  * ADOBE CONFIDENTIAL
  * __________________
  *
- *  Copyright 2024 Adobe
+ *  Copyright 2026 Adobe
  *  All Rights Reserved.
  *
  * NOTICE:  All information contained herein is, and remains
@@ -19,6 +19,9 @@ export interface StoreConfigProps {
     minimum_password_length: number;
     required_character_classes_number: string;
     store_code: string;
+    shopping_assistance_enabled?: boolean;
+    shopping_assistance_checkbox_title?: string;
+    shopping_assistance_checkbox_tooltip?: string;
 }
 export interface GetStoreConfigResponse {
     data: {
@@ -28,4 +31,3 @@ export interface GetStoreConfigResponse {
         message: string;
     }[];
 }
-//# sourceMappingURL=storeConfig.types.d.ts.map

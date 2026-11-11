@@ -1,6 +1,20 @@
-import { AvailableActionsProps, MoneyProps, QueryType } from '../../types';
+/********************************************************************
+ * ADOBE CONFIDENTIAL
+ *
+ *  Copyright 2024 Adobe
+ *  All Rights Reserved.
+ *
+ * NOTICE:  All information contained herein is, and remains
+ * the property of Adobe and its suppliers, if any. The intellectual
+ * and technical concepts contained herein are proprietary to Adobe
+ * and its suppliers and are protected by all applicable intellectual
+ * property laws, including trade secret and copyright laws.
+ * Dissemination of this information or reproduction of this material
+ * is strictly forbidden unless prior written permission is obtained
+ * from Adobe.
+ *******************************************************************/
+import { AvailableActionsProps, MoneyProps, OrderCommentItem, QueryType } from '../../types/index.js';
 import { OrdersReturnPropsModel } from './customer-orders-return';
-
 export type OrderAddressModel = {
     city: string;
     company: string;
@@ -47,6 +61,7 @@ export type OrderItemModel = {
         recipientName: string;
         message: string;
     };
+    giftWrappingAvailable: boolean;
     giftWrappingPrice: MoneyProps;
     productGiftWrapping: {
         uid: string;
@@ -58,6 +73,8 @@ export type OrderItemModel = {
         };
         price: MoneyProps;
     }[];
+    freeGiftLabel?: string | null;
+    isFreeGift?: boolean;
     taxCalculations: {
         includeAndExcludeTax: {
             originalPrice: MoneyProps;
@@ -169,10 +186,7 @@ export type ShipmentsModel = {
     id: string;
     number: string;
     tracking: ShipmentsTracingModel[];
-    comments: {
-        message: string;
-        timestamp: string;
-    }[];
+    comments: OrderCommentItem[];
     items: ShipmentItemsModel[];
 };
 export type OrderDataModel = {
@@ -195,6 +209,8 @@ export type OrderDataModel = {
     shippingMethod?: string;
     carrier?: string;
     orderDate: string;
+    adminAssistedOrder?: boolean;
+    comments: OrderCommentItem[];
     returns: OrdersReturnPropsModel[];
     discounts: {
         amount: MoneyProps;
@@ -243,4 +259,3 @@ export type OrderDataModel = {
     }[];
 };
 export type TransformedData<T extends QueryType> = T extends 'orderData' ? OrderDataModel : null;
-//# sourceMappingURL=order-details.d.ts.map

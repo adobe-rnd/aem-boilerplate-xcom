@@ -1,0 +1,86 @@
+import { signUpUser } from "../../../actions";
+import { assertAuthUser, expectsEventWithContext } from "../../../assertions";
+import { enableAnalyticsConsent, visitWithAnalyticsConsent, waitForAnalyticsConsent } from "./consentTestSupport";
+
+enableAnalyticsConsent();
+
+it("has shopperId as logged-in when authenticated, and guest when not", () => {
+  // 1. checks that shopperContext is guest on first non-authenticated page load
+  visitWithAnalyticsConsent("/");
+  cy.waitForResource("commerce-events-collector.js").then(() => {
+    cy.window()
+      .its("adobeDataLayer")
+      .then((dl) => {
+        const index = dl.findLastIndex((el) => el.shopperContext);
+        cy.wrap(dl)
+          .its(index)
+          .should("eql", { shopperContext: { shopperId: "guest" } });
+      });
+  });
+
+  // 2. creates customer and checks that shopperContext is set to logged-in
+  visitWithAnalyticsConsent("/customer/create");
+  cy.fixture("userInfo").then(({ sign_up }) => {
+    signUpUser(sign_up);
+    assertAuthUser(sign_up);
+  });
+  cy.waitForResource("commerce-events-collector.js").then(() => {
+    cy.window()
+      .its("adobeDataLayer")
+      .then((dl) => {
+        const index = dl.findLastIndex((el) => el.shopperContext);
+        cy.wrap(dl)
+          .its(index)
+          .should("eql", { shopperContext: { shopperId: "logged-in" } });
+      });
+  });
+
+  // 3. Loads a new page and checks that shopperContext is still set to logged-in
+  visitWithAnalyticsConsent("/");
+  cy.waitForResource("commerce-events-collector.js").then(() => {
+    cy.window()
+      .its("adobeDataLayer")
+      .then((dl) => {
+        const index = dl.findLastIndex((el) => el.shopperContext);
+        cy.wrap(dl)
+          .its(index)
+          .should("eql", { shopperContext: { shopperId: "logged-in" } });
+      });
+  });
+
+  // 4. Logs out / deletes customer and checks that shopperContext is set to guest
+  cy.reload();
+  waitForAnalyticsConsent();
+  cy.get(".nav-dropdown-button").contains("Hi, John").click();
+  cy.get('.nav-auth-menu-panel').should('be.visible');
+  cy.get(
+    "#nav > div.section.nav-tools > div.dropdown-wrapper.nav-tools-wrapper > div > ul > li:nth-child(2) > button",
+  ).click();
+  // After logout the page reloads; the authenticated event drives button state,
+  // so we assert directly without waiting for renderAuth.js (loaded lazily on interaction).
+  cy.get(".nav-dropdown-button").should("not.contain", "Hi,");
+  cy.wait(1000);
+  cy.waitForResource("commerce-events-collector.js").then(() => {
+    cy.window()
+      .its("adobeDataLayer")
+      .then((dl) => {
+        const index = dl.findLastIndex((el) => el.shopperContext);
+        cy.wrap(dl)
+          .its(index)
+          .should("eql", { shopperContext: { shopperId: "guest" } });
+      });
+  });
+
+  // 5. Loads a new page and checks that shopperContext is still set to guest
+  visitWithAnalyticsConsent("/");
+  cy.waitForResource("commerce-events-collector.js").then(() => {
+    cy.window()
+      .its("adobeDataLayer")
+      .then((dl) => {
+        const index = dl.findLastIndex((el) => el.shopperContext);
+        cy.wrap(dl)
+          .its(index)
+          .should("eql", { shopperContext: { shopperId: "guest" } });
+      });
+  });
+});

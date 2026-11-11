@@ -1,0 +1,26 @@
+{
+  "definitions": [
+    {
+      "title": "Commerce Checkout Success",
+      "id": "commerce-checkout-success",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block",
+            "template": {
+              "name": "commerce-checkout-success",
+              "model": "commerce-checkout-success"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "commerce-checkout-success",
+      "fields": []
+    }
+  ],
+  "filters": []
+}

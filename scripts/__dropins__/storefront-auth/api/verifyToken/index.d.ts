@@ -14,5 +14,4 @@
  * is strictly forbidden unless prior written permission is obtained
  * from Adobe.
  *******************************************************************/
-export * from './verifyToken';
-//# sourceMappingURL=index.d.ts.map
+export * from './verifyToken.d.ts';

@@ -167,3 +167,16 @@ export const authFormUserCheckBoxBilling = 'input[name="defaultBilling"]';
 export const fieldUserEmail = 'input[name="email"]';
 export const fieldUserNumber = 'input[name="number"]';
 export const submitButton = 'button[type="submit"]';
+
+// Order Comments
+export const orderCommentsContainer = '.order-order-comments-container';
+export const orderCommentsHeader = '.order-order-comments__header';
+export const orderCommentsItem = '.order-order-comments__item';
+export const orderCommentsText = '.order-order-comments__text';
+export const orderCommentsDate = '.order-order-comments__date';
+export const orderCommentsEmpty = '.order-order-comments--empty';
+export const orderCommentsEmptyState = '.order-order-comments__empty-state';
+
+// Cart line item promotion / discount rule labels (cart, mini-cart, checkout)
+export const cartItemPromotions = '.cart-item-promotions';
+export const cartItemPromotionLabel = '.cart-item-promotion-label';

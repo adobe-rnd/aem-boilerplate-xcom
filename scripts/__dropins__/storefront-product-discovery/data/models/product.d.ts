@@ -1,5 +1,4 @@
 import { SearchInputUnit } from './acdl';
-
 export interface Product {
     id: string;
     name: string;
@@ -12,6 +11,7 @@ export interface Product {
     metaDescription: string;
     lowStock: boolean;
     links: any[];
+    attributes: ProductViewAttribute[];
     images: ProductImage[];
     description: string;
     externalId: string;
@@ -37,6 +37,12 @@ export interface ProductPrice {
         currency: string;
     };
 }
+export interface ProductViewAttribute {
+    label?: string;
+    name: string;
+    roles?: string[];
+    value?: any;
+}
 export interface ProductImage {
     label: string;
     roles: string[];
@@ -53,4 +59,3 @@ export interface SearchInputError {
     error: Error;
     request: SearchInputRequest;
 }
-//# sourceMappingURL=product.d.ts.map

@@ -17,7 +17,12 @@ import createMiniPDP from '../../scripts/components/commerce-mini-pdp/commerce-m
 import '../../scripts/initializers/cart.js';
 
 import { readBlockConfig } from '../../scripts/aem.js';
-import { fetchPlaceholders, rootLink, getProductLink } from '../../scripts/commerce.js';
+import {
+  fetchPlaceholders,
+  rootLink,
+  getProductLink,
+  renderCartItemPromotions,
+} from '../../scripts/commerce.js';
 
 export default async function decorate(block) {
   const {
@@ -43,6 +48,8 @@ export default async function decorate(block) {
   // Create a container for the update message
   const updateMessage = document.createElement('div');
   updateMessage.className = 'commerce-mini-cart__update-message';
+  updateMessage.setAttribute('role', 'status');
+  updateMessage.setAttribute('aria-live', 'polite');
 
   // Create shadow wrapper
   const shadowWrapper = document.createElement('div');
@@ -194,6 +201,9 @@ export default async function decorate(block) {
 
           UI.render(Button, {
             children: placeholders?.Global?.CartEditButton,
+            // Every cart item renders its own Edit button, so the accessible
+            // name must include the product name to distinguish them.
+            'aria-label': `${placeholders?.Global?.CartEditButton} ${item.name}`,
             variant: 'tertiary',
             size: 'medium',
             icon: h(Icon, { source: 'Edit' }),
@@ -203,6 +213,10 @@ export default async function decorate(block) {
           editLinkContainer.appendChild(editLink);
           ctx.appendChild(editLinkContainer);
         }
+      },
+
+      Footer: (ctx) => {
+        renderCartItemPromotions(ctx);
       },
     },
   })(block);

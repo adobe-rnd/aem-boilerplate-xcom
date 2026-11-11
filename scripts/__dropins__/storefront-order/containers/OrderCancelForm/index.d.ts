@@ -13,6 +13,5 @@
  * is strictly forbidden unless prior written permission is obtained
  * from Adobe.
  *******************************************************************/
-export * from './OrderCancelForm';
-export { OrderCancelForm as default } from './OrderCancelForm';
-//# sourceMappingURL=index.d.ts.map
+export * from './OrderCancelForm.js';
+export { OrderCancelForm as default } from './OrderCancelForm.js';

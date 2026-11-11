@@ -21,9 +21,10 @@ export interface ValuesModel {
     sku: string;
     quantity: number;
     optionsUIDs?: string[];
+    /** Per bundle option value UID quantities (cart `entered_options`). */
+    bundleOptionQuantities?: Record<string, number>;
     enteredOptions?: Array<{
         uid: string;
         value: string;
     }>;
 }
-//# sourceMappingURL=values-model.d.ts.map

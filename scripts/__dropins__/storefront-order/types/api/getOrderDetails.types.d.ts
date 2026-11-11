@@ -13,6 +13,7 @@
  * is strictly forbidden unless prior written permission is obtained
  * from Adobe.
  *******************************************************************/
+import { OrderCommentItem } from '../orderComments.types';
 export type QueryType = 'orderData';
 export interface UserAddressesProps {
     city?: string;
@@ -104,10 +105,7 @@ interface InvoiceProps {
     number?: string;
     total?: TotalProps;
     items?: InvoiceItemInterface[];
-    comments?: {
-        message: string;
-        timestamp: string;
-    }[];
+    comments?: OrderCommentItem[];
 }
 export interface GiftMessageProps {
     form: string;
@@ -195,10 +193,7 @@ export interface ShipmentsProps {
         number: string;
         title: string;
     }[];
-    comments: {
-        message: string;
-        timestamp: string;
-    }[];
+    comments: OrderCommentItem[];
     items: {
         id: string;
         product_sku: string;
@@ -255,9 +250,11 @@ export interface OrderProps {
     number: string;
     order_date: string;
     printed_card_included: boolean;
+    admin_assisted_order?: number;
     applied_coupons: {
         code: string;
     }[];
+    comments?: OrderCommentItem[];
     returns: {
         __typename: string;
         items: ReturnsItemsProps[];
@@ -303,4 +300,3 @@ export interface OrderByNumberResponse extends OrdersResponse {
 }
 export type ResponseData<T extends QueryType> = T extends 'orderData' | 'orderSummary' | 'orderStatus' ? OrderByNumberResponse : never;
 export {};
-//# sourceMappingURL=getOrderDetails.types.d.ts.map

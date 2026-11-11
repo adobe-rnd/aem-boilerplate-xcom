@@ -19,9 +19,11 @@ export * from './estimateShippingMethods';
 export * from './fetch-graphql';
 export * from './getCart';
 export * from './getCheckoutAgreements';
+export * from './getCompanyCredit';
 export * from './getCustomer';
 export * from './getNegotiableQuote';
 export * from './getStoreConfig';
+export * from './getStoredPaymentMethods';
 export * from './initialize';
 export * from './initializeCheckout';
 export * from './isEmailAvailable';
@@ -32,4 +34,3 @@ export * from './setPaymentMethod';
 export * from './setShippingAddress';
 export * from './setShippingMethods';
 export * from './synchronizeCheckout';
-//# sourceMappingURL=index.d.ts.map

@@ -13,7 +13,6 @@
  * is strictly forbidden unless prior written permission is obtained
  * from Adobe.
  *******************************************************************/
-export * from './OrderProductListContent';
-export * from './CartSummaryItem';
-export { OrderProductListContent as default } from './OrderProductListContent';
-//# sourceMappingURL=index.d.ts.map
+export * from './OrderProductListContent.js';
+export * from './CartSummaryItem.js';
+export { OrderProductListContent as default } from './OrderProductListContent.js';

@@ -13,6 +13,5 @@
  * is strictly forbidden unless prior written permission is obtained
  * from Adobe.
  *******************************************************************/
-export * from './ReturnReasonForm';
-export { ReturnReasonForm as default } from './ReturnReasonForm';
-//# sourceMappingURL=index.d.ts.map
+export * from './ReturnReasonForm.js';
+export { ReturnReasonForm as default } from './ReturnReasonForm.js';

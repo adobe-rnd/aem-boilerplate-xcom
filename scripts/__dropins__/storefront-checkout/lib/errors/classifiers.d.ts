@@ -19,7 +19,10 @@ export declare enum ErrorCodes {
     INVALID_INPUT = "INVALID_INPUT",
     SERVER_ERROR = "SERVER_ERROR",
     UNAUTHENTICATED = "UNAUTHENTICATED",
-    UNKNOWN_ERROR = "UNKNOWN_ERROR"
+    UNKNOWN_ERROR = "UNKNOWN_ERROR",
+    QUOTE_DATA_ERROR = "QUOTE_DATA_ERROR",
+    QUOTE_PERMISSION_DENIED = "QUOTE_PERMISSION_DENIED",
+    PERMISSION_DENIED = "PERMISSION_DENIED"
 }
 export interface ErrorClassifier {
     /**
@@ -33,4 +36,3 @@ export interface ErrorClassifier {
     matches: (error: unknown) => boolean;
 }
 export declare const classifiers: ErrorClassifier[];
-//# sourceMappingURL=classifiers.d.ts.map

@@ -1,0 +1,178 @@
+import {
+  assertProductContextAbsent,
+  assertProductContextPresent,
+  assertUrlExcludesCurrentProduct,
+  assertUrlExcludesCurrentProductPrice,
+  assertUrlIncludesCurrentProduct,
+  assertUrlIncludesCurrentSku,
+  getPrexPage,
+  interceptRecsGraphQL,
+  visitPrexPage,
+  waitForRecsCarousel,
+  waitForRecsGraphQL,
+} from '../../support/recsGraphql';
+
+/**
+ * GraphQL contract tests for the product-recommendations block → dropin → backend wiring.
+ *
+ * Proves the storefront passes (or omits) currentProduct correctly per environment.
+ * productContext anchor: only PDP sets it (scripts/initializers/pdp.js → acdl: true).
+ *
+ * Environment detection: ACO is identified by the presence of `catalogApiKey` in
+ * Cypress.env(), which is only set in cypress.aco.config.js. This allows a single
+ * test to assert different GraphQL behavior per environment without skip tags.
+ */
+
+// --- PLP: static SKU anchor (no price) ---
+// A PLP rec block with only currentsku set should never forward currentProduct
+// to the GraphQL URL, regardless of environment.
+describe('PREX context matrix — PLP static SKU anchor', () => {
+  beforeEach(() => {
+    interceptRecsGraphQL();
+  });
+
+  it('PLP with currentsku only: no currentProduct in GraphQL URL', () => {
+    visitPrexPage('displayPlp');
+    // PLP pages never set productContext — it is only populated on PDP via acdl: true
+    assertProductContextAbsent();
+    waitForRecsCarousel();
+    waitForRecsGraphQL().then(({ request }) => {
+      assertUrlExcludesCurrentProduct(request.url);
+    });
+  });
+});
+
+// --- PDP: recid only (no currentsku/currentprice in block config) ---
+// The SKU anchor comes from ACDL productContext (set by the PDP dropin).
+// Shopper-derived ACDL pricing is withheld without consent, including on ACO.
+describe('PREX context matrix — PDP recid only', () => {
+  beforeEach(() => {
+    interceptRecsGraphQL();
+  });
+
+  it('PDP with recid only: unconsented request keeps the product anchor without shopper-derived pricing', () => {
+    visitPrexPage('pdpAcdlOnly');
+    // Wait for carousel before asserting productContext — dropin sets it asynchronously
+    waitForRecsCarousel();
+    assertProductContextPresent();
+    waitForRecsGraphQL().then(({ request }) => {
+      assertUrlExcludesCurrentProduct(request.url);
+      assertUrlIncludesCurrentSku(request.url, 'ADB125');
+    });
+  });
+});
+
+// --- ACO only: block config price passthrough ---
+// These scenarios are ACO-specific: the block explicitly sets currentsku + currentprice
+// (or pins SKU without price as a guard against sending stale ACDL pricing).
+describe('PREX context matrix — ACO block config price passthrough', () => {
+  before(function () {
+    if (!Cypress.env('catalogApiKey')) this.skip();
+  });
+
+  beforeEach(() => {
+    interceptRecsGraphQL();
+  });
+
+  // PLP block with currentsku + currentprice: both values come from block config,
+  // not ACDL, so ACO should forward currentProduct with price.
+  it('PLP with currentsku + currentprice in block config: currentProduct with price', () => {
+    visitPrexPage('plpBlockSkuAndPrice');
+    assertProductContextAbsent();
+    waitForRecsCarousel();
+    waitForRecsGraphQL().then(({ request }) => {
+      assertUrlIncludesCurrentProduct(request.url, { requirePrice: true });
+    });
+  });
+
+  // #1272 guard: when block pins currentsku without currentprice on a PDP,
+  // the ACDL productContext price must NOT be forwarded (it belongs to the anchor
+  // product set via block config, not the currently viewed PDP product).
+  it('PDP with block currentsku only: must not send ACDL price', () => {
+    visitPrexPage('pdpBlockSkuNoPrice');
+    waitForRecsCarousel();
+    assertProductContextPresent();
+    waitForRecsGraphQL().then(({ request }) => {
+      assertUrlExcludesCurrentProductPrice(request.url);
+    });
+  });
+});
+
+// --- Cart page: block config anchor ---
+// Cart pages never set productContext (no PDP dropin). The rec block uses
+// currentsku (+ currentprice on ACO) from block config as the anchor.
+describe('PREX context matrix — cart page rec block', () => {
+  beforeEach(() => {
+    interceptRecsGraphQL();
+  });
+
+  it('cart page: anchor from block config, currentProduct reflects environment', () => {
+    // ACO forwards currentsku + currentprice from block config as currentProduct with price.
+    // PaaS/SaaS omit currentProduct from the GraphQL URL.
+    const isACO = !!Cypress.env('catalogApiKey');
+    visitPrexPage('cartRecsBlock');
+    assertProductContextAbsent();
+    waitForRecsCarousel();
+    waitForRecsGraphQL().then(({ request }) => {
+      if (isACO) {
+        assertUrlIncludesCurrentProduct(request.url, { requirePrice: true });
+      } else {
+        assertUrlExcludesCurrentProduct(request.url);
+      }
+    });
+  });
+});
+
+// --- PDP: cart dropin's own productContext push must not hijack currentSku ---
+// PREX-2255 (#1403): adding a recommended item to cart re-uses the cart dropin's
+// generic add-to-cart tracking, which pushes ACDL productContext for the *added*
+// item, not the PDP being viewed. Before the fix, product-recommendations.js
+// treated that push the same as a PDP navigation and re-anchored context.currentSku
+// on the added item's SKU. The cart update still triggers a legitimate reload
+// (cartSkus changed), so this asserts the currentSku GraphQL variable on that
+// reload — always sent whenever recs are invoked — stays pinned to the PDP's
+// own SKU, never the added-to-cart SKU or any other.
+//
+// @skipPaas: the recs/recommendations dropin (and its GraphQL calls) is only
+// officially supported on ACCS (SaaS) and ACO, not PaaS. The PaaS QA backend used
+// by this suite happens to have Catalog Service enabled for test purposes, but
+// that's incidental to this backend, not a supported production configuration —
+// same reasoning verifyRecsStorageHydration.spec.js uses to skip PaaS.
+describe('PREX context matrix — cart add-to-cart must not hijack currentSku', () => {
+  beforeEach(() => {
+    interceptRecsGraphQL();
+  });
+
+  it('PDP with recid only: adding a recommended item to cart keeps currentSku pinned to the PDP SKU', { tags: '@skipPaas' }, () => {
+    cy.intercept('https://commerce.adobedc.net/collector/**', { statusCode: 200, body: '' });
+    cy.visit(getPrexPage('pdpAcdlOnly'), { qs: { consent: 'accept' } });
+    waitForRecsCarousel();
+    assertProductContextPresent();
+
+    let pdpSku;
+    cy.window().then((win) => {
+      pdpSku = win.adobeDataLayer.getState('productContext')?.sku;
+    });
+
+    cy.get('@recsGraphql.all').should((requests) => {
+      assertUrlIncludesCurrentSku(requests[requests.length - 1].request.url, pdpSku);
+    });
+
+    // Add a recommended product to cart — this triggers the cart dropin's own
+    // productContext push (for the added item, a different SKU) and, via the
+    // resulting cart/data event, a legitimate recs reload. Uses the block's own
+    // Footer slot class (product-recommendations.js), not a dropin-internal one.
+    cy.get('.recommendations-product-list__content .footer__button--add-to-cart button')
+      .first()
+      .should('be.visible')
+      .click();
+
+    cy.get('.nav-cart-button').should('have.attr', 'data-count', '1');
+    cy.get('@recsGraphql.all').should((requests) => {
+      const { request } = requests[requests.length - 1];
+      const variables = JSON.parse(new URL(request.url).searchParams.get('variables'));
+      expect(variables.cartSkus, 'request reflects the completed cart addition').to.have.length(1);
+      assertUrlIncludesCurrentSku(request.url, pdpSku);
+    });
+  });
+});

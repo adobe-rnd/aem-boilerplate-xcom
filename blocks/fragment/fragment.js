@@ -4,8 +4,8 @@
  * https://www.aem.live/developer/block-collection/fragment
  */
 
-import { getRootPath } from '@dropins/tools/lib/aem/configs.js';
 import { decorateMain } from '../../scripts/scripts.js';
+import getSiteRootPath from '../../scripts/site-root.js';
 import {
   loadSections,
 } from '../../scripts/aem.js';
@@ -16,11 +16,11 @@ import {
  * @returns {Promise<HTMLElement>} The root element of the fragment
  */
 export async function loadFragment(path) {
-  if (path && path.startsWith('/')) {
-    const root = getRootPath().replace(/\/$/, '');
-    // eslint-disable-next-line no-param-reassign
-    path = path.replace(/(\.plain)?\.html/, '');
-    const resp = await fetch(`${root}${path}.plain.html`);
+  if (path && path.startsWith('/') && !path.startsWith('//')) {
+    const root = getSiteRootPath().replace(/\/$/, '');
+    const fragmentPath = path === root || path.startsWith(`${root}/`) ? path : `${root}${path}`;
+    const url = `${fragmentPath}.plain.html`;
+    const resp = await fetch(url);
     if (resp.ok) {
       const main = document.createElement('main');
       main.innerHTML = await resp.text();
@@ -46,12 +46,19 @@ export default async function decorate(block) {
   const link = block.querySelector('a');
   const path = link ? link.getAttribute('href') : block.textContent.trim();
   const fragment = await loadFragment(path);
-  if (fragment) {
-    const fragmentSection = fragment.querySelector(':scope .section');
-    if (fragmentSection) {
-      block.classList.add(...fragmentSection.classList);
-      block.classList.remove('section');
-      block.replaceChildren(...fragmentSection.childNodes);
-    }
+  if (!fragment) return;
+
+  const wrapper = block.closest('.fragment-wrapper');
+  const section = wrapper.closest('.section');
+
+  if (section && section.children.length === 1) {
+    // fragment is the ONLY child of its section; replace the whole section
+    section.replaceWith(...fragment.childNodes);
+  } else {
+    // fragment shares section with other children; flatten children into it
+    fragment.querySelectorAll(':scope > .section').forEach((fragSection) => {
+      [...fragSection.childNodes].forEach((child) => wrapper.before(child));
+    });
+    wrapper.remove();
   }
 }

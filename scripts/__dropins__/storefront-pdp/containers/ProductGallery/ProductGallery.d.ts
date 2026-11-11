@@ -1,10 +1,12 @@
 import { HTMLAttributes } from 'preact/compat';
-import { Container, ResolveImageUrlOptions, SlotProps } from '@dropins/tools/types/elsie/src/lib';
-import { ImageProps } from '@dropins/tools/types/elsie/src/components';
-import { ProductModel } from '../../data/models/product-model';
-
+import { Container, ResolveImageUrlOptions, SlotProps } from '@dropins/tools/lib';
+import { ImageProps } from '@dropins/tools/components';
+import { ProductModel } from '../../data/models/product-model.js';
 type DefaultSlotContext = {
     data: ProductModel | null;
+};
+type VideosProp = boolean | {
+    position: 'first' | 'last';
 };
 export interface ProductGalleryProps extends Omit<HTMLAttributes<HTMLDivElement>, 'controls'> {
     scope?: string;
@@ -19,15 +21,19 @@ export interface ProductGalleryProps extends Omit<HTMLAttributes<HTMLDivElement>
     zoom?: {
         closeButton: boolean;
     } | boolean;
+    videos?: VideosProp;
     slots?: {
         CarouselThumbnail?: SlotProps<DefaultSlotContext & {
             defaultImageProps: ImageProps;
+            mediaType?: 'image' | 'video';
+            previewUrl?: string;
         }>;
         CarouselMainImage?: SlotProps<DefaultSlotContext & {
             defaultImageProps: ImageProps;
+            mediaType?: 'image' | 'video';
+            previewUrl?: string;
         }>;
     };
 }
 export declare const ProductGallery: Container<ProductGalleryProps, ProductModel | null>;
 export {};
-//# sourceMappingURL=ProductGallery.d.ts.map

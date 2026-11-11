@@ -13,6 +13,5 @@
  * is strictly forbidden unless prior written permission is obtained
  * from Adobe.
  *******************************************************************/
-export * from './OrderStatusContent';
-export { OrderStatusContent as default } from './OrderStatusContent';
-//# sourceMappingURL=index.d.ts.map
+export * from './OrderStatusContent.js';
+export { OrderStatusContent as default } from './OrderStatusContent.js';

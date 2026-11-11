@@ -13,6 +13,5 @@
  * is strictly forbidden unless prior written permission is obtained
  * from Adobe.
  *******************************************************************/
-export * from './ReturnOrderMessage';
-export { ReturnOrderMessage as default } from './ReturnOrderMessage';
-//# sourceMappingURL=index.d.ts.map
+export * from './ReturnOrderMessage.js';
+export { ReturnOrderMessage as default } from './ReturnOrderMessage.js';

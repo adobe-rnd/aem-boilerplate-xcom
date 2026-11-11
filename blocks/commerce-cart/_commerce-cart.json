@@ -78,6 +78,12 @@
           "description": "Enable the ability to undo the removal of an item from the cart"
         },
         {
+          "component": "boolean",
+          "name": "enable-updating-product",
+          "label": "Enable Updating Product",
+          "description": "Enable the ability to update products in the cart"
+        },
+        {
           "component": "number",
           "name": "max-items",
           "label": "Max Items",

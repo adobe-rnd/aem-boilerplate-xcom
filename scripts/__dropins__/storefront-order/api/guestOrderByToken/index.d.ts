@@ -13,5 +13,4 @@
  * is strictly forbidden unless prior written permission is obtained
  * from Adobe.
  *******************************************************************/
-export * from './guestOrderByToken';
-//# sourceMappingURL=index.d.ts.map
+export * from './guestOrderByToken.js';

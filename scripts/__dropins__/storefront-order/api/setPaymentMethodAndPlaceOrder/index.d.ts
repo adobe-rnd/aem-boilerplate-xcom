@@ -14,5 +14,4 @@
  * is strictly forbidden unless prior written permission is obtained
  * from Adobe.
  *******************************************************************/
-export * from './setPaymentMethodAndPlaceOrder';
-//# sourceMappingURL=index.d.ts.map
+export * from './setPaymentMethodAndPlaceOrder.js';

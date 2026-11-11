@@ -13,6 +13,5 @@
  * is strictly forbidden unless prior written permission is obtained
  * from Adobe.
  *******************************************************************/
-export * from './OrderSearchForm';
-export { OrderSearchForm as default } from './OrderSearchForm';
-//# sourceMappingURL=index.d.ts.map
+export * from './OrderSearchForm.js';
+export { OrderSearchForm as default } from './OrderSearchForm.js';

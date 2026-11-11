@@ -13,6 +13,5 @@
  * is strictly forbidden unless prior written permission is obtained
  * from Adobe.
  *******************************************************************/
-export * from './ReturnsListContent';
-export { ReturnsListContent as default } from './ReturnsListContent';
-//# sourceMappingURL=index.d.ts.map
+export * from './ReturnsListContent.js';
+export { ReturnsListContent as default } from './ReturnsListContent.js';

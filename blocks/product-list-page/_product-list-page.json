@@ -28,6 +28,13 @@
           "label": "URL Path",
           "valueType": "string",
           "description": "Current Category URL Path"
+        },
+        {
+          "component": "number",
+          "name": "pageSize",
+          "label": "Page Size",
+          "value": 9,
+          "description": "Number of products per page (default: 9)"
         }
       ]
     }

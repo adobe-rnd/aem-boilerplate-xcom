@@ -115,6 +115,11 @@
     color: inherit;
 }
 
+#mini-pdp-modal .mini-pdp__quantity-wrapper--disabled {
+    opacity: 0.6;
+    pointer-events: none;
+}
+
 #mini-pdp-modal .mini-pdp__quantity-label {
     font: var(--type-details-caption-1-font);
     letter-spacing: var(--type-details-caption-1-letter-spacing);
@@ -137,6 +142,28 @@
 
 #mini-pdp-modal .mini-pdp__buttons .dropin-button {
     width: 100%;
+}
+
+.mini-pdp__update-button-wrapper {
+    position: relative;
+}
+
+.mini-pdp__update-button-wrapper--busy .mini-pdp__update-button {
+    opacity: 0.4;
+    pointer-events: none;
+}
+
+.mini-pdp__update-spinner-icon {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: calc(50% - (var(--size) / 2));
+    margin: 0 auto;
+    z-index: 1;
+}
+
+.mini-pdp__update-button button.dropin-button.dropin-button--primary--disabled {
+    color: var(--color-neutral-800);
 }
 
 @media (min-width: 768px) {

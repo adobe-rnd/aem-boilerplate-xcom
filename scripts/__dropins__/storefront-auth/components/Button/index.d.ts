@@ -14,6 +14,5 @@
  * is strictly forbidden unless prior written permission is obtained
  * from Adobe.
  *******************************************************************/
-export * from './Button';
-export { Button as default } from './Button';
-//# sourceMappingURL=index.d.ts.map
+export * from './Button.d.ts';
+export { Button as default } from './Button.d.ts';

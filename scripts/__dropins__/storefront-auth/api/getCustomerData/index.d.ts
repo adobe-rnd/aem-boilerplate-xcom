@@ -14,5 +14,4 @@
  * is strictly forbidden unless prior written permission is obtained
  * from Adobe.
  *******************************************************************/
-export * from './getCustomerData';
-//# sourceMappingURL=index.d.ts.map
+export * from './getCustomerData.d.ts';

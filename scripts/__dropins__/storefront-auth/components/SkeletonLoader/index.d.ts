@@ -14,6 +14,5 @@
  * is strictly forbidden unless prior written permission is obtained
  * from Adobe.
  *******************************************************************/
-export * from './SkeletonLoader';
-export { SkeletonLoader as default } from './SkeletonLoader';
-//# sourceMappingURL=index.d.ts.map
+export * from './SkeletonLoader.d.ts';
+export { SkeletonLoader as default } from './SkeletonLoader.d.ts';

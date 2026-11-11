@@ -14,10 +14,9 @@
  * is strictly forbidden unless prior written permission is obtained
  * from Adobe.
  *******************************************************************/
-export * from './UpdatePassword';
-export * from './SuccessNotification';
-export * from './SignUp';
-export * from './SignIn';
-export * from './ResetPassword';
-export * from './AuthCombine';
-//# sourceMappingURL=index.d.ts.map
+export * from './UpdatePassword.js';
+export * from './SuccessNotification.js';
+export * from './SignUp.js';
+export * from './SignIn.js';
+export * from './ResetPassword.js';
+export * from './AuthCombine.js';
