@@ -377,7 +377,12 @@ export function rootLink(link) {
 
   if (!pathname) {
     pathname = root;
-  } else if (root && pathname !== root && !pathname.startsWith(`${root}/`)) {
+  } else if (
+    root
+    && pathname !== root
+    && pathname !== `${root}.html`
+    && !pathname.startsWith(`${root}/`)
+  ) {
     pathname = `${root}${pathname.startsWith('/') ? '' : '/'}${pathname}`;
   }
 
