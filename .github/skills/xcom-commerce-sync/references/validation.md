@@ -64,6 +64,23 @@ Use both Author and Feature Preview. A Preview-only test does not exercise `.res
 
 ## 4. Functional Matrix
 
+### Targeted URL contract checks
+
+For URL/root callers affected by the sync, use isolated fixtures before browser testing. These are migration-contract checks, not a general application or performance test sweep.
+
+With Author root `/content/shop/en`, verify fragment fetch construction:
+
+| Input | Expected request |
+| --- | --- |
+| `/footer` | `/content/shop/en/footer.plain.html` |
+| `/content/shop/en/footer` | `/content/shop/en/footer.plain.html` |
+
+- Repeat with an Author site root plus a localized configured store root, and keep delivery controls for `/` and `/de/`.
+- Verify the root itself and real descendants are recognized at a segment boundary. `/content/shop/en-other/footer` must not count as a descendant of `/content/shop/en`.
+- Check root-page `.html` URLs for link-building callers that accept them; retain protocol-relative/external URL handling and suffix behavior according to each caller's existing contract.
+- Capture requested URLs without fetching real content. A working rendered page does not cover already-rooted or multistore inputs absent from that page.
+- If a case fails, identify whether it regressed against the prior xcom baseline or was inherited from upstream. Record fixture evidence separately from deployed observations.
+
 ### Homepage and authoring
 
 - Render the homepage in direct Author and Universal Editor.

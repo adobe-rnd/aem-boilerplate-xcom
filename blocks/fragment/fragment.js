@@ -18,7 +18,8 @@ import {
 export async function loadFragment(path) {
   if (path && path.startsWith('/') && !path.startsWith('//')) {
     const root = getSiteRootPath().replace(/\/$/, '');
-    const url = `${root}${path}.plain.html`;
+    const fragmentPath = path === root || path.startsWith(`${root}/`) ? path : `${root}${path}`;
+    const url = `${fragmentPath}.plain.html`;
     const resp = await fetch(url);
     if (resp.ok) {
       const main = document.createElement('main');

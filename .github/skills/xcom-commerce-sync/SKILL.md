@@ -131,6 +131,14 @@ Test every path assumption changed upstream. Preserve these Crosswalk behaviors 
 - Apply site-root handling consistently to products, fragments, footer, Account, Checkout, and Drop-in website cookies.
 - Accept both arrays and serialized JSON where AEM may serialize enrichment values differently.
 
+For xcom-owned URL/root adaptations, check the callers as well as the shared helper. Changing from a delivery root to an Author-aware root can break previously accepted inputs even when the merge is conflict-free:
+
+- Verify site-relative paths and already-rooted Author paths resolve without duplicating the site/store prefix. Cover default and localized roots, the root itself, and segment-boundary lookalikes.
+- Preserve each caller's existing contract for absolute URLs, suffixes, query strings, and rejected inputs; do not broaden a root-prefix fix into unrelated URL cleanup.
+- Prefer small local fixtures using the actual functions with a captured fetch or mocked location/configuration. Assert the resulting URL before considering additional cloud testing.
+- Compare a failing fixture with the previous xcom baseline and pinned upstream before attributing it to the latest merge. Distinguish isolated reproduction from a deployed failure.
+- Fix composition in the owning caller when the shared helper already returns the correct root. Do not patch vendored libraries or weaken root segment boundaries to accommodate one case.
+
 When upstream changes SKU resolution or PDP auto-blocking:
 
 - Read the selected source's precedence for metadata, authored `defaultSku`, and URL fallback; do not carry the old template-only rule forward without a verified Author requirement.
