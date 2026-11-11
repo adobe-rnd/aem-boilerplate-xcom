@@ -76,6 +76,17 @@ Preserve upstream ancestry. Merge the selected Commerce source rather than copyi
 
 Keep the mechanical upstream merge distinguishable from later Crosswalk fixes. Record the sync merge/baseline SHA so reviewers can measure `<sync-baseline>...HEAD` separately from `origin/main...HEAD`.
 
+#### Review Cumulative Compatibility
+
+Review the full accumulated xcom-specific changes against the last merged xcom baseline, not just the latest upstream increment. Earlier unmerged sync commits are part of the review scope, not a proven baseline.
+
+- Focus on maintained Author/UE adaptations and their callers, excluding generated assets and mechanical upstream changes.
+- Check retained adaptations when upstream changes a contract they depend on, even if those adaptations merge cleanly.
+- Preserve previously supported behavior unless an intentional change is documented and agreed.
+- Use small, targeted local checks where behavior is uncertain. A default-store smoke test does not establish localized or Author-path compatibility.
+
+This requires a focused compatibility review, not exhaustive application testing or a CI test for every issue.
+
 ### 2. Merge and Regenerate
 
 1. Merge the exact selected Commerce source into the issue branch.
