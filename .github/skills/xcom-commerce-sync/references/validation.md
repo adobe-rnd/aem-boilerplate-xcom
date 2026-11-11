@@ -17,6 +17,7 @@ Run the repository-supported generation and validation commands:
 
 ```bash
 npm install
+npm run prepare
 npm run install:dropins
 npm run build:json
 npm run lint
@@ -24,6 +25,7 @@ npm run lint
 
 Then:
 
+- Confirm `git config --local --get core.hooksPath` points to the installed Husky dispatcher (currently `.husky/_`). Automatic hook setup is skipped by `ignore-scripts=true`, so `npm run prepare` is required on a fresh checkout; do not re-enable dependency lifecycle scripts.
 - Confirm both pinned upstream SHAs were selected from their respective `main` branches. Identify matching B2C release labels and any post-tag `main` commits; do not introduce separate `integration`, B2B, or feature-branch sources.
 - Run `npm run build:json` again and confirm it produces no new diff.
 - Compare the selected Crosswalk source with xcom for UE event serialization, formatted-link buttons, rich-text handling, section metadata, path mapping, and multi-field configuration. Distinguish missing behavior from equivalent fixes already ported without shared commit ancestry.

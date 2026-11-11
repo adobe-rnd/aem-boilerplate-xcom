@@ -82,7 +82,7 @@ Keep the mechanical upstream merge distinguishable from later Crosswalk fixes. R
 2. Resolve generic upstream files in favor of Commerce unless a verified Crosswalk contract requires an overlay.
 3. Keep `scripts/aem.js` as vendored upstream code. Put Crosswalk behavior in supported wrappers or helpers.
 4. Update dependencies using the repository package-manager workflow.
-5. Run `npm install` when updating the lockfile.
+5. Run `npm install` when updating the lockfile, then explicitly run `npm run prepare` to activate the retained Husky/model-generation hooks. Keep `ignore-scripts=true`; explicit project hook setup does not re-enable dependency lifecycle scripts.
 6. Run `npm run install:dropins` to regenerate `scripts/__dropins__`.
 7. Mark generated Drop-ins and lockfiles in `.gitattributes` when upstream does so.
 8. Never repair generated Drop-in files by hand; fix inputs and regenerate.

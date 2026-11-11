@@ -21,7 +21,14 @@ Alternatively, you can follow our [Guide](https://experienceleague.adobe.com/dev
 
 ## Installation
 
-Run `npm install` to install dependencies.
+Install dependencies and explicitly activate the Git hooks:
+
+```bash
+npm install
+npm run prepare
+```
+
+`npm run prepare` installs this repository's Husky hooks, including automatic component JSON generation when partial models are committed. It must be run explicitly because `ignore-scripts=true` also skips automatic `prepare` execution. Dependency lifecycle scripts remain disabled.
 
 This repo's `.npmrc` sets `ignore-scripts=true`, which disables npm lifecycle scripts (`preinstall`/`install`/`postinstall`) for every package. This is a defense against npm supply-chain attacks that hide malicious code inside those scripts. One consequence is that `npm install` alone will **not** copy the drop-in assets into `scripts/__dropins__` or apply the GraphQL overrides defined in `build.mjs`.
 
