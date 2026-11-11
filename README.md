@@ -1,6 +1,9 @@
-# Edge Delivery Services + Adobe Commerce Boilerplate
+# Edge Delivery Services with AEM Authoring Boilerplate for Commerce
 
-This project boilerplate is for Edge Delivery Services projects that integrate with Adobe Commerce.
+This project boilerplate is for AEM Authoring with Edge Delivery Services (aka Crosswalk) projects that integrate with Adobe Commerce.
+
+> [!NOTE]
+> Using Edge Delivery with AEM Authoring for Commerce is meant for customer that cannot adapt [Experience Workspace](https://www.aem.live/docs/ew/about), the documented default for [Adobe Commerce Storefront](https://experienceleague.adobe.com/en/tools/commerce-storefront/). If you think you need to use this Boilerplate please get in touch with us.
 
 ## Documentation
 
@@ -129,3 +132,8 @@ Boilerplate's consent gate does not automatically integrate with Adobe Commerce 
 Major changes to this boilerplate are described and documented as part of pull requests and tracked via the `changelog` tag. This log documents changes to the canonical starting point — not upgrades that forked implementations must apply. Review it if you are considering pulling specific upstream changes into your fork:
 
 <https://github.com/hlxsites/aem-boilerplate-commerce/issues?q=label%3Achangelog+is%3Aclosed>
+
+### Product Detail Pages (PDPs)
+Since Ocotober 2025, folder mapping is no longer configured by default as its [deprecated](https://www.aem.live/developer/folder-mapping). To keep it easy to start, static product pages have been created as part ot the site template for all products listed on the homepage.
+
+It is highly recommended to create physical product detail pages in Edge Delivery Services. Use the [AEM Commerce Prerenderer](https://github.com/adobe-rnd/aem-commerce-prerender) to implement a [byom overaly](https://www.aem.live/developer/byom#setup-byom-as-content-overlay) that creates and publishes product detail pages from the product data available in Catalog Service.
