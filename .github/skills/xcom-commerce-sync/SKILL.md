@@ -208,7 +208,7 @@ Use a slash-free EDS validation branch even when the Git branch contains `/`. Pu
 6. Update Jira with both links, validation, and known accepted gaps.
 7. Merge xcom before the dependent Quick Site PR.
 8. Confirm release ownership before merging or releasing; do not infer it from past ownership.
-9. Follow the repository release skill/process after approval.
+9. Execute the [post-approval release procedure](./references/validation.md#7-post-approval-release). Confirm the coordinated version, merge any version-only follow-up, verify the template artifacts, and publish only the approved release assets and channels.
 
 When a README workflow flags a deleted block, verify the base and source branches. Do not add documentation for a block intentionally removed by Commerce upstream.
 
