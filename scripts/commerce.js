@@ -342,7 +342,9 @@ export async function loadCommerceLazy() {
  */
 export async function initializeCommerce() {
   // Initialize Config
-  initializeConfig(await getConfigFromSession());
+  initializeConfig(await getConfigFromSession(), {
+    match: (key) => window.location.pathname.match(`^(/content/.*)?${key}`),
+  });
 
   // Set Fetch GraphQL (Core)
   CORE_FETCH_GRAPHQL.setEndpoint(getConfigValue('commerce-core-endpoint') || await getConfigValue('commerce-endpoint'));
