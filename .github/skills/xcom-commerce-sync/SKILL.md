@@ -194,7 +194,7 @@ Stabilize the xcom models before editing `sites-franklin`.
 
 Read and execute [the validation and release checklist](./references/validation.md). Do not consider lint or a local page load sufficient for a structural update.
 
-Use a slash-free EDS validation branch even when the Git branch contains `/`. Publish only to Preview unless Live is explicitly approved.
+Create a new validation repository from the xcom GitHub template and use it as the disposable Quick Site's code repository. Obtain repository-creation permission and AEM Code Sync app access before setup. Deploy the candidate sync code to a slash-free EDS validation branch even when the source Git branch contains `/`, and explicitly configure the test site to use that repository and branch. Template creation alone does not include an unmerged sync. Publish only to Preview unless Live is explicitly approved.
 
 ### 8. Review and Deliver
 

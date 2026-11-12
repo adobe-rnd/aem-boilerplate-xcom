@@ -55,15 +55,69 @@ Also:
 
 ## 3. AEM Cloud Setup
 
-1. Create a disposable Quick Site from the updated package.
-2. Configure it against a known Commerce catalog.
-3. Push xcom code to a slash-free validation branch such as `issue-sites-12345`.
-4. Verify AEM Code Sync serves that branch.
-5. Open the site in direct AEM Author and Universal Editor.
-6. Record the AEM Sites console, Feature Preview, and representative page URLs.
-7. Keep Live untouched unless explicitly approved.
+The owner needs permission to create a repository in the chosen GitHub account or organization and must arrange any required GitHub app approval. The LLM can perform the setup once authorized; it cannot grant those permissions.
+
+1. Create a new repository from the [aem-boilerplate-xcom GitHub template](https://github.com/adobe-rnd/aem-boilerplate-xcom) using **Use this template**, not **Fork**. This is the code repository for the disposable Quick Site; do not point the test site at the shared xcom repository.
+2. Grant the AEM Code Sync GitHub app access to the new repository, involving an organization administrator if required.
+3. Deploy the candidate xcom code to a slash-free validation branch such as `issue-sites-12345` in the new repository.
+4. In AEM Sites, choose **Create > Site from template** and upload the updated standard Quick Site template ZIP built in section 2: `content/sites-franklin-commerce/target/template/aem-sites-commerce-with-edge-delivery-services-template-<version>.zip`. Do not upload the ordinary `sites-franklin-commerce-<version>.zip` FileVault content package here.
+5. Select the newly uploaded template, verify its name and version rather than selecting an older imported template, then continue the wizard to create the disposable Quick Site. Use the new repository's GitHub URL as the Project URL.
+6. Explicitly set and verify `owner`, `repo`, and `ref` in the new site's Edge Delivery Services configuration at `/conf/<test-site>/settings/cloudconfigs/edge-delivery-service-configuration/jcr:content`. Set `ref` to the validation branch defined in step 3.
+7. Configure the site against a known Commerce catalog, using the [example Commerce configuration](#example-commerce-configuration) as a reference.
+8. Verify AEM Code Sync serves the candidate code from the selected repository and branch before functional testing.
+9. Open the site in direct AEM Author and Universal Editor.
+10. Record the validation repository, branch, candidate source SHA, deployed commit SHA, AEM Sites console, Feature Preview, and representative page URLs.
+11. Keep Live untouched unless explicitly approved.
+
+Creating a repository from the template copies the current default-branch code, not the unmerged sync candidate. Verify the deployed code matches the candidate tree; the commit SHAs can differ because template repositories have independent history.
 
 Use both Author and Feature Preview. A Preview-only test does not exercise `.resource`, `/content/{site}`, or `.html` handling.
+
+### Example Commerce Configuration
+
+Add the following object under `public.default` using [Admin Edit](https://tools.aem.live/tools/admin-edit/index.html).
+
+```json
+{
+	"commerce-core-endpoint": "https://www.aemshop.net/graphql",
+	"commerce-endpoint": "https://www.aemshop.net/cs-graphql",
+	"commerce-assets-enabled": true,
+	"headers": {
+		"all": {
+			"Store": "default"
+		},
+		"cs": {
+			"Magento-Store-Code": "main_website_store",
+			"Magento-Store-View-Code": "default",
+			"Magento-Website-Code": "base",
+			"x-api-key": "4dfa19c9fe6f4cccade55cc5b3da94f7",
+			"Magento-Environment-Id": "f38a0de0-764b-41fa-bd2c-5bc2f3c7b39a"
+		}
+	},
+	"analytics": {
+		"aep-ims-org-id": null,
+		"aep-datastream-id": null,
+		"base-currency-code": "USD",
+		"environment": "Testing",
+		"environment-id": "f38a0de0-764b-41fa-bd2c-5bc2f3c7b39a",
+		"store-code": "main_website_store",
+		"store-id": 1,
+		"store-name": "Main Website Store",
+		"store-url": "https://www.aemshop.net",
+		"store-view-code": "default",
+		"store-view-id": 1,
+		"store-view-name": "Default Store View",
+		"website-code": "base",
+		"website-id": 1,
+		"website-name": "Main Website"
+	},
+	"plugins": {
+		"picker": {
+			"rootCategory": "YOUR_ROOT_CATEGORY_ID"
+		}
+	}
+}
+```
 
 ## 4. Functional Matrix
 
