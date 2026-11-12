@@ -16,6 +16,8 @@ Before using the boilerplate, we recommend you to go through the documentation o
 1. [Web Performance](https://www.aem.live/developer/keeping-it-100)
 1. [Markup, Sections, Blocks, and Auto Blocking](https://www.aem.live/developer/markup-sections-blocks)
 
+See [Sync and Release](RELEASE.md) for the developer workflow.
+
 ## Getting Started
 
 Use the [Site Creator Tool](https://da.live/app/adobe-commerce/storefront-tools/tools/site-creator/site-creator) to quickly spin up your own copy of code and content.
