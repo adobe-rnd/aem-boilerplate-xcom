@@ -28,6 +28,8 @@ Search state is read from and written to the URL by this project (see `search-ur
 
 On load, the block normalizes the URL (e.g. filter format) with `replaceState`. After each search result, it updates the URL with `pushState` so the address bar reflects the current request.
 
+The result summary renders the search phrase as literal text, never as HTML, while preserving its bold formatting.
+
 ### Events
 
 #### Event Listeners
