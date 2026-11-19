@@ -23,6 +23,61 @@ describe("Search Feature", () => {
     assertImageListDisplay('.product-discovery-product-list__grid');
   });
 
+  describe("Search result summaries", () => {
+    const markup = 'tee <b data-injection-check="true">marker</b> & "quotes"';
+
+    [
+      { name: "matching searches", phrase: markup, totalCount: 3 },
+      { name: "zero-result searches", phrase: markup, totalCount: 0 },
+      { name: "failed searches", phrase: markup, totalCount: 0, error: true },
+      { name: "searches without a phrase", phrase: "", totalCount: 3 },
+    ].forEach(({ name, phrase, totalCount, error }) => {
+      it(`renders literal text for ${name}`, () => {
+        cy.intercept("**/*graphql*", (request) => {
+          const query = request.query.query || request.body?.query;
+          if (!query?.includes("productSearch")) return;
+
+          request.alias = "summarySearch";
+          request.reply({
+            statusCode: 200,
+            body: error
+              ? { errors: [{ message: "Search unavailable during regression test." }] }
+              : {
+                data: {
+                  productSearch: {
+                    total_count: totalCount,
+                    items: [],
+                    facets: [],
+                    suggestions: [],
+                    related_terms: [],
+                    page_info: { current_page: 1, page_size: 9, total_pages: 1 },
+                  },
+                },
+              },
+          });
+        });
+
+        cy.visit(`/search?q=${encodeURIComponent(phrase)}`);
+        cy.wait("@summarySearch");
+
+        const summary = ".product-list-page .search__result-info";
+        const expected = phrase
+          ? `${totalCount} results found for "${phrase}".`
+          : `${totalCount} results found.`;
+
+        cy.get(summary).should("have.text", expected);
+        cy.get(summary).find("[data-injection-check]").should("not.exist");
+        if (phrase) {
+          cy.get(summary).find("strong").should("have.text", `"${phrase}"`);
+        } else {
+          cy.get(summary).find("strong").should("not.exist");
+        }
+        cy.get(".product-list-page")
+          .should(totalCount === 0 ? "have.class" : "not.have.class", "product-list-page--empty");
+      });
+    });
+  });
+
   it("Verify Search results page", () => {
     // Visit the homepage
     cy.visit("/");
